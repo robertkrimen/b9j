@@ -19,7 +19,7 @@
 
                 testSimple: function() {
                     given(tester);
-                    tester.done();
+                    tester.done(this);
                 }
 
             }));    
@@ -28,7 +28,8 @@
         });
     };
 
-    pckg.Tester = function() {
+    pckg.Tester = function(given) {
+        if (! given) given = {}; 
         this._errors = [];
         this._tests = 0;
         this._test = 0;
@@ -43,12 +44,17 @@
         _endTest: function(error) {
             if (error) {
                 this._errors.push({ test: this._test, error: error });
+                YAHOO.log("fail " + this._test + ":\n" + error, "info", "TestRunner");
+            }
+            else {
+                YAHOO.log("pass " + this._test, "info", "TestRunner");
             }
         },
 
-        done: function() {
+        done: function(testCase) {
+            YAHOO.log(testCase.name + ": " + "Passed:" + (this._tests - this._errors.length) + " Failed:" + this._errors.length + " Total:" + this._tests, "info", "TestRunner");
             if (this._errors.length)
-                YAHOO.util.Assert.fail("Failed " + this._errors.length + " tests out of " + this._tests);
+                YAHOO.util.Assert.fail("FAIL " + this._errors.length + " / " + this._tests);
         }
     };
 
@@ -78,19 +84,51 @@
 
     for (ii = 0; ii < _test.length; ii++) {
         var name = _test[ii];
-        pckg.Tester.prototype[name] = function() {
-            this._beginTest();
-            var error;
-            try {
-                YAHOO.util.Assert[name].apply(YAHOO.util.Assert, arguments);
-            }
-            catch (thrown) {
-                if (! thrown instanceof YAHOO.util.AssertionError) throw(thrown);
-                error = thrown;
-            }
-            this._endTest(error);
-            return error ? false : true;
-        };
+        (function(name){
+            pckg.Tester.prototype[name] = function() {
+                this._beginTest();
+                var error;
+                try {
+                    YAHOO.util.Assert[name].apply(YAHOO.util.Assert, arguments);
+                }
+                catch (thrown) {
+                    if (! thrown instanceof YAHOO.util.AssertionError) throw(thrown);
+                    error = thrown;
+                }
+                this._endTest(error);
+                return error ? false : true;
+            };
+        }(name));
     }
-    
+
+    pckg.TesterView = function() {
+        this.panel = new YAHOO.widget.Panel(
+                "panel", // The element id
+                {
+                        width: "480px",
+                        fixedcenter: true,
+                        close: false,
+                        draggable: false,
+                        zindex: 4,
+                        modal: true,
+                        visible: false
+                }
+        );
+        this.panel.setBody("<p>Aliquam ultrices. Nulla dictum, augue et condimentum commodo.</p>");
+        this.panel.render(document.body);
+        this.panel.show();
+    };
+
+    pckg.TesterView.prototype = {
+
+        passTest: function(number) {
+            this.panel.body.innerHTML += "<p>ok........." + number + "</p>";
+        },
+
+        failTest: function(number, error) {
+            this.panel.body.innerHTML += "<p>fail......." + number + "</p>";
+        }
+
+    };
+
 }());
