@@ -31,7 +31,7 @@ body {
 
         YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 
-            name: "b9j/namespace Test",
+            name: "b9j/path Test",
 
             setUp: function() {
             },
@@ -40,21 +40,9 @@ body {
             },
         
             testNamespace: function() {
-                b9j.namespace.declare('xyzzy');
-                Assert.isObject(xyzzy);
-
-                b9j.namespace.declare('xyzzy.io');
-                if (Assert.isObject(xyzzy.io)) {
-                    console.log("Cool!");
-                }
-                else {
-                    console.log("Not cool!");
-                }
-
-                Assert.isFalse(1);
-
-                Assert.isFalse(Test.isObject(xyzzy.missing));
+                Assert.areEqual("blah", b9j.path.canonical('xyzzy'));
             },
+
         }));    
 
         YAHOO.tool.TestRunner.run();

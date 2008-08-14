@@ -22,42 +22,9 @@ body {
 <div id="testLogger"></div>
 <script type="text/javascript">
 
-    var Assert = YAHOO.util.Assert;
-    var Test = YAHOO.lang;
-     
-    YAHOO.util.Event.onDOMReady(function(){
-
-        var logger = new YAHOO.tool.TestLogger("testLogger");
-
-        YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
-
-            name: "b9j/namespace Test",
-
-            setUp: function() {
-            },
-        
-            tearDown: function() {
-            },
-        
-            testNamespace: function() {
-                b9j.namespace.declare('xyzzy');
-                Assert.isObject(xyzzy);
-
-                b9j.namespace.declare('xyzzy.io');
-                if (Assert.isObject(xyzzy.io)) {
-                    console.log("Cool!");
-                }
-                else {
-                    console.log("Not cool!");
-                }
-
-                Assert.isFalse(1);
-
-                Assert.isFalse(Test.isObject(xyzzy.missing));
-            },
-        }));    
-
-        YAHOO.tool.TestRunner.run();
+    b9j.test.simple(function(test) {
+        test.areEqual("blah1", "blah");
+        test.areEqual("blah1", "blah2");
     });
 
 </script>
