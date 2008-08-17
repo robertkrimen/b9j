@@ -113,22 +113,24 @@ function namespace(spec,context) {
 
 }());
 /* 
-
- =head1 NAME b9j.test
-  
- =head1 SYNPOSIS 
-  
-     b9j.test.simple(function(test) {
-
-         test.areEqual("xyzzy", "xyzzy");
-         test.areEqual("this", "that");
-
-     });
-  
- =head1 DESCRIPTION
-  
- b9j.test is a wrapper around the YUI test system providing Test::More-like functionality
-  
+ *
+ * =head1 NAME
+ * 
+ * b9j.test
+ *
+ * =head1 SYNPOSIS 
+ *  
+ *     b9j.test.simple(function(test) {
+ *
+ *         test.areEqual("xyzzy", "xyzzy");
+ *         test.areEqual("this", "that");
+ *
+ *     });
+ *  
+ * =head1 DESCRIPTION
+ *  
+ * b9j.test is a wrapper around the YUI test system providing Test::More-like feedback
+ *  
  */
 
 (function(){
