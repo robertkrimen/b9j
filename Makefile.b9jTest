@@ -1,0 +1,40 @@
+.PHONY: b9jTest
+
+b9jTest: $(BUILD)/b9jTest.js $(BUILD)/b9jTest.css
+yui_VERSION = 2.5.2
+
+$(BUILD)/b9jTest.js: $(BUILD)/b9jTest.uncompressed.js ./yuicompressor.jar
+	java -jar ./yuicompressor.jar $< > $@
+
+$(BUILD)/b9jTest.css: $(BUILD)/b9jTest.uncompressed.css ./yuicompressor.jar
+	java -jar ./yuicompressor.jar $< > $@
+
+$(BUILD)/b9jTest.uncompressed.js: $(BUILD_tmp)/yahoo-dom-event.js $(BUILD_tmp)/logger-min.js $(BUILD_tmp)/yuitest-min.js $(BUILD_tmp)/container-min.js $(BUILD)/b9j.js b9jTest/source.js
+	cat $^ > $@
+
+$(BUILD_tmp)/yahoo-dom-event.js:
+	wget 'http://yui.yahooapis.com/$(yui_VERSION)/build/yahoo-dom-event/yahoo-dom-event.js' -O $@
+
+$(BUILD_tmp)/logger-min.js:
+	wget 'http://yui.yahooapis.com/$(yui_VERSION)/build/logger/logger-min.js' -O $@
+
+$(BUILD_tmp)/yuitest-min.js:
+	wget 'http://yui.yahooapis.com/$(yui_VERSION)/build/yuitest/yuitest-min.js' -O $@
+
+$(BUILD_tmp)/container-min.js:
+	wget 'http://yui.yahooapis.com/$(yui_VERSION)/build/container/container-min.js' -O $@
+
+$(BUILD)/b9jTest.uncompressed.css: $(BUILD_tmp)/reset-fonts-grids.css $(BUILD_tmp)/base-min.css $(BUILD_tmp)/logger.css $(BUILD_tmp)/yuitest.css b9jTest/source.css
+	cat $^ > $@
+
+$(BUILD_tmp)/reset-fonts-grids.css:
+	wget 'http://yui.yahooapis.com/$(yui_VERSION)/build/reset-fonts-grids/reset-fonts-grids.css' -O $@
+
+$(BUILD_tmp)/base-min.css:
+	wget 'http://yui.yahooapis.com/$(yui_VERSION)/build/base/base-min.css' -O $@
+
+$(BUILD_tmp)/logger.css:
+	wget 'http://yui.yahooapis.com/$(yui_VERSION)/build/logger/assets/skins/sam/logger.css' -O $@
+
+$(BUILD_tmp)/yuitest.css:
+	wget 'http://yui.yahooapis.com/$(yui_VERSION)/build/yuitest/assets/skins/sam/yuitest.css' -O $@
