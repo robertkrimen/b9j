@@ -1,9 +1,9 @@
-.PHONY: all clean b9jTest
+.PHONY: all clean b9jTest build
 
 yuicompressor_VERSION := 2.3.6
 yuicompressor_JAR := yuicompressor-$(yuicompressor_VERSION)/build/yuicompressor-$(yuicompressor_VERSION).jar
 
-PACKAGE := b9j namespace test path
+PACKAGE := b9j namespace test path b9jTest
 PACKAGE_source := $(PACKAGE:%=%/source.js)
 PACKAGE_documentation := $(PACKAGE:%=%/documentation.html)
 PACKAGE_test := $(PACKAGE:%=%/test.html)
@@ -26,10 +26,15 @@ yuicompressor-$(yuicompressor_VERSION).zip:
 	wget 'http://www.julienlecomte.net/yuicompressor/yuicompressor-$(yuicompressor_VERSION).zip'
 
 $(yuicompressor_JAR): yuicompressor-$(yuicompressor_VERSION).zip
-	unzip $<
+	unzip -o $<
 
 yuicompressor.jar: $(yuicompressor_JAR)
 	ln -snf $< $@
 
 b9jTest:
 	$(MAKE) -C $@
+
+build: b9j.js yuicompressor.jar b9jTest
+	mkdir -p $@
+	cp b9jTest/b9jTest.{js,css} $@
+	java -jar yuicompressor.jar b9j.js -o $@/b9j.js
