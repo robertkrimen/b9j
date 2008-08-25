@@ -2,54 +2,45 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <title>Test</title>
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/reset-fonts-grids/reset-fonts-grids.css"> 
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/base/base-min.css"> 
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/logger/assets/skins/sam/logger.css"> 
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/yuitest/assets/skins/sam/yuitest.css"> 
+<link rel="stylesheet" type="text/css" href="../build/b9jTest.css">
 <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
 <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/logger/logger-min.js"></script> 
 <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yuitest/yuitest-min.js"></script>
-<script type="text/javascript" src="../b9j-bootstrap.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/container/container-min.js"></script>
+<script type="text/javascript" src="../build/b9j.bootstrap.js"></script>
+<script type="text/javascript" src="../test/source.js"></script>
+<script type="text/javascript" src="../b9jTest/source.js"></script>
 <script type="text/javascript" src="./source.js"></script>
-<style type="text/css">
-body {
-    padding: 1em;
-    font-size: 167%;
-}
-</style>
 </head>
 <body class="yui-skin-sam">
 <div id="testLogger"></div>
 <script type="text/javascript">
 
-    var Assert = YAHOO.util.Assert;
-    var Test = YAHOO.lang;
-     
-    YAHOO.util.Event.onDOMReady(function(){
+    b9jTest(function(test) {
 
-        var logger = new YAHOO.tool.TestLogger("testLogger");
+        test.is("a/b/c", b9j.path.canonical("a//b//c"));
+        test.is("a/b/c/", b9j.path.canonical("a//b//c//"));
+        test.is("a/b/c/", b9j.path.canonical("a/./b/././c//"));
+        test.is("./a/b/c/", b9j.path.canonical("./a/./b/././c/."));
 
-        YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
+        var path;
+        {
+            path = new b9j.path.Path("a/b", "c/d", "e");
+            test.is("a/b/c/d/e", path.get());
+            path.pop();
+            test.is("a/b/c/d", path.get());
+            path.pop(2);
+            test.is("a/b", path.get());
+            path.pop(3);
+            test.is("", path.get());
 
-            name: "b9j/path Test",
+            path = new b9j.path.Path("/a/b/c");
+            path.pop(10);
+            test.is("/", path.get());
+        }
 
-            setUp: function() {
-            },
-        
-            tearDown: function() {
-            },
-        
-            testNamespace: function() {
-                Assert.areEqual("blah", b9j.path.canonical('xyzzy'));
-            },
-
-        }));    
-
-        YAHOO.tool.TestRunner.run();
     });
 
 </script>
 </body>
 </html>
-
-

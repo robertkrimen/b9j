@@ -1,7 +1,7 @@
 /* 
  * =head1 NAME
  * 
- * b9j.namespace - Create and use namespaces
+ * b9j.namespace - Namespace creation and aliasing
  *
  * =head1 SYNPOSIS 
  *  

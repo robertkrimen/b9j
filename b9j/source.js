@@ -1,3 +1,38 @@
+/*
+ * =head1 b9j
+ *
+ * A supplemental javascript library
+ *
+ * =head2 b9j.namespace - Namespace creation and aliasing
+ *
+ *          declare     # Declare a namespace
+ *          using       # Alias one or more namespace(s) to a shorthand name
+ *
+ * =head2 b9j.test - A wrapper around YUI Test to make simple testing easy
+ *
+ *          b9jTest     # An easy-to-use test framework based on YUI Test
+ *                      # NOTE: Requires YUI Test to be loaded
+ *
+ * =head1 AUTHOR
+ *
+ * Robert Krimen, `<robertkrimen at gmail.com>`
+ *
+ * =head1 SOURCE
+ *
+ * You can contribute or fork this project via GitHub:
+ *
+ * http://github.com/robertkrimen/b9j/tree/master
+ *
+ *          git clone git://github.com/robertkrimen/b9j.git
+ *
+ * =head1 COPYRIGHT & LICENSE
+ *
+ * Copyright 2008 Robert Krimen
+ *
+ * This program is free software; you can redistribute it and/or modify it under the same terms as Perl.
+ *
+ */
+
 if (typeof b9j == "undefined" || !b9j) {
     var b9j = {};
 }
@@ -53,41 +88,45 @@ if (typeof b9j == "undefined" || !b9j) {
     b9j._namespace = _namespace;
 
 })();
+
 /*
-// http://higher-order.blogspot.com/2008/02/designing-clientserver-web-applications.html#Namespacing
-function namespace(spec,context) {
-    var validIdentifier = /^(?:[a-zA-Z_]\w*[.])*[a-zA-Z_]\w*$/,
-        i,N;
-    context = context || window;
-    spec = spec.valueOf();
-    if (typeof spec === 'object') {
-            if (typeof spec.length === 'number') {//assume an array-like object
-                for (i=0,N=spec.length;i<N;i++) {
-                    namespace(spec[i],context);
+
+    // http://higher-order.blogspot.com/2008/02/designing-clientserver-web-applications.html#Namespacing
+
+    function namespace(spec,context) {
+        var validIdentifier = /^(?:[a-zA-Z_]\w*[.])*[a-zA-Z_]\w*$/,
+            i,N;
+        context = context || window;
+        spec = spec.valueOf();
+        if (typeof spec === 'object') {
+                if (typeof spec.length === 'number') {//assume an array-like object
+                    for (i=0,N=spec.length;i<N;i++) {
+                        namespace(spec[i],context);
+                    }
                 }
-            }
-            else {//spec is a specification object e.g, {com: {trifork: ['model,view']}}
-                for (i in spec) if (spec.hasOwnProperty(i)) {
-                    context[i] = context[i] || {};
-                    namespace(spec[i], context[i]);//recursively descend tree
+                else {//spec is a specification object e.g, {com: {trifork: ['model,view']}}
+                    for (i in spec) if (spec.hasOwnProperty(i)) {
+                        context[i] = context[i] || {};
+                        namespace(spec[i], context[i]);//recursively descend tree
+                    }
                 }
-            }
-    } else if (typeof spec === 'string') {
-            (function handleStringCase(){
-               var parts;
-               if (!validIdentifier.test(spec)) {
-                   throw new Error('"'+spec+'" is not a valid name for a package.');
-               }
-               parts = spec.split('.');
-               for (i=0,N=parts.length;i<N;i++) {
-                   spec = parts[i];
-                   context[spec] = context[spec] || {};
-                   context = context[spec];
-               }
-            })();
+        } else if (typeof spec === 'string') {
+                (function handleStringCase(){
+                   var parts;
+                   if (!validIdentifier.test(spec)) {
+                       throw new Error('"'+spec+'" is not a valid name for a package.');
+                   }
+                   parts = spec.split('.');
+                   for (i=0,N=parts.length;i<N;i++) {
+                       spec = parts[i];
+                       context[spec] = context[spec] || {};
+                       context = context[spec];
+                   }
+                })();
+        }
+        else {
+           throw new TypeError();
+        }
     }
-    else {
-       throw new TypeError();
-    }
-}
+
 */

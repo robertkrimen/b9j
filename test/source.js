@@ -1,7 +1,7 @@
 /* 
  * =head1 NAME
  * 
- * b9j.test - Test javascript easily with this simple wrapper around YUI Test
+ * b9j.test - A wrapper around YUI Test to make simple testing easy
  *
  * =head1 SYNPOSIS 
  *  
@@ -18,6 +18,8 @@
  * b9j.test is a wrapper around [YUI Test](http://developer.yahoo.com/yui/yuitest/), providing [Test::More](http://search.cpan.org/perldoc?Test::More)-like functionality and feedback
  *  
  * Primarily, b9j.test provides the b9jTest method, described below.
+ *
+ * =head1 NOTE: This package requires YUI Test to be loaded. For a standalone solution, see the b9jTest package
  *
  * =head1 Example HTML test document
  *

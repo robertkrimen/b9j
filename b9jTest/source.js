@@ -2,7 +2,7 @@
  *
  * =head1 NAME
  * 
- * b9jTest
+ * b9jTest - A wrapper around YUI Test to make simple testing quick and easy
  *
  * =head1 SYNOPSIS 
  *  
@@ -203,10 +203,10 @@
  *
  * Copyright 2008 Robert Krimen
  *
- * This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+ * This program is free software; you can redistribute it and/or modify it under the same terms as Perl.
  *
  */
 
 function b9jTest(given) {
-    b9j.test.simple(given);
+    b9j.test.b9jTest(given);
 }

@@ -1,8 +1,12 @@
-.PHONY: all clean build _build
+.PHONY: all clean build _build ship
 
 BUILD := build
 BUILD_tmp := build/tmp
 BUILD_documentation := build/documentation
+
+b9j_VERSION := 0.1.0
+SHIP := $(BUILD)/b9j-$(b9j_VERSION)
+SHIP_ZIP := $(BUILD)/b9j-$(b9j_VERSION).zip
 
 yuicompressor_VERSION := 2.3.6
 yuicompressor_JAR := $(BUILD_tmp)/yuicompressor-$(yuicompressor_VERSION)/$(BUILD)/yuicompressor-$(yuicompressor_VERSION).jar
@@ -48,5 +52,15 @@ build: _build $(BUILD)/b9j.bootstrap.js $(BUILD)/b9j.js $(PACKAGE_documentation)
 
 _build:
 	mkdir -p $(BUILD)
+
+ship: build
+	rm -rf $(SHIP) $(SHIP_ZIP)
+	mkdir -p $(SHIP) $(SHIP)/documentation
+	(cd $(BUILD) && cp b9jTest.css b9jTest.js b9j.js b9j.uncompressed.js ../$(SHIP))
+	(cd $(BUILD)/documentation && cp b9j.html b9jTest.html namespace.html test.html ../../$(SHIP)/documentation)
+	(cd $(BUILD) && zip -r ../$(SHIP_ZIP) `basename $(SHIP)`)
+	rm -f $(BUILD)/b9j-latest*
+	ln -sf `basename $(SHIP)` $(BUILD)/b9j-latest
+	ln -sf `basename $(SHIP_ZIP)` $(BUILD)/b9j-latest.zip
 
 include Makefile.b9jTest
