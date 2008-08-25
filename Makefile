@@ -19,9 +19,11 @@ clean:
 
 yuicompressor-$(yuicompressor_VERSION).zip:
 	wget 'http://www.julienlecomte.net/yuicompressor/yuicompressor-$(yuicompressor_VERSION).zip'
+	touch $@
 
 $(yuicompressor_JAR): yuicompressor-$(yuicompressor_VERSION).zip
 	unzip -o $<
+	touch $@
 
 yuicompressor.jar: $(yuicompressor_JAR)
 	ln -sf $< $@
