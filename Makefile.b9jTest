@@ -3,11 +3,11 @@
 b9jTest: $(BUILD)/b9jTest.js $(BUILD)/b9jTest.css
 yui_VERSION = 2.5.2
 
-$(BUILD)/b9jTest.js: $(BUILD)/b9jTest.uncompressed.js ./yuicompressor.jar
-	java -jar ./yuicompressor.jar $< > $@
+$(BUILD)/b9jTest.js: $(BUILD)/b9jTest.uncompressed.js $(yuicompressor_JAR)
+	$(yuicompress) $< > $@
 
-$(BUILD)/b9jTest.css: $(BUILD)/b9jTest.uncompressed.css ./yuicompressor.jar
-	java -jar ./yuicompressor.jar $< > $@
+$(BUILD)/b9jTest.css: $(BUILD)/b9jTest.uncompressed.css $(yuicompressor_JAR)
+	$(yuicompress) $< > $@
 
 $(BUILD)/b9jTest.uncompressed.js: $(BUILD_tmp)/yahoo-dom-event.js $(BUILD_tmp)/logger-min.js $(BUILD_tmp)/yuitest-min.js $(BUILD_tmp)/container-min.js $(BUILD)/b9j.js b9jTest/source.js
 	cat $^ > $@
