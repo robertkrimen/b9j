@@ -10,7 +10,7 @@
 <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/logger/logger-min.js"></script> 
 <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yuitest/yuitest-min.js"></script>
 <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/container/container-min.js"></script>
-<script type="text/javascript" src="../b9j-bootstrap.js"></script>
+<script type="text/javascript" src="../build/b9j.bootstrap.js"></script>
 <script type="text/javascript" src="./source.js"></script>
 <style type="text/css">
 body {
@@ -23,9 +23,11 @@ body {
 <div id="testLogger"></div>
 <script type="text/javascript">
 
-    b9j.test.simple(function(test) {
-        test.areEqual("blah", "blah");
-        test.areEqual("blah", "blah");
+    b9j.test.b9jTest(function(test) {
+        test.areEqual("xyzzy", "xyzzy");
+        test.areNotEqual("xyzzy", "banana");
+        test.like(/xyzzy/, "applexyzzy");
+        test.unlike(/xyzzy/, "banana");
     });
 
 </script>

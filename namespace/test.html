@@ -2,66 +2,118 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <title>Test</title>
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/reset-fonts-grids/reset-fonts-grids.css"> 
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/base/base-min.css"> 
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/logger/assets/skins/sam/logger.css"> 
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/yuitest/assets/skins/sam/yuitest.css"> 
+<link rel="stylesheet" type="text/css" href="../build/b9jTest.css">
 <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
 <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/logger/logger-min.js"></script> 
 <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yuitest/yuitest-min.js"></script>
-<script type="text/javascript" src="../b9j-bootstrap.js"></script>
+<script type="text/javascript" src="../b9j/source.js"></script>
 <script type="text/javascript" src="./source.js"></script>
-<style type="text/css">
-body {
-    padding: 1em;
-    font-size: 167%;
-}
-</style>
+<script type="text/javascript" src="../test/source.js"></script>
 </head>
 <body class="yui-skin-sam">
 <div id="testLogger"></div>
 <script type="text/javascript">
 
-    var Assert = YAHOO.util.Assert;
-    var Test = YAHOO.lang;
-     
-    YAHOO.util.Event.onDOMReady(function(){
+    b9j.test.b9jTest(function(test) {
+        (function(){
+            b9j.namespace.declare('xyzzy');
+            b9j.namespace.declare('xyzzy.io');
+        })();
+        test.isObject(xyzzy);
+        test.isObject(xyzzy.io);
+ 
+        b9j.namespace.declare({ com: {
+            example:
+                [ 'apple', 'banana', 'cherry.grape' ] }
+        });
 
-        var logger = new YAHOO.tool.TestLogger("testLogger");
+        test.isObject(com);
+        test.isObject(com.example);
+        test.isObject(com.example.apple);
+        test.isObject(com.example.banana);
+        test.isObject(com.example.cherry);
+        test.isObject(com.example.cherry.grape);
 
-        YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
+        com.example.apple.xyzzy = function(){
+            return 1;
+        };
 
-            name: "b9j/namespace Test",
+        com.example.cherry.grape.frobozz = function(){
+            return 2;
+        };
 
-            setUp: function() {
-            },
-        
-            tearDown: function() {
-            },
-        
-            testNamespace: function() {
-                b9j.namespace.declare('xyzzy');
-                Assert.isObject(xyzzy);
-
-                b9j.namespace.declare('xyzzy.io');
-                if (Assert.isObject(xyzzy.io)) {
-                    console.log("Cool!");
-                }
-                else {
-                    console.log("Not cool!");
-                }
-
-                Assert.isFalse(1);
-
-                Assert.isFalse(Test.isObject(xyzzy.missing));
-            },
-        }));    
-
-        YAHOO.tool.TestRunner.run();
+        b9j.namespace.using(com.example.apple, com.example.cherry.grape).run(function(apple, grape){
+            test.is(apple.xyzzy(), 1);
+            test.is(grape.frobozz(), 2);
+        });
     });
 
 </script>
 </body>
 </html>
 
+<!--<html>-->
+<!--<head>-->
+<!--    <meta http-equiv="content-type" content="text/html; charset=utf-8">-->
+<!--<title>Test</title>-->
+<!--<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/reset-fonts-grids/reset-fonts-grids.css"> -->
+<!--<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/base/base-min.css"> -->
+<!--<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/logger/assets/skins/sam/logger.css"> -->
+<!--<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/yuitest/assets/skins/sam/yuitest.css"> -->
+<!--<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo-dom-event/yahoo-dom-event.js"></script> -->
+<!--<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/logger/logger-min.js"></script> -->
+<!--<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yuitest/yuitest-min.js"></script>-->
+<!--<script type="text/javascript" src="../b9j-bootstrap.js"></script>-->
+<!--<script type="text/javascript" src="./source.js"></script>-->
+<!--<style type="text/css">-->
+<!--body {-->
+<!--    padding: 1em;-->
+<!--    font-size: 167%;-->
+<!--}-->
+<!--</style>-->
+<!--</head>-->
+<!--<body class="yui-skin-sam">-->
+<!--<div id="testLogger"></div>-->
+<!--<script type="text/javascript">-->
 
+<!--    var Assert = YAHOO.util.Assert;-->
+<!--    var Test = YAHOO.lang;-->
+<!--     -->
+<!--    YAHOO.util.Event.onDOMReady(function(){-->
+
+<!--        var logger = new YAHOO.tool.TestLogger("testLogger");-->
+
+<!--        YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({-->
+
+<!--            name: "b9j/namespace Test",-->
+
+<!--            setUp: function() {-->
+<!--            },-->
+<!--        -->
+<!--            tearDown: function() {-->
+<!--            },-->
+<!--        -->
+<!--            testNamespace: function() {-->
+<!--                b9j.namespace.declare('xyzzy');-->
+<!--                Assert.isObject(xyzzy);-->
+
+<!--                b9j.namespace.declare('xyzzy.io');-->
+<!--                if (Assert.isObject(xyzzy.io)) {-->
+<!--                    console.log("Cool!");-->
+<!--                }-->
+<!--                else {-->
+<!--                    console.log("Not cool!");-->
+<!--                }-->
+
+<!--                Assert.isFalse(1);-->
+
+<!--                Assert.isFalse(Test.isObject(xyzzy.missing));-->
+<!--            },-->
+<!--        }));    -->
+
+<!--        YAHOO.tool.TestRunner.run();-->
+<!--    });-->
+
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->

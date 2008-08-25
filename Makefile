@@ -24,12 +24,12 @@ $(yuicompressor_JAR): yuicompressor-$(yuicompressor_VERSION).zip
 	unzip -o $<
 
 yuicompressor.jar: $(yuicompressor_JAR)
-	ln -snf $< $@
+	ln -sf $< $@
 
 $(BUILD)/b9j.bootstrap.uncompressed.js: b9j/source.js namespace/source.js test/source.js
 	cat $^ > $@
 
-$(BUILD)/b9j.bootstrap.js: $(BUILD)/b9j.bootstrap.uncompressed.js
+$(BUILD)/b9j.bootstrap.js: $(BUILD)/b9j.bootstrap.uncompressed.js yuicompressor.jar
 	java -jar yuicompressor.jar $< -o $@
 
 $(PACKAGE_documentation): $(BUILD_documentation)/%.html: %/source.js
@@ -38,7 +38,7 @@ $(PACKAGE_documentation): $(BUILD_documentation)/%.html: %/source.js
 $(BUILD)/b9j.uncompressed.js: $(PACKAGE_source)
 	cat $^ > $@
 
-$(BUILD)/b9j.js: $(BUILD)/b9j.uncompressed.js
+$(BUILD)/b9j.js: $(BUILD)/b9j.uncompressed.js yuicompressor.jar
 	java -jar yuicompressor.jar $< -o $@
 
 build: _build $(BUILD)/b9j.bootstrap.js $(BUILD)/b9j.js $(PACKAGE_documentation) b9jTest

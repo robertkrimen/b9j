@@ -36,7 +36,7 @@ if (typeof b9j == "undefined" || !b9j) {
             }
             else {
                 for (ii in namespace) {
-                    if (namespace.hasOwnPropery(ii)) {
+                    if (namespace.hasOwnProperty(ii)) {
                         context[ii] = context[ii] || {};
                         _namespace(namespace[ii], context[ii]);
                     }
