@@ -28,9 +28,9 @@
  *         <html>
  *         <head>
  *             <meta http-equiv="content-type" content="text/html; charset=utf-8">
- *         <title>Test</title>
- *         <link rel="stylesheet" type="text/css" href="./b9jTest.css">
- *         <script type="text/javascript" src="./b9jTest.js"></script>
+ *         <title>Test example</title>
+ *         <link rel="stylesheet" type="text/css" href="http://appengine.bravo9.com/b9j/b9jTest.css">
+ *         <script type="text/javascript" src="http://appengine.bravo9.com/b9j/b9jTest.js"></script>
  *         </head>
  *         <body class="yui-skin-sam">
  *         <div id="testLogger"></div>

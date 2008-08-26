@@ -20,6 +20,12 @@
  * of b9jTest.js and b9jTest.css, which include every YUI and b9j component you need
  * to run tests.
  *
+ * =head1 DOWNLOAD
+ *
+ * * [b9jTest.js](http://appengine.bravo9.com/b9j/b9jTest.js)
+ *
+ * * [b9jTest.css](http://appengine.bravo9.com/b9j/b9jTest.css)
+ *
  * =head1 Example HTML test document
  *
  * The following is a functioning example of b9jTest in action:
@@ -27,9 +33,9 @@
  *         <html>
  *         <head>
  *             <meta http-equiv="content-type" content="text/html; charset=utf-8">
- *         <title>Test</title>
- *         <link rel="stylesheet" type="text/css" href="./b9jTest.css">
- *         <script type="text/javascript" src="./b9jTest.js"></script>
+ *         <title>b9jTest example</title>
+ *         <link rel="stylesheet" type="text/css" href="http://appengine.bravo9.com/b9j/b9jTest.css">
+ *         <script type="text/javascript" src="http://appengine.bravo9.com/b9j/b9jTest.js"></script>
  *         </head>
  *         <body class="yui-skin-sam">
  *         <div id="testLogger"></div>
@@ -44,6 +50,8 @@
  *         </script>
  *         </body>
  *         </html>
+ *
+ * Try this example: [http://appengine.bravo9.com/b9j/documentation/b9jTest-example.html](http://appengine.bravo9.com/b9j/documentation/b9jTest-example.html)
  *
  * =head1 METHODS
  *
