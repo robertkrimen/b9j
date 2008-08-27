@@ -217,7 +217,7 @@
 
         YAHOO.util.Event.onDOMReady(function(){
 
-            var logger = new YAHOO.tool.TestLogger("testLogger");
+            var logger = new YAHOO.tool.TestLogger("testLogger", { thresholdMin: 1000, thresholdMax: 1000 });
 
             var name, setUp, tearDown;
             name = "b9jTest";
