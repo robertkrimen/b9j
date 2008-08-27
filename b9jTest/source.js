@@ -1,5 +1,4 @@
 /* 
- *
  * =head1 NAME
  * 
  * b9jTest - A wrapper around YUI Test to make simple testing quick and easy

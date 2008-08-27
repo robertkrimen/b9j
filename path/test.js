@@ -85,6 +85,25 @@ b9jTest(function(test) {
         test.is("/a/a/b/c/a/a/b/c/", path.get());
 
         test.is("/a/a/b/c/a/a/b/c/", path.get());
+
+        // .up .down
+        path.set("a");
+        path.up();
+        test.is("", path);
+
+        path.down("a/b/c").up();
+        test.is("a/b", path);
+
+        path.down("/h/i/j//").up().up().up();
+        test.is("a/b", path);
+
+        path.down("/h/i/j//").up(3);
+        test.is("a/b", path);
+
+        path.set("/");
+        path.up();
+        test.is("/", path);
+
     }
 
     {
@@ -218,4 +237,3 @@ b9jTest(function(test) {
     }
 
 });
-
