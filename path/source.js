@@ -292,11 +292,31 @@
             return ! this.isTree();
         },
 
+/* =head2 path.toTree()
+ *
+ * Modifies path by prepending a slash
+ *
+ *          new b9j.path.Path("").toTree()    // /
+ *          new b9j.path.Path("/").toTree()   // /
+ *          new b9j.path.Path("a").toTree()   // /a
+ *          new b9j.path.Path("/a").toTree()  // /a
+ */
+
         toTree: function() {
             this._root = true;
             if ("" == this._path[0]) return;
             this._path.splice(0, 0, "");
         },
+
+/* =head2 path.toBranch()
+ *
+ * Modifies path by removing the leading slash, if any
+ *
+ *          new b9j.path.Path("").toBranch()    // ""
+ *          new b9j.path.Path("/").toBranch()   // ""
+ *          new b9j.path.Path("a").toBranch()   // a
+ *          new b9j.path.Path("/a").toBranch()  // a
+ */
 
         toBranch: function() {
             this._root = false;
@@ -304,14 +324,38 @@
             this._path.splice(0, 1);
         },
 
+/* =head2 path.first()
+ *
+ * Returns the first part of path, not including any slashes
+ *
+ *          new b9j.path.Path("/a/b/c/").first()  // a
+ */
+
         first: function() {
             return this.at(0);
         },
+
+/* =head2 path.last()
+ *
+ * Returns the last part of path, not including any slashes
+ *
+ *          new b9j.path.Path("/a/b/c/").last()  // c
+ */
 
         last: function() {
             return this.at(-1);
         },
 
+/* =head2 path.at( $index )
+ *
+ * Returns the part of path at $index, not including any slashes
+ * You can use a negative $index to start from the end of path
+ *
+ *          new b9j.path.Path("/a/b/c/").at(0)  // a (equivalent to path.first())
+ *          new b9j.path.Path("/a/b/c/").at(-1) // c (equivalent to path.last())
+ *          new b9j.path.Path("/a/b/c/").at(1)  // b
+ *
+ */
         at: function(ii) {
             if (this.isEmpty()) return "";
             if (1 == this._path.length && "" == this._path[0])
@@ -327,6 +371,14 @@
             return this._path[ii];
         },
 
+/* =head2 path.beginning()
+ *
+ * Returns the first part of path, including the leading slash, if any
+ *
+ *          new b9j.path.Path("/a/b/c/").beginning() // /a
+ *          new b9j.path.Path("a/b/c/").beginning()  // a
+ *
+ */
         beginning: function() {
             if (this.isEmpty()) return "";
             if (this.isRoot()) return "/";
@@ -336,6 +388,14 @@
             
         },
 
+/* =head2 path.ending()
+ *
+ * Returns the last part of path, including the trailing slash, if any
+ *
+ *          new b9j.path.Path("/a/b/c/").beginning() // c/
+ *          new b9j.path.Path("a/b/c/").beginning()  // c
+ *
+ */
         ending: function() {
             if (this.isEmpty()) return "";
             if (this.isRoot()) return "/";
@@ -345,6 +405,16 @@
             
         },
 
+/* =head2 path.list()
+ *
+ * Returns an array of the parts of path
+ *
+ *          new b9j.path.Path().list()          // []
+ *          new b9j.path.Path("/").list()       // []
+ *          new b9j.path.Path("/a/b/c/").list() // [ "a", "b", "c" ]
+ *          new b9j.path.Path("a/b/c/").list()  // [ "a", "b", "c" ]
+ *
+ */
         list: function() {
             if (this.isEmpty()) return [];
             if (this.isRoot()) return [];
