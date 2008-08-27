@@ -40,14 +40,25 @@
 
     pckg.Path.prototype = {
 
+        clone: function() {
+            return new b9j.path.Path(this.get());
+        },
+
         set: function() {
             this._path = canonical_array(arguments);
             if (this._path.length > 1 && this._path[0] == "") {
                 this._root = true;
+                if (2 == this._path.length && this._path[1] == "") { /* Dealing with [ "", "" ] case */
+                    this._path = [ "" ];
+                }
             }
         },
 
         get: function() {
+            return this.toString();
+        },
+
+        toString: function() {
             if (this._path.length == 1 && "" == this._path[0]) // Might be at "/"
                 return this._root ? '/' : '';
             return this._path.join('/');
@@ -62,12 +73,105 @@
                     break;
                 popped.push(this._path.pop());
             }
+
+            return new b9j.path.Path(popped);
+        },
+
+        up: function() {
+            this.pop.apply(this, arguments);
+            return this;
+        },
+
+        parent: function() {
+            var path = this.clone();
+            path.pop.apply(this, arguments);
+            return path;
         },
 
         push: function() {
             this._path = canonical_array(this._path, arguments);
-        }
+            return this;
+        },
 
+        down: function() {
+            this.down.apply(this, arguments);
+            return this;
+        },
+
+        child: function() {
+            var path = this.clone();
+            path.push.apply(this, arguments);
+            return path;
+        },
+
+        isEmpty: function() {
+            return 1 == this._path.length && "" == this._path[0] && ! this._root ? true : false;
+        },
+
+        isRoot: function() {
+            return 1 == this._path.length && "" == this._path[0] && this._root ? true : false;
+        },
+
+        isTree: function() {
+            return this._root ? true : false;
+        },
+
+        isBranch: function() {
+            return ! this.isTree();
+        },
+
+        toTree: function() {
+            this._root = true;
+            if ("" == this._path[0]) return;
+            this._path.splice(0, 0, "");
+        },
+
+        toBranch: function() {
+            this._root = false;
+            if ("" != this._path[0]) return;
+            this._path.splice(0, 1);
+        },
+
+        first: function() {
+            return this.at(0);
+        },
+
+        last: function() {
+            return this.at(-1);
+        },
+
+        at: function(ii) {
+            if (this.isEmpty()) return "";
+            if (1 == this._path.length && "" == this._path[0])
+                return "";
+            if (0 > ii)
+                ii += this._path.length;
+            else if ("" == this._path[0])
+                ii += 1;
+            if (ii >= this._path.length)
+                return "";
+            if (ii == this._path.length - 1 && "" == this._path[ii])
+                ii -= 1;
+            return this._path[ii];
+        },
+
+        beginning: function() {
+            if (this.isEmpty()) return "";
+            if (this.isRoot()) return "/";
+            var first = this.at(0);
+            if (this.isBranch()) return first;
+            return "/" + first;
+            
+        },
+
+        ending: function() {
+            if (this.isEmpty()) return "";
+            if (this.isRoot()) return "/";
+            var last = this.at(-1);
+            if (last == this._path[this._path.length - 1]) return last;
+            return last + "/";
+            
+        }
     };
 
 

@@ -14,67 +14,6 @@
 </head>
 <body class="yui-skin-sam">
 <div id="testLogger"></div>
-<script type="text/javascript">
-
-    b9jTest(function(test) {
-
-        test.is("a/b/c", b9j.path._canonical("a//b//c"));
-        test.is("a/b/c/", b9j.path._canonical("a//b//c//"));
-        test.is("a/b/c/", b9j.path._canonical("a/./b/././c//"));
-        test.is("./a/b/c/", b9j.path._canonical("./a/./b/././c/."));
-
-        var path;
-        {
-            // .get
-            path = new b9j.path.Path("a/b", "c/d", "e");
-            test.is("a/b/c/d/e", path.get());
-
-            // .set
-            path.set("");
-            test.is("", path.get());
-
-            path.set("/");
-            test.is("/", path.get());
-
-            path.set("a", "b/c//");
-            test.is("a/b/c/", path.get());
-
-            path.set("a/b/c/d/e");
-            test.is("a/b/c/d/e", path.get());
-
-            // .pop
-            path.pop();
-            test.is("a/b/c/d", path.get());
-
-            path.pop(2);
-            test.is("a/b", path.get());
-
-            path.pop(3);
-            test.is("", path.get());
-
-            path = new b9j.path.Path("/a/b/c");
-            path.pop(10);
-            test.is("/", path.get());
-
-            path.set("/");
-            path.pop();
-            test.is("/", path.get());
-
-            // .push
-            path.push("a");
-            test.is("/a", path.get());
-
-            path.push("a", "b/c//");
-            test.is("/a/a/b/c/", path.get());
-
-            path.push(path);
-            test.is("/a/a/b/c/a/a/b/c/", path.get());
-
-            test.is("/a/a/b/c/a/a/b/c/", path.get());
-        }
-
-    });
-
-</script>
+<script type="text/javascript" src="./test.js"></script>
 </body>
 </html>
