@@ -30,7 +30,7 @@
 	$path =~ s|/{2,}|/|g;                           # xx////xx  -> xx/xx
 	$path =~ s{(?:/\.)+(?:/|\z)}{/}g;               # xx/././xx -> xx/xx
 	$path =~ s|^(?:\./)+||s unless $path eq "./";	# ./xx      -> xx
-	$path =~ s|^/(?:\.\./)+|/|;			            # /../../xx -> xx
+	$path =~ s|^/(?:\.\./)+|/|;			            # /../../xx -> /xx
 	$path =~ s|^/\.\.$|/|;				            # /..       -> /
 	$path =~ s|/\z|| unless $path eq "/";		    # xx/       -> xx
     */
@@ -42,8 +42,8 @@
         path = path.replace(/(?:\/\.)+(?:\/|$)/g, '/');     // xx/././xx    -> xx/xx
         if ("./" != path)
             path = path.replace(/^(?:\.\/)+/, '');          // ./xx         -> xx
-        path = path.replace(/^(?:\.\.\/)+/, '');            // /../../xx    -> xx
-        path = path.replace(/^\.\.$/, '');                  // /..          -> /
+        path = path.replace(/^\/(?:\.\.\/)+/, '/');         // /../../xx    -> /xx
+        path = path.replace(/^\/\.\.$/, '/');               // /..          -> /
         return path;
     };
 

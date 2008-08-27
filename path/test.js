@@ -1,11 +1,40 @@
 b9jTest(function(test) {
 
     {
-        var _path = b9j.path._canonical;
-        test.is("a/b/c", _path("a//b//c"));
-        test.is("a/b/c/", _path("a//b//c//"));
-        test.is("a/b/c/", _path("a/./b/././c//"));
-        test.is("a/b/c/", _path("./a/./b/././c/."));
+        var parse = b9j.path._canonical;
+        test.is("a/b/c", parse("a//b//c"));
+        test.is("a/b/c/", parse("a//b//c//"));
+        test.is("a/b/c/", parse("a/./b/././c//"));
+        test.is("a/b/c/", parse("./a/./b/././c/."));
+
+        // xx////xx     -> xx/xx
+
+        test.is("a/b", parse("a////b"));
+        test.is("/a/b", parse("////a////b"));
+        test.is("/a/b/", parse("////a////b////"));
+        test.is("a/", parse("a////"));
+
+        // xx/././xx    -> xx/xx
+        
+        test.is("a/b", parse("a/././b"));
+        test.is("/a/b", parse("/./a/././b"));
+        test.is("/a/b/", parse("/././a/././b/././"));
+
+        // ./xx         -> xx
+        
+        test.is("a/b", parse("./a/b"));
+
+        // /../../xx    -> /xx
+        
+        test.is("/a/b", parse("/../../a/b"));
+        test.is("/a/b", parse("/.././../a/b"));
+
+        // /..          -> /
+        
+        test.is("/", parse("/.."));
+        test.is("/", parse("/../.."));
+        test.is("/", parse("/.././.."));
+
     }
 
     var path;
