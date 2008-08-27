@@ -220,23 +220,73 @@
             return this;
         },
 
+/* =head2 path.child( $part1, [ $part2 ], ... )
+ *
+ * Returns a child path of path as a new, separate b9j.path.Path object with $partN appended
+ * (separated by slashes)
+ *
+ *          var path = new b9j.path.Path( "a/b/c" )
+ *          var child_path = path.child( "d/e" )
+ *          // path is STILL a/b/c
+ *          // child_path is a/b/c/d/e
+ *
+ */
         child: function() {
             var path = this.clone();
             path.push.apply(this, arguments);
             return path;
         },
 
+/* =head2 path.isEmpty()
+ *
+ * Returns true if path is the empty path ("")
+ *
+ *          new b9j.path.Path().isEmpty()     // true
+ *          new b9j.path.Path("").isEmpty()   // true
+ *          new b9j.path.Path("/").isEmpty()  // false
+ *          new b9j.path.Path("a").isEmpty()  // false
+ */
+
         isEmpty: function() {
             return 1 == this._path.length && "" == this._path[0] && ! this._root ? true : false;
         },
+
+/* =head2 path.isRoot()
+ *
+ * Returns true if path is the root path ("/")
+ *
+ *          new b9j.path.Path("").isRoot()   // false
+ *          new b9j.path.Path("/").isRoot()  // true
+ *          new b9j.path.Path("a").isRoot()  // false
+ */
 
         isRoot: function() {
             return 1 == this._path.length && "" == this._path[0] && this._root ? true : false;
         },
 
+/* =head2 path.isTree()
+ *
+ * Returns true if path begins with a slash
+ *
+ *          new b9j.path.Path("").isTree()    // false
+ *          new b9j.path.Path("/").isTree()   // true
+ *          new b9j.path.Path("a").isTree()   // false
+ *          new b9j.path.Path("/a").isTree()  // true
+ */
+
         isTree: function() {
             return this._root ? true : false;
         },
+
+/* =head2 path.isBranch()
+ *
+ * Returns true if path does NOT begin with a slash
+ *
+ *          new b9j.path.Path("").isBranch()    // true
+ *          new b9j.path.Path("/").isBranch()   // false
+ *          new b9j.path.Path("a").isBranch()   // true
+ *          new b9j.path.Path("/a").isBranch()  // false
+ */
 
         isBranch: function() {
             return ! this.isTree();
