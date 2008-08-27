@@ -1,9 +1,12 @@
 b9jTest(function(test) {
 
-    test.is("a/b/c", b9j.path._canonical("a//b//c"));
-    test.is("a/b/c/", b9j.path._canonical("a//b//c//"));
-    test.is("a/b/c/", b9j.path._canonical("a/./b/././c//"));
-    test.is("./a/b/c/", b9j.path._canonical("./a/./b/././c/."));
+    {
+        var _path = b9j.path._canonical;
+        test.is("a/b/c", _path("a//b//c"));
+        test.is("a/b/c/", _path("a//b//c//"));
+        test.is("a/b/c/", _path("a/./b/././c//"));
+        test.is("a/b/c/", _path("./a/./b/././c/."));
+    }
 
     var path;
     {
@@ -70,6 +73,7 @@ b9jTest(function(test) {
         test.isFalse(path.isRoot());
         test.isFalse(path.isTree());
         test.isTrue(path.isBranch());
+        test.areEqual([].toSource(), path.list().toSource());
 
         path = new b9j.path.Path("/");
         test.is("/", path);
@@ -81,6 +85,7 @@ b9jTest(function(test) {
         test.is("", path.last());
         test.is("/", path.beginning());
         test.is("/", path.ending());
+        test.areEqual([].toSource(), path.list().toSource());
         test.isFalse(path.isEmpty());
         test.isTrue(path.isRoot());
         test.isTrue(path.isTree());
@@ -96,6 +101,7 @@ b9jTest(function(test) {
         test.is("a", path.last());
         test.is("a", path.beginning());
         test.is("a", path.ending());
+        test.areEqual([ "a" ].toSource(), path.list().toSource());
         test.isFalse(path.isEmpty());
         test.isFalse(path.isRoot());
         test.isFalse(path.isTree());
@@ -111,6 +117,7 @@ b9jTest(function(test) {
         test.is("a", path.last());
         test.is("/a", path.beginning());
         test.is("a", path.ending());
+        test.areEqual([ "a" ].toSource(), path.list().toSource());
         test.isFalse(path.isEmpty());
         test.isFalse(path.isRoot());
         test.isTrue(path.isTree());
@@ -126,6 +133,7 @@ b9jTest(function(test) {
         test.is("b", path.last());
         test.is("/a", path.beginning());
         test.is("b", path.ending());
+        test.areEqual([ "a", "b" ].toSource(), path.list().toSource());
         test.isFalse(path.isEmpty());
         test.isFalse(path.isRoot());
         test.isTrue(path.isTree());
@@ -141,6 +149,7 @@ b9jTest(function(test) {
         test.is("b", path.last());
         test.is("/a", path.beginning());
         test.is("b/", path.ending());
+        test.areEqual([ "a", "b" ].toSource(), path.list().toSource());
         test.isFalse(path.isEmpty());
         test.isFalse(path.isRoot());
         test.isTrue(path.isTree());
@@ -156,6 +165,7 @@ b9jTest(function(test) {
         test.is("c", path.last());
         test.is("/a", path.beginning());
         test.is("c", path.ending());
+        test.areEqual([ "a", "b", "c" ].toSource(), path.list().toSource());
         test.isFalse(path.isEmpty());
         test.isFalse(path.isRoot());
         test.isTrue(path.isTree());
@@ -171,6 +181,7 @@ b9jTest(function(test) {
         test.is("c", path.last());
         test.is("a", path.beginning());
         test.is("c", path.ending());
+        test.areEqual([ "a", "b", "c" ].toSource(), path.list().toSource());
         test.isFalse(path.isEmpty());
         test.isFalse(path.isRoot());
         test.isFalse(path.isTree());

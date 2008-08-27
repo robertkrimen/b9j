@@ -26,11 +26,24 @@
         }
     }
 
+    /*
+	$path =~ s|/{2,}|/|g;                           # xx////xx  -> xx/xx
+	$path =~ s{(?:/\.)+(?:/|\z)}{/}g;               # xx/././xx -> xx/xx
+	$path =~ s|^(?:\./)+||s unless $path eq "./";	# ./xx      -> xx
+	$path =~ s|^/(?:\.\./)+|/|;			            # /../../xx -> xx
+	$path =~ s|^/\.\.$|/|;				            # /..       -> /
+	$path =~ s|/\z|| unless $path eq "/";		    # xx/       -> xx
+    */
+
     pckg._canonical = function() {
         var path = [];
         _flatten(path, arguments);
-        path = path.join('/').split(/\/+/).join('/');
-        path = path.replace(/(?:\/\.)+(?:\/|$)/g, '/');
+        path = path.join('/').split(/\/+/).join('/');       // xx////xx     -> xx/xx
+        path = path.replace(/(?:\/\.)+(?:\/|$)/g, '/');     // xx/././xx    -> xx/xx
+        if ("./" != path)
+            path = path.replace(/^(?:\.\/)+/, '');          // ./xx         -> xx
+        path = path.replace(/^(?:\.\.\/)+/, '');            // /../../xx    -> xx
+        path = path.replace(/^\.\.$/, '');                  // /..          -> /
         return path;
     };
 
@@ -171,6 +184,15 @@
             if (last == this._path[this._path.length - 1]) return last;
             return last + "/";
             
+        },
+
+        list: function() {
+            if (this.isEmpty()) return [];
+            if (this.isRoot()) return [];
+            var path = [].concat(this._path);
+            if ("" == path[0]) path.splice(0, 1);
+            if ("" == path[path.length - 1]) path.splice(path.length - 1, 1);
+            return path;
         }
     };
 
