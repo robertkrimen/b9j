@@ -14,7 +14,7 @@ yuicompressor_JAR := $(BUILD_tmp)/yuicompressor-$(yuicompressor_VERSION)/$(BUILD
 yuicompressor_ZIP := $(BUILD_tmp)/yuicompressor-$(yuicompressor_VERSION).zip
 yuicompress := java -jar $(yuicompressor_JAR)
 
-PACKAGE := b9j namespace test b9jTest path
+PACKAGE := b9j namespace test b9jTest path x-uri
 PACKAGE_source := $(PACKAGE:%=%/source.js)
 PACKAGE_documentation := $(PACKAGE:%=$(BUILD_documentation)/%.html)
 PACKAGE_test := $(PACKAGE:%=$(BUILD_test)/%.html)
