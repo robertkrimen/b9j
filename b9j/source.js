@@ -1,17 +1,37 @@
 /*
- * =head1 b9j
+ * =head1 NAME
  *
- * A supplemental javascript library
+ * b9j - A supplemental javascript library
+ *
+ * =head1 VERSION
+ *
+ * Version 0.1.1
+ *
+ * =head1 COMPONENTS
  *
  * =head2 b9j.namespace - Namespace creation and aliasing
  *
  *          declare     # Declare a namespace
  *          using       # Alias one or more namespace(s) to a shorthand name
  *
+ * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/namespace.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/namespace.html)
+ *
  * =head2 b9j.test - A wrapper around YUI Test to make simple testing easy
  *
  *          b9jTest     # An easy-to-use test framework based on YUI Test
  *                      # NOTE: Requires YUI Test to be loaded
+ *
+ * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/test.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/test.html)
+ *
+ * =head2 b9jTest - A bundled version of b9j.test
+ *
+ * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/b9jTest.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/b9jTest.html)
+ *
+ * =head2 b9j.path - Path handling made easy
+ *
+ *          Path        # A class representing a URI/UNIX-style path
+ *
+ * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/path.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/path.html)
  *
  * =head1 AUTHOR
  *

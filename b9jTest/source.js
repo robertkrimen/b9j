@@ -13,6 +13,10 @@
  *
  *     });
  *
+ * =head1 YUI VERSION
+ *
+ * YUI 2.3.6
+ *
  * =head1 DESCRIPTION
  *
  * b9jTest is a convenience package for running tests. It is comprised

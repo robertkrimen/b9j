@@ -152,8 +152,8 @@
             var popped = [];
             var count = arguments.length ? arguments[0] : 1;
         
-            if (this.isEmpty()) return;
-            if (this.isRoot()) return;
+            if (this.isEmpty()) return new b9j.path.Path();
+            if (this.isRoot()) return new b9j.path.Path();
 
             if (count > 0 && this._path.length > 1 && "" == this._path[this._path.length - 1]) // Get rid of "extra" slash at end: a/b/c/
                 this._path.pop();

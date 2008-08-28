@@ -19,7 +19,7 @@
  *  
  * Primarily, b9j.test provides the b9jTest method, described below.
  *
- * =head1 NOTE: This package requires YUI Test to be loaded. For a standalone solution, see the b9jTest package
+ * =head2 NOTE: This package requires YUI Test to be loaded. For a standalone solution, see the b9jTest package
  *
  * =head1 Example HTML test document
  *
