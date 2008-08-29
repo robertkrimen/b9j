@@ -718,6 +718,18 @@
  * Set $key to $value in query
  * $value can be a single value or an array
  *
+ * =head2 query.set( $key, $value1, $value2, ... )
+ *
+ * Set $key to an array of [ $value1, $value2, ... ]
+ *
+ * Returns query
+ *
+ * =head2 query.set( $query )
+ *
+ * Set query uri to $uri, completely reinitializing the object
+ *
+ * $query can be a query string or hash (simple object)
+ *
  * Returns query
  *
  */
@@ -727,8 +739,70 @@
                 this._store = b9j.uri.parseQuery(key); // Not really a key, actually a query string
             }
 
-            this._store[key] = value;
+            if (arguments.length > 2) {
+                this._store[key] = Array.prototype.splice.call(arguments, 1);
+            }
+            else {
+                this._store[key] = value;
+            }
 
+            return this;
+        },
+
+/*
+ * =head2 query.add( $key, $value )
+ *
+ * Add $value to $key
+ *
+ * If $key does not exist, then $key is set to $value  
+ * If $key already has a value, multiple or otherwise, then $value is appended  
+ *
+ * Returns query
+ *
+ */
+
+        add: function(key, value) {
+
+            var store_value;
+            if (b9j.isValue(store_value = this._store[key])) {
+                if (b9j.isArray( store_value )) {
+                    store_value.push(value);
+                }
+                else {
+                    this._store[key] = [ store_value, value ];
+                }
+            }
+            else {
+                this._store[key] = value;
+            }
+
+            return this;
+        },
+
+/*
+ * =head2 query.clear( $key )
+ *
+ * Clear $key from query
+ *
+ * Returns query
+ *
+ * =head2 query.clear()
+ *
+ * Clear every key/value from query, essentially turning it into the empty query
+ *
+ * Returns query
+ *
+ */
+
+        clear: function(key) {
+
+            if (arguments.length) {
+                delete this._store[key];
+            }
+            else {
+                this.set("");
+            }
+            
             return this;
         },
 
