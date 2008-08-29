@@ -65,9 +65,18 @@ b9j.test.b9jTest(function(test) {
         test.is(2, result.c[1]);
         test.is(3, result.c[2]);
 
+        result = b9j.clone(d, { shallowObject: 1 });
+        test.is(1, result[0]);
+        test.is(2, result[1]);
+        test.is(4, result[3][0]);
+        result[3][0] = 7;
+        test.is(7, result[3][0]);
+        test.is(4, d[3][0]);
+
     }
 
     {
+        test.isTrue(b9j.isObject([]));
         test.isTrue(b9j.isEmpty(""));
         test.isTrue(b9j.isEmpty({}));
         test.isFalse(b9j.isEmpty({ a: null }));

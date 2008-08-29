@@ -690,7 +690,7 @@
  */
 
         clone: function() {
-            return new b9j.uri.query.Query(b9j.clone(this._store, { shallowObject: 1 }));
+            return new b9j.uri.query.Query( b9j.clone( this._store, { shallowObject: 1 } ) );
         },
 
 /*
@@ -751,7 +751,7 @@
         set: function(key, value) {
             
             if (arguments.length == 1) {
-                this._store = b9j.uri.query.parse(key); // Not really a key, actually a query string
+                this._store = b9j.uri.query.parse(key); // Not really a key, actually a query string or hash
             }
             else if (arguments.length > 2) {
                 this._store[key] = Array.prototype.splice.call(arguments, 1);
@@ -777,17 +777,35 @@
 
         add: function(key, value) {
 
-            var store_value;
-            if (b9j.isValue(store_value = this._store[key])) {
-                if (b9j.isArray( store_value )) {
-                    store_value.push(value);
-                }
-                else {
-                    this._store[key] = [ store_value, value ];
+            if (arguments.length == 1) {
+                var hash = b9j.uri.query.parse(key); // Not really a key, actually a query string or hash
+                for (key in hash) {
+                    this.add(key, hash[key]);
                 }
             }
             else {
-                this._store[key] = value;
+                var store_value;
+                if (b9j.isValue(store_value = this._store[key])) {
+                    if (b9j.isArray( store_value )) {
+                        if (b9j.isArray( value )) {
+                            store_value.splice(store_value.length, 0, value);
+                        }
+                        else {
+                            store_value.push( value );
+                        }
+                    }
+                    else {
+                        if (b9j.isArray( value )) {
+                            this._store[key] = [ store_value ].concat(value);
+                        }
+                        else {
+                            this._store[key] = [ store_value, value ];
+                        }
+                    }
+                }
+                else {
+                    this._store[key] = value;
+                }
             }
 
             return this;

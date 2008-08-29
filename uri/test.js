@@ -166,6 +166,15 @@ function _testURIQuery(test) {
         query = base.clone();
         query.clear();
         test.isTrue(query.isEmpty());
+
+        query = base.clone();
+        query.add("c", 6);
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&c=6", query);
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6", base);
+
+        query = base.clone();
+        query.add({ c: 6 });
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&c=6", query);
     }
 }
 

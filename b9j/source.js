@@ -177,21 +177,30 @@ if (typeof b9j == "undefined" || !b9j) {
                 for (var ii = 0; ii < copy.length; ii++) {
                     var value = copy[ii];
                     if (b9j.isObject(value))
-                        copy[ii] = clone(value);
+                        copy[ii] = clone(value, given);
                 }
             }
             return copy;
         }
         else if (b9j.isObject(value)) {
             var copy = merge(value); // Shallow copy
-            if (given.shallow || given.shallowObject) {
+            if (given.shallow) {
+            }
+            else if (given.shallowObject) {
+                for (ii in copy) {
+                    if (copy.hasOwnProperty(ii)) {
+                        var value = copy[ii];
+                        if (b9j.isArray(value))
+                            copy[ii] = clone(value, given);
+                    }
+                }
             }
             else {
                 for (ii in copy) {
                     if (copy.hasOwnProperty(ii)) {
                         var value = copy[ii];
                         if (b9j.isObject(value))
-                            copy[ii] = clone(value);
+                            copy[ii] = clone(value, given);
                     }
                 }
             }
