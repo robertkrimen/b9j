@@ -13,12 +13,6 @@
 
     var pckg = b9j.namespace.declare('b9j.uri');
 
-    function isValue(given) {
-        var type = typeof given;
-        return "string" == type || ("number" == type && isFinite(given));
-            
-    }
-
     /*
         parseUri 1.2.1
         (c) 2007 Steven Levithan <stevenlevithan.com>
@@ -107,23 +101,87 @@
         return queryHash;
     }
 
+/*
+ * =head1 METHODS
+ *
+ */
+
+/*
+ * =head2 b9j.uri.parse( $uri )
+ *
+ * Parse $uri (which should be a string) and return a hash containing the following:
+ *  
+ *      protocol
+ *      authority
+ *      userInformation
+ *      user
+ *      password
+ *      host
+ *      port
+ *      relative
+ *      path
+ *      directory
+ *      file
+ *      query
+ *      queryHash
+ *      fragment
+ *
+ * An example:
+ *
+ *      ... = b9j.uri.parse("http://example.com:8080/?a=1&b=2")
+ *  
+ * See also [RFC3986 (http://tools.ietf.org/html/rfc3986)](http://tools.ietf.org/html/rfc3986)
+ *
+ * This method is adapted from [parseUri 1.2](http://blog.stevenlevithan.com/archives/parseuri) by Steven Levithan
+ *
+ */
     pckg.parse = function() {
         return _parseURI.apply(null, arguments);
     };
 
+/*
+ * =head2 b9j.uri.parseQuery( $query )
+ *
+ * Parse $query (which should be a string) and return a key/value hash:
+ *
+ *      var hash = b9j.uri.parseQuery("a=1&b=2")
+ *      // hash is { a: 1, b: 2 }
+ *
+ * If the the query string contains a multi-value key, then that key is represented
+ * in the hash by an array instead of a simple value:
+ *
+ *      var hash = b9j.uri.parseQuery("a=1&b=2&c=4&c=5&c=6")
+ *      // hash is { a: 1, b: 2, c: [ 4, 5, 6 ] }
+ *
+ */
     pckg.parseQuery = function() {
         return _parseURIQuery.apply(null, arguments);
     };
 
+/*
+ * =head2 new b9j.uri.Uri( $uri )
+ *
+ * Returns a new URI object representing $uri, which can either be a string or a hash resulting
+ * from b9j.uri.parse
+ *
+ */
+
     pckg.URI = function(uri, query) {
         this.set(uri);
-        if (query) {
-            this.query().merge(query);
+        if (query) { // This should probably set query
+            this.mergeQuery(query);
         }
     };
 
     pckg.URI.prototype = {
         
+/* =head2 uri.clone()
+ *
+ * Returns a clone of uri
+ * 
+ */
+
+
         clone: function() {
             var uri = b9j.clone(this._uri);
             uri.query = b9j.clone(this._query._store, { shallowObject: 1 });
@@ -138,6 +196,20 @@
             return this._uri.source;
         },
 
+/*
+ * =head2 uri.protocol()
+ *
+ * Returns the protocol of uri, which is something like `http`, `https`, `ftp`, ...
+ *
+ *      http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&b=2&c=3&c=4&c=5#top => http
+ *
+ * =head2 uri.protocol( $protocol )
+ *
+ * Sets the protocol of uri to $protocol
+ *
+ * Returns uri
+ *
+ */
         protocol: function(value) {
             if (arguments.length) {
                 this._uri.protocol = value;
@@ -146,6 +218,20 @@
             return this._uri.protocol;
         },
 
+/*
+ * =head2 uri.authority() 
+ *
+ * Returns the authority of uri, which is something like `example.com:80` or `user:password@www.example.net`
+ *
+ *      http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&b=2&c=3&c=4&c=5#top => alice:xyzzy@www.example.net
+ *
+ * =head2 uri.authority( $authority )
+ *
+ * Sets the authority of uri to $authority
+ *
+ * Returns uri
+ *
+ */
         authority: function(value) {
             if (arguments.length) {
                 this._uri.authority = value;
@@ -180,6 +266,20 @@
             return this._uri.authority;
         },
 
+/*
+ * =head2 uri.host()
+ *
+ * Returns the host of uri, which is something like `example.com` or `www.example.net`
+ *
+ *      http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&b=2&c=3&c=4&c=5#top => www.example.net
+ *
+ * =head2 uri.host( $host )
+ *
+ * Sets the host of uri to $host
+ *
+ * Returns uri
+ *
+ */
         host: function() {
             if (arguments.length) {
                 this._uri.host = arguments[0];
@@ -189,6 +289,23 @@
             return this._uri.host;
         },
 
+/*
+ * =head2 uri.port()
+ *
+ * Returns the port of uri, which can be empty (think default port) or something like `8080`, `8000`, ...
+ *
+ *      http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&b=2&c=3&c=4&c=5#top => 8080
+ *
+ * =head2 uri.port( $port )
+ *
+ * Sets the port of uri to $port
+ *
+ * Returns uri
+ *
+ */
+
+// TODO Test setting the "empty" port
+
         port: function() {
             if (arguments.length) {
                 this._uri.port = arguments[0];
@@ -197,6 +314,21 @@
             }
             return this._uri.port;
         },
+
+/*
+ * =head2 uri.user()
+ *
+ * Returns the user of uri, if any
+ *
+ *      http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&b=2&c=3&c=4&c=5#top => alice
+ *
+ * =head2 uri.user( $user )
+ *
+ * Sets the user of uri to $user
+ *
+ * Returns uri
+ *
+ */
 
         user: function() {
             if (arguments.length) {
@@ -208,6 +340,21 @@
             return this._uri.user;
         },
 
+/*
+ * =head2 uri.password()
+ *
+ * Returns the password of uri, if any
+ *
+ *      http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&b=2&c=3&c=4&c=5#top => xyzzy
+ *
+ * =head2 uri.password( $password )
+ *
+ * Sets the password of uri to $password
+ *
+ * Returns uri
+ *
+ */
+
         password: function() {
             if (arguments.length) {
                 this._uri.password = arguments[0];
@@ -218,6 +365,24 @@
             return this._uri.password;
         },
 
+/*
+ * =head2 uri.userInformation()
+ *
+ * =head2 uri.userInfo()
+ *
+ * Returns the userInformation of uri, if any. The user information is usually something like `user:password`
+ *
+ *      http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&b=2&c=3&c=4&c=5#top => alice:xyzzy
+ *
+ * =head2 uri.userInformation( $userInformation )
+ *
+ * =head2 uri.userInfo( $userInformation )
+ *
+ * Sets the userInformation of uri $userInformation, which will in turn update user, password, and authority appropiately
+ *
+ * Returns uri
+ *
+ */
         userInformation: function(value) {
             if (arguments.length) {
                 this._uri.userInformation = value;
@@ -240,6 +405,20 @@
             return this.userInformation.apply(this, arguments);
         },
 
+/*
+ * =head2 uri.fragment()
+ *
+ * Returns the fragment of uri, if any
+ *
+ *      http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&b=2&c=3&c=4&c=5#top => top
+ *
+ * =head2 uri.fragment( $fragment )
+ *
+ * Sets the fragment of uri to $fragment
+ *
+ * Returns uri
+ *
+ */
         fragment: function() {
             if (arguments.length) {
                 this._uri.fragment = arguments[0];
@@ -248,6 +427,26 @@
             return this._uri.fragment;
         },
 
+/*
+ * =head2 uri.query()
+ *
+ * Returns the query of uri, which is a b9j.uri.URIQuery object
+ *
+ *      http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&b=2&c=3&c=4&c=5#top => a=1&b=2&c=3&c=4&c=5
+ *
+ * You can make changes to the returned query object, and these will be reflected in uri
+ *
+ * =head2 uri.query( $query )
+ *
+ * Sets the query of uri to $query, which can be either a string or a key/value hash. For example
+ *
+ *      // The following are equivalent
+ *      uri.query( "a=1&b=1&b=2" )
+ *      uri.query( { a: 1, b: [ 1, 2 ] } ) 
+ *
+ * Returns uri
+ *
+ */
         query: function(value) {
             if (arguments.length) {
                 this._query = new b9j.uri.URIQuery(value);
@@ -255,6 +454,29 @@
             }
             return this._query;
         },
+
+/*
+ * =head2 uri.path()
+ *
+ * Returns the path of uri, which is a b9j.path.Path object
+ *
+ *      http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&b=2&c=3&c=4&c=5#top => /apple/banana/
+ *
+ * You can make changes to the returned path object, and these will be reflected in uri
+ *
+ * =head2 uri.path( $path )
+ *
+ * Sets the path of uri to $path, which can be either a string or an array of path parts
+ *
+ *      // The following are equivalent
+ *      uri.path( "a/b/c" )
+ *      uri.path( [ 'a', 'b', 'c' ] )
+ *
+ * Returns uri
+ *
+ */
+
+// TODO Make sure path isTree()
 
         path: function(value) {
             if (arguments.length) {
@@ -298,7 +520,7 @@
             return this;
         },
 
-        merge: function(uri) {
+        _merge: function(uri) {
             throw new Error("URI.merge is not ready");
             if (b9j.isObject(uri)) {
                 throw new Error("URI.merge(Object) is not ready");
