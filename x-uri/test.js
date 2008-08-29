@@ -148,13 +148,13 @@ function _testURI(test) {
 function _testURIQuery(test) {
 
     {
-        query = new b9j.uri.URIQuery({ a: 1, b: 2, c: [ 3, 4, 5, 6 ] });
+        query = new b9j.uri.query.Query({ a: 1, b: 2, c: [ 3, 4, 5, 6 ] });
         test.is(1, query.get("a"));
         test.is(2, query.get("b"));
         test.is(3, query.get("c"));
         test.is("a=1&b=2&c=3&c=4&c=5&c=6", query);
 
-        query = new b9j.uri.URIQuery("a=1&b=2&c=3&c=4&c=5&c=6");
+        query = new b9j.uri.query.Query("a=1&b=2&c=3&c=4&c=5&c=6");
         test.is(1, query.get("a"));
         test.is(2, query.get("b"));
         test.is(3, query.get("c"));

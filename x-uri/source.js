@@ -12,6 +12,7 @@
 (function(){
 
     var pckg = b9j.namespace.declare('b9j.uri');
+    b9j.namespace.declare('b9j.uri.query');
 
     /*
         parseUri 1.2.1
@@ -153,8 +154,15 @@
  *      var hash = b9j.uri.parseQuery("a=1&b=2&c=4&c=5&c=6")
  *      // hash is { a: 1, b: 2, c: [ 4, 5, 6 ] }
  *
+ * This function is an alias for b9j.uri.query.parse( ... )
+ *
  */
+
     pckg.parseQuery = function() {
+        return _parseURIQuery.apply(null, arguments);
+    };
+
+    pckg.query.parse = function() {
         return _parseURIQuery.apply(null, arguments);
     };
 
@@ -430,7 +438,7 @@
 /*
  * =head2 uri.query()
  *
- * Returns the query of uri, which is a b9j.uri.URIQuery object
+ * Returns the query of uri, which is a b9j.uri.query.Query object
  *
  *      http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&b=2&c=3&c=4&c=5#top => a=1&b=2&c=3&c=4&c=5
  *
@@ -449,7 +457,7 @@
  */
         query: function(value) {
             if (arguments.length) {
-                this._query = new b9j.uri.URIQuery(value);
+                this._query = new b9j.uri.query.Query(value);
                 return this;
             }
             return this._query;
@@ -486,35 +494,100 @@
             return this._path;
         },
 
+/*
+ * =head2 uri.up()
+ *
+ * Modify uri by updating the path to the parent of the current path. For example:
+ *
+ *      var uri = new b9j.uri.URI("http://example.com/a/b/c")
+ *      uri.up()
+ *      uri.toString() // http://example.com/a/b
+ *
+ */
         up: function() {
             this._path.up.apply(this._path, arguments);
             return this;
         },
 
+/*
+ * =head2 uri.down( $path )
+ *
+ * Modify uri by updating the path to the child of the current path by $path. For example:
+ *
+ *      var uri = new b9j.uri.URI("http://example.com/a/b/c")
+ *      uri.down( "c/d", "e/" )
+ *      uri.toString() // http://example.com/a/b/c/d/e/
+ *
+ */
         down: function() {
             this._path.down.apply(this._path, arguments);
             return this;
         },
 
-        child: function() {
-            var clone = this.clone();
-            clone.down.apply(clone, arguments);
-        },
-
+/*
+ * =head2 uri.parent()
+ *
+ * Returns a clone of uri that is the parent (path-wise) of uri. For example:
+ *
+ *      var uri = new b9j.uri.URI("http://example.com/a/b/c")
+ *      var parent = uri.parent()
+ *      uri.toString() // http://example.com/a/b/c
+ *      parent.toString() // http://example.com/a/b
+ *
+ */
         parent: function() {
             var clone = this.clone();
             clone.up.apply(clone, arguments);
         },
 
+/*
+ * =head2 uri.child( $path )
+ *
+ * Returns a clone of uri that is the child (path-wise) of uri by $path. For example:
+ *
+ *      var uri = new b9j.uri.URI("http://example.com/a/b/c")
+ *      var child = uri.child( "c/d", "e" )
+ *      uri.toString() // http://example.com/a/b/c
+ *      child.toString() // http://example.com/a/b/c/d/e/
+ *
+ */
+        child: function() {
+            var clone = this.clone();
+            clone.down.apply(clone, arguments);
+        },
+
+/*
+ * =head2 uri.set( $uri ) 
+ *
+ * Set the uri to $uri, completely reinitializing the object (including path and query)
+ *
+ */
         set: function(uri) {
             this._uri = b9j.uri.parse(uri);
             this.query(this._uri.queryHash ? this._uri.queryHash : this._uri.query);
-            delete this._uri.query;
-            delete this._uri.queryHash;
+//            delete this._uri.query;
+//            delete this._uri.queryHash;
             this.path(this._uri.path);
             return this;
         },
 
+/*
+ * =head2 uri.mergeQuery( $query ) 
+ *
+ * Merge $query with the current query of uri
+ *
+ * $query can either be a query string or hash (simple object). An example:
+ *
+ *      var uri = new b9j.uri.URI("http://example.com/?a=1&b=2&c=3&c=4&c=5")
+ *
+ *      // The following are equivalent
+ *      uri.mergeQuery( "b=6&b=7&c=8&d=9" )
+ *      uri.mergeQuery( { b: [ 6, 7 ], c: 8, d: 9 }
+ *
+ *      // And will result in
+ *      uri.query.toString() // a=1&b=6&b=7&c=8&d=9
+ *
+ */
         mergeQuery: function(query) {
             this.query().merge(query);
             return this;
@@ -544,6 +617,12 @@
             return this;
         },
 
+/*
+ * =head2 uri.toString()
+ *
+ * Returns uri in string-form
+ *
+ */
         // RFC3986 http://tools.ietf.org/html/rfc3986
         toString: function() {
             var toString = "", value;
@@ -572,13 +651,40 @@
         }
     };
 
+/*
+ * =head2 b9j.uri.query.parse( $query )
+ *
+ * Parse $query (which should be a string) and return a key/value hash:
+ *
+ *      var hash = b9j.uri.parseQuery("a=1&b=2")
+ *      // hash is { a: 1, b: 2 }
+ *
+ * If the the query string contains a multi-value key, then that key is represented
+ * in the hash by an array instead of a simple value:
+ *
+ *      var hash = b9j.uri.parseQuery("a=1&b=2&c=4&c=5&c=6")
+ *      // hash is { a: 1, b: 2, c: [ 4, 5, 6 ] }
+ *
+ * =head2 new b9j.uri.query.Query( $query )
+ *
+ * Returns a new Query object representing $query, which can either be a (query) string or a hash resulting
+ * from b9j.uri.query.parse
+ *
+ */
 
-    pckg.URIQuery = function(query) {
+    pckg.query.Query = function(query) {
         this._store = b9j.uri.parseQuery(query);
     };
 
-    pckg.URIQuery.prototype = {
+    pckg.query.Query.prototype = {
 
+/*
+ * =head2 query.get( $key )
+ *
+ * Returns the value for $key
+ * If $key is multi-value, then return only the first value of $key
+ *
+ */
         get: function(key) {
             var value = this._store[key];
             if (b9j.isArray(value)) {
@@ -589,6 +695,13 @@
             }
         },
 
+/*
+ * =head2 query.getAll( $key )
+ *
+ * Returns an array containing every value for $key
+ * If $key is a single-value, then return an array with one element.
+ *
+ */
         getAll: function(key) {
             var value = this._store[key];
             if (b9j.isArray(value)) {
@@ -599,20 +712,57 @@
             }
         },
 
+/*
+ * =head2 query.set( $key, $value )
+ *
+ * Set $key to $value in query
+ * $value can be a single value or an array
+ *
+ * Returns query
+ *
+ */
         set: function(key, value) {
             
             if (arguments.length == 1) {
                 this._store = b9j.uri.parseQuery(key); // Not really a key, actually a query string
             }
 
-            return this._store[key] = value;
+            this._store[key] = value;
+
+            return this;
         },
 
+/*
+ * =head2 query.merge( $query )
+ *
+ * Merge $query with the query
+ *
+ * $query can either be a query string or hash (simple object). An example:
+ *
+ *      var query = new b9j.uri.query.Query("a=1&b=2&c=3&c=4&c=5")
+ *
+ *      // The following are equivalent
+ *      query.merge( "b=6&b=7&c=8&d=9" )
+ *      query.merge( { b: [ 6, 7 ], c: 8, d: 9 }
+ *
+ *      // And will result in
+ *      query.toString() // a=1&b=6&b=7&c=8&d=9
+ *
+ * Returns query
+ *
+ */
         merge: function(query) {
             query = b9j.uri.parseQuery(query);
             this._store = b9j.merge(this._store, query);
+            return this;
         },
 
+/*
+ * =head2 query.isEmpty()
+ *
+ * Returns true if query is empty ("")
+ *
+ */
         isEmpty: function() {
             for (var key in this._store) {
                 return false;
@@ -620,7 +770,17 @@
             return true;
         },
 
+// TODO More "empty query" testing
+
+/*
+ * =head2 query.toString()
+ *
+ * Returns query in string-form
+ *
+ */
+
         toString: function() {
+// TODO Check if empty, first?
             var toString = "";
             var keyValueList = [];
             for (var key in this._store) {
