@@ -67,4 +67,12 @@ b9j.test.b9jTest(function(test) {
 
     }
 
+    {
+        test.isTrue(b9j.isEmpty(""));
+        test.isTrue(b9j.isEmpty({}));
+        test.isFalse(b9j.isEmpty({ a: null }));
+        test.isFalse(b9j.isEmpty({ null: null }));
+        test.isFalse(b9j.isEmpty({ undefined: undefined }));
+    }
+
 });

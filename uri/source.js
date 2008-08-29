@@ -85,6 +85,9 @@
         if (b9j.isObject(input)) {
             return input;
         }
+        else if ("" == input || input.match(/^\s/)) {
+            return {};
+        }
         var queryHash = {};
         input.replace(_parseURI.queryParser, function ($0, $1, $2) {
             if ($1) {
@@ -183,7 +186,8 @@
 
     pckg.URI.prototype = {
         
-/* =head2 uri.clone()
+/*
+ * =head2 uri.clone()
  *
  * Returns a clone of uri
  * 
@@ -679,6 +683,17 @@
     pckg.query.Query.prototype = {
 
 /*
+ * =head2 query.clone()
+ *
+ * Returns a clone of query
+ * 
+ */
+
+        clone: function() {
+            return new b9j.uri.query.Query(b9j.clone(this._store, { shallowObject: 1 }));
+        },
+
+/*
  * =head2 query.get( $key )
  *
  * Returns the value for $key
@@ -736,10 +751,9 @@
         set: function(key, value) {
             
             if (arguments.length == 1) {
-                this._store = b9j.uri.parseQuery(key); // Not really a key, actually a query string
+                this._store = b9j.uri.query.parse(key); // Not really a key, actually a query string
             }
-
-            if (arguments.length > 2) {
+            else if (arguments.length > 2) {
                 this._store[key] = Array.prototype.splice.call(arguments, 1);
             }
             else {
@@ -857,7 +871,7 @@
 // TODO Check if empty, first?
             var toString = "";
             var keyValueList = [];
-            for (var key in this._store) {
+            for (key in this._store) {
                 var value = this._store[key];
                 if (b9j.isArray(value)) {
                     for (var ii = 0; ii < value.length; ii++) {

@@ -118,7 +118,12 @@ if (typeof b9j == "undefined" || !b9j) {
     b9j.isUndefined = YAHOO.lang.isUndefined;
     b9j.isValue = YAHOO.lang.isValue;
     b9j.isEmpty = function(value) {
-        if (b9j.isValue(value)) {
+        if (b9j.isObject(value)) {
+            for (var ii in value) {
+                return false;
+            }
+        }
+        else if (b9j.isValue(value)) {
             return "" == value;
         }
         return true;

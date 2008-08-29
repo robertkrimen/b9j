@@ -147,6 +147,7 @@ function _testURI(test) {
 
 function _testURIQuery(test) {
 
+    var base = new b9j.uri.query.Query("a=1&b=2&c=3&c=4&c=5&c=6");
     {
         query = new b9j.uri.query.Query({ a: 1, b: 2, c: [ 3, 4, 5, 6 ] });
         test.is(1, query.get("a"));
@@ -158,6 +159,13 @@ function _testURIQuery(test) {
         test.is(1, query.get("a"));
         test.is(2, query.get("b"));
         test.is(3, query.get("c"));
+
+        query = new b9j.uri.query.Query("");
+        test.isTrue(query.isEmpty());
+
+        query = base.clone();
+        query.clear();
+        test.isTrue(query.isEmpty());
     }
 }
 
