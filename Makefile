@@ -9,12 +9,13 @@ b9j_VERSION := 0.1.1
 SHIP := $(BUILD)/b9j-$(b9j_VERSION)
 SHIP_ZIP := $(BUILD)/b9j-$(b9j_VERSION).zip
 
+yui_VERSION := 2.5.2
 yuicompressor_VERSION := 2.3.6
 yuicompressor_JAR := $(BUILD_tmp)/yuicompressor-$(yuicompressor_VERSION)/$(BUILD)/yuicompressor-$(yuicompressor_VERSION).jar
 yuicompressor_ZIP := $(BUILD_tmp)/yuicompressor-$(yuicompressor_VERSION).zip
 yuicompress := java -jar $(yuicompressor_JAR)
 
-PACKAGE := b9j namespace test b9jTest path x-uri
+PACKAGE := b9j-YUI b9j namespace test b9jTest path x-uri
 PACKAGE_source := $(PACKAGE:%=%/source.js)
 PACKAGE_documentation := $(PACKAGE:%=$(BUILD_documentation)/%.html)
 PACKAGE_test := $(PACKAGE:%=$(BUILD_test)/%.html)
@@ -33,7 +34,7 @@ $(yuicompressor_JAR): $(yuicompressor_ZIP)
 	(cd $(BUILD_tmp) && unzip `basename $(yuicompressor_ZIP)`)
 	touch $@
 
-$(BUILD)/b9j.bootstrap.uncompressed.js: b9j/source.js namespace/source.js test/source.js
+$(BUILD)/b9j.bootstrap.uncompressed.js: b9j-YUI/source.js b9j/source.js namespace/source.js test/source.js
 	cat $^ > $@
 
 $(BUILD)/b9j.bootstrap.js: $(BUILD)/b9j.bootstrap.uncompressed.js $(yuicompressor_JAR)

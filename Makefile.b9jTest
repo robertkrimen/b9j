@@ -1,7 +1,7 @@
 .PHONY: b9jTest
 
 b9jTest: $(BUILD)/b9jTest.js $(BUILD)/b9jTest.css
-yui_VERSION = 2.5.2
+yui_VERSION ?= 2.5.2
 
 $(BUILD)/b9jTest.js: $(BUILD)/b9jTest.uncompressed.js $(yuicompressor_JAR)
 	$(yuicompress) $< > $@

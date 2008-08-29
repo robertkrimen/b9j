@@ -53,6 +53,7 @@
  *
  */
 
+
 if (typeof b9j == "undefined" || !b9j) {
     var b9j = {};
 }
@@ -106,6 +107,94 @@ if (typeof b9j == "undefined" || !b9j) {
     };
 
     b9j._namespace = _namespace;
+
+    b9j.isArray = YAHOO.lang.isArray;
+    b9j.isBoolean = YAHOO.lang.isBoolean;
+    b9j.isFunction = YAHOO.lang.isFunction
+    b9j.isNull = YAHOO.lang.isNull;
+    b9j.isNumber = YAHOO.lang.isNumber;
+    b9j.isObject = YAHOO.lang.isObject;
+    b9j.isString = YAHOO.lang.isString;
+    b9j.isUndefined = YAHOO.lang.isUndefined;
+    b9j.isValue = YAHOO.lang.isValue;
+    b9j.isEmpty = function(value) {
+        if (b9j.isValue(value)) {
+            return "" == value;
+        }
+        return true;
+    };
+
+    b9j.toArray = function(given) {
+        return Array.prototype.splice.call(given, 0);
+    }
+
+    function merge(left, right) {
+        var result = {}
+        if (arguments.length == 1) {
+            for (ii in left) { 
+                if (left.hasOwnProperty(ii)) {
+                    result[ii] = left[ii];
+                }
+            }
+        }
+        else if (arguments.length == 2) {
+            var hl, hr;
+            result = merge(left); // Shallow copy
+            for (ii in right) {
+                if (right.hasOwnProperty(ii)) {
+                    hl = b9j.isObject(left[ii]);
+                    hr = b9j.isObject(right[ii]);
+    
+                    if (hl && hr) {
+                        result[ii] = merge(left[ii], right[ii]);
+                    }
+                    else {
+                        result[ii] = right[ii]
+                    }
+                }
+            }
+        }
+        else if (arguments.length > 2) {
+            var right_arguments = Array.prototype.splice.call(arguments, 1);
+            result = merge(left, merge.apply(this, right_arguments));
+        }
+        return result;
+    }
+    b9j.merge = merge;
+
+    function clone(value, given) {
+        if (!given) given = {};
+        if (b9j.isArray(value)) {
+            var copy = [].concat(value); // Shallow copy
+            if (given.shallow || given.shallowArray) {
+            }
+            else {
+                for (var ii = 0; ii < copy.length; ii++) {
+                    var value = copy[ii];
+                    if (b9j.isObject(value))
+                        copy[ii] = clone(value);
+                }
+            }
+            return copy;
+        }
+        else if (b9j.isObject(value)) {
+            var copy = merge(value); // Shallow copy
+            if (given.shallow || given.shallowObject) {
+            }
+            else {
+                for (ii in copy) {
+                    if (copy.hasOwnProperty(ii)) {
+                        var value = copy[ii];
+                        if (b9j.isObject(value))
+                            copy[ii] = clone(value);
+                    }
+                }
+            }
+            return copy;
+        }
+        return value;
+    }
+    b9j.clone = clone;
 
 })();
 
