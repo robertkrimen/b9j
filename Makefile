@@ -15,7 +15,7 @@ yuicompressor_JAR := $(BUILD_tmp)/yuicompressor-$(yuicompressor_VERSION)/$(BUILD
 yuicompressor_ZIP := $(BUILD_tmp)/yuicompressor-$(yuicompressor_VERSION).zip
 yuicompress := java -jar $(yuicompressor_JAR)
 
-PACKAGE := b9j-YUI b9j namespace test b9jTest path uri
+PACKAGE := b9j-YUI b9j namespace test b9jTest path uri sha256
 PACKAGE_source := $(PACKAGE:%=%/source.js)
 PACKAGE_documentation := $(PACKAGE:%=$(BUILD_documentation)/%.html)
 PACKAGE_test := $(PACKAGE:%=$(BUILD_test)/%.html)
@@ -74,6 +74,7 @@ _build:
 	mkdir -p $(BUILD)
 
 ship: wipe build
+	find $(BUILD)/documentation $(BUILD)/test -name static -prune -or -type f -name "*.html"  -print -exec tidy -mi --vertical-space no --tidy-mark no -asxml --wrap 0 {} \;
 	rm -rf $(SHIP) $(SHIP_ZIP)
 	mkdir -p $(SHIP) $(SHIP)/documentation $(SHIP)/test
 	(cd $(BUILD) && cp b9jTest.css b9jTest.js b9j.js b9j.uncompressed.js ../$(SHIP))
