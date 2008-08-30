@@ -29,7 +29,7 @@
  * b9j.namespace provides methods for setting up and using namespaces
  *
  * The methods contained within are modeled after:  
- * [higher-order.blogspot.com/2008/02/designing-clientserver-web-applications.html#Namespacing](http://higher-order.blogspot.com/2008/02/designing-clientserver-web-applications.html#Namespacing) (by Karl Krukow)
+ * [http://blog.higher-order.net/2008/02/18/designing-clientserver-web-applications/](http://blog.higher-order.net/2008/02/18/designing-clientserver-web-applications/) (by Karl Krukow)
  *
  * =head1 METHODS
  *
@@ -88,14 +88,38 @@
  *
  * =head1 SEE ALSO
  *
- * [higher-order.blogspot.com/2008/02/designing-clientserver-web-applications.html#Namespacing](http://higher-order.blogspot.com/2008/02/designing-clientserver-web-applications.html#Namespacing)
+ * [http://blog.higher-order.net/2008/02/18/designing-clientserver-web-applications/](http://blog.higher-order.net/2008/02/18/designing-clientserver-web-applications/)
+ *
+ * [b9j](http://appengine.bravo9.com/b9j)
+ *
+ * =head1 AUTHOR
+ *
+ * Robert Krimen, `<robertkrimen at gmail.com>`
+ *
+ * =head1 DOWNLOAD
+ *
+ * Available as part of [**b9j**](http://appengine.bravo9.com/b9j): [b9j-latest.zip](http://appengine.bravo9.com/b9j/b9j-latest.zip)
+ *
+ * =head1 SOURCE
+ *
+ * You can contribute or fork this project via GitHub:
+ *
+ * [http://github.com/robertkrimen/b9j/tree/master](http://github.com/robertkrimen/b9j/tree/master)
+ *
+ *      git clone git://github.com/robertkrimen/b9j.git
+ *
+ * =head1 COPYRIGHT & LICENSE
+ *
+ * Copyright 2008 Robert Krimen
+ *
+ * Code licensed under the BSD License: [http://appengine.bravo9.com/b9j/documentation/license.txt](http://appengine.bravo9.com/b9j/documentation/license.txt)
  *
  */
 
 (function(){
 
     // 'use' adapted from work by Karl Krukow
-    // http://higher-order.blogspot.com/2008/02/designing-clientserver-web-applications.html#Namespacing
+    // http://blog.higher-order.net/2008/02/18/designing-clientserver-web-applications/
 
     var pckg = b9j._namespace('b9j.namespace');
 

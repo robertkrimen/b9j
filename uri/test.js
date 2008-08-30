@@ -5,32 +5,32 @@ function _testURI(test) {
 
     {
         uri = parse("http://example.com");
-        test.is("http", uri.protocol);
+        test.is("http", uri.scheme);
         test.is("example.com", uri.host);
     }
 
     {
         uri = new b9j.uri.URI("http://example.com");
-        test.is("http://example.com", uri);
+        test.is("http://example.com/", uri);
         var uriClone = uri.clone();
-        test.is("http://example.com", uriClone);
+        test.is("http://example.com/", uriClone);
         uriClone.port(80);
-        test.is("http://example.com:80", uriClone);
-        test.is("http://example.com", uri);
+        test.is("http://example.com:80/", uriClone);
+        test.is("http://example.com/", uri);
 
         uri = new b9j.uri.URI("http://example.com?a=1&b=2");
-        test.is("http://example.com?a=1&b=2", uri);
+        test.is("http://example.com/?a=1&b=2", uri);
         var uriClone = uri.clone();
-        test.is("http://example.com?a=1&b=2", uriClone);
+        test.is("http://example.com/?a=1&b=2", uriClone);
         uriClone.query().set("b", 3);
         uriClone.query().set("c", 4);
-        test.is("http://example.com?a=1&b=3&c=4", uriClone);
-        test.is("http://example.com?a=1&b=2", uri);
+        test.is("http://example.com/?a=1&b=3&c=4", uriClone);
+        test.is("http://example.com/?a=1&b=2", uri);
     }
 
     {
         uri = new b9j.uri.URI("http://example.com");
-        test.is("http://example.com", uri);
+        test.is("http://example.com/", uri);
     
         uri.down("a", "b");
         test.is("http://example.com/a/b", uri);
@@ -41,7 +41,7 @@ function _testURI(test) {
 
     uri = base = new b9j.uri.URI("http://user:password@example.com:80/path/?a=1&b=2&c=3&c=4&c=5#fragment");
     test.is("http://user:password@example.com:80/path/?a=1&b=2&c=3&c=4&c=5#fragment", uri);
-    test.is("http", uri.protocol());
+    test.is("http", uri.scheme());
     test.is("user:password@example.com:80", uri.authority());
     test.is("user", uri.user());
     test.is("password", uri.password());
@@ -93,6 +93,12 @@ function _testURI(test) {
         uri = base.clone();
         uri.port(8080);
         test.is("http://user:password@example.com:8080/path/?a=1&b=2&c=3&c=4&c=5#fragment", uri);
+
+        uri.port("");
+        test.is("http://user:password@example.com/path/?a=1&b=2&c=3&c=4&c=5#fragment", uri);
+
+        uri.port(null);
+        test.is("http://user:password@example.com/path/?a=1&b=2&c=3&c=4&c=5#fragment", uri);
     }
 
     {
@@ -143,6 +149,12 @@ function _testURI(test) {
 //        uri.merge("example.net?f=1&g=2");
 //        test.is("http://example.net:80/path/?a=1&b=2&c=3&c=4&c=5&f=1&g=2#fragment", uri);
     }
+
+    {
+        uri = base.clone();
+        uri.path("a");
+        test.is("http://user:password@example.com:80/a?a=1&b=2&c=3&c=4&c=5#fragment", uri);
+    }
 }
 
 function _testURIQuery(test) {
@@ -159,22 +171,70 @@ function _testURIQuery(test) {
         test.is(1, query.get("a"));
         test.is(2, query.get("b"));
         test.is(3, query.get("c"));
+    }
+
+    {
+        query = base.clone();
+        query.add("c", 7);
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&c=7", query);
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6", base);
+
+        query = base.clone();
+        query.add({ c: 7 });
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&c=7", query);
+
+        query = base.clone();
+        query.add("c=7");
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&c=7", query);
+    }
+
+    {
+        query = base.clone();
+        query.add("c", 7, 8);
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&c=7&c=8", query);
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6", base);
+
+        query = base.clone();
+        query.add({ c: [ 7, 8 ] });
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&c=7&c=8", query);
+
+        query = base.clone();
+        query.add("c=7&c=8");
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&c=7&c=8", query);
+    }
+
+    {
+        query = base.clone();
+        query.add("d", null);
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&d", query);
+
+        query = base.clone();
+        query.add("c", null);
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&c", query);
+
+        query = base.clone();
+        query.add("d", "");
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&d=", query);
+
+        query = base.clone();
+        query.add("c", "");
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&c=", query);
+    }
+
+    {
 
         query = new b9j.uri.query.Query("");
         test.isTrue(query.isEmpty());
 
         query = base.clone();
         query.clear();
+        test.is("", query);
         test.isTrue(query.isEmpty());
 
         query = base.clone();
-        query.add("c", 6);
-        test.is("a=1&b=2&c=3&c=4&c=5&c=6&c=6", query);
-        test.is("a=1&b=2&c=3&c=4&c=5&c=6", base);
-
-        query = base.clone();
-        query.add({ c: 6 });
-        test.is("a=1&b=2&c=3&c=4&c=5&c=6&c=6", query);
+        query.set("        \n");
+        test.is("", query);
+        test.isTrue(query.isEmpty());
     }
 }
 

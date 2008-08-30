@@ -1,11 +1,26 @@
 /* 
  * =head1 NAME
  * 
- * b9j.uri - URI
+ * b9j.uri - URI (Uniform Resource Identifier) parsing, manipulation, and generation
  *
  * =head1 SYNOPSIS 
+ *
+ *      var uri = new b9j.uri.URI( "http://example.com/a/b?a=1&b=2&c=3&c=4&c=5" )
+ *      var host = uri.host()
+ *
+ *      var uriChild = uri.child("c.html")          // http://example.com/a/b/c.html?a=1&b=2& ...
+ *      uriChild.query.add({ c: [ 6, 7 ], d: 8 })   // ... ?a=1&b=2&c=3&c=4&c=5&c=6&c=7&d=8
+ *      uriChild.query.set("b", 9)                  // ... ?a=1&b=9&c ...
+ *
+ *      return uriChild.toString()
  *  
  * =head1 DESCRIPTION
+ *
+ * This package provides a way to parse, manipulate, and generate URIs. Specifically, it
+ * splits up a URI into three objects: the URI, the path, and the query. The path and query are subordinate, 
+ * and changes to either object will be reflected in their "owner" URI.
+ *
+ * It uses a modified parseUri (by Steven Levithan) for URI parsing: [http://blog.stevenlevithan.com/archives/parseuri](http://blog.stevenlevithan.com/archives/parseuri)
  *
  */
 
@@ -41,7 +56,7 @@
 
         return uri;
     };
-    _parseURI.partName = ["source","protocol","authority","userInformation","user","password","host","port","relative","path","directory","file","query","fragment"];
+    _parseURI.partName = ["source","scheme","authority","userInformation","user","password","host","port","relative","path","directory","file","query","fragment"];
     _parseURI.queryParser = /(?:^|&)([^&=]*)=?([^&]*)/g;
     _parseURI.authorityParser = /^(?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?$/;
     _parseURI.hostPortParser = /^([^:\/?#]*)(?::(\d*))$/;
@@ -115,7 +130,7 @@
  *
  * Parse $uri (which should be a string) and return a hash containing the following:
  *  
- *      protocol
+ *      scheme
  *      authority
  *      userInformation
  *      user
@@ -179,7 +194,7 @@
 
     pckg.URI = function(uri, query) {
         this.set(uri);
-        if (query) { // This should probably set query
+        if (query) { // TODO This should probably set query
             this.mergeQuery(query);
         }
     };
@@ -209,27 +224,36 @@
         },
 
 /*
- * =head2 uri.protocol()
+ * =head2 uri.scheme()
  *
- * Returns the protocol of uri, which is something like `http`, `https`, `ftp`, ...
+ * =head2 uri.scheme( $scheme )
+ *
+ * Returns the scheme of uri, which is something like `http`, `https`, `ftp`, ...
  *
  *      http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&b=2&c=3&c=4&c=5#top => http
  *
- * =head2 uri.protocol( $protocol )
- *
- * Sets the protocol of uri to $protocol
+ * Sets the scheme of uri to $scheme
  *
  * Returns uri
  *
+ * =head2 uri.protocol()
+ *
+ * =head2 uri.protocol( $protocol )
+ *
+ * An alias for uri.scheme() and uri.scheme( ... )
+ *
  */
-        protocol: function(value) {
+        scheme: function(value) {
             if (arguments.length) {
-                this._uri.protocol = value;
+                this._uri.scheme = value;
                 return this;
             }
-            return this._uri.protocol;
+            return this._uri.scheme;
         },
 
+        protocol: function(value) {
+            return this.scheme.apply(this, arguments);
+        },
 /*
  * =head2 uri.authority() 
  *
@@ -262,13 +286,14 @@
             if (this._dirtyAuthority) {
                 var hostPort = "";
                 hostPort = this.host();
-                if ("" != hostPort && "" != this.port())
+                if ("" != hostPort && ! b9j.isEmpty( this.port() )) {
                     hostPort += ":";
-                hostPort += this.port();
+                    hostPort += this.port();
+                }
     
                 var authority = "";
                 authority += this.userInformation();
-                if ("" != authority)
+                if (! b9j.isEmpty( authority ))
                     authority += "@";
                 authority += hostPort;
 
@@ -315,8 +340,6 @@
  * Returns uri
  *
  */
-
-// TODO Test setting the "empty" port
 
         port: function() {
             if (arguments.length) {
@@ -488,11 +511,10 @@
  *
  */
 
-// TODO Make sure path isTree()
-
         path: function(value) {
             if (arguments.length) {
                 this._path = new b9j.path.Path(value);
+                this._path.toTree();
                 return this;
             }
             return this._path;
@@ -631,7 +653,7 @@
         toString: function() {
             var toString = "", value;
 
-            if (! b9j.isEmpty(value = this.protocol())) {
+            if (! b9j.isEmpty(value = this.scheme())) {
                 toString += value + ":";
             }
 
@@ -694,6 +716,13 @@
         },
 
 /*
+ * =head2 query.get()
+ *
+ * Returns the query store directly as a hash (simple object), so you can do the following:
+ *
+ *      var hash = new b9j.uri.query.Query("a=1&b=2")
+ *      if (query.get.a) { ...
+ *
  * =head2 query.get( $key )
  *
  * Returns the value for $key
@@ -701,6 +730,10 @@
  *
  */
         get: function(key) {
+
+            if (0 == arguments.length)
+                return this._store;
+
             var value = this._store[key];
             if (b9j.isArray(value)) {
                 return value[0];
@@ -764,12 +797,22 @@
         },
 
 /*
+ * =head2 query.add( $query )
+ *
+ * Add $query to query, where $query can be a query string or hash (simple object)
+ *
+ * Returns query
+ *
  * =head2 query.add( $key, $value )
  *
  * Add $value to $key
  *
  * If $key does not exist, then $key is set to $value  
  * If $key already has a value, multiple or otherwise, then $value is appended  
+ *
+ * =head2 query.add( $key, $value1, $value2, ... )
+ *
+ * Add $value1, $value2, ... to $key, turning it into a multi-value key
  *
  * Returns query
  *
@@ -778,17 +821,23 @@
         add: function(key, value) {
 
             if (arguments.length == 1) {
-                var hash = b9j.uri.query.parse(key); // Not really a key, actually a query string or hash
+                var hash = b9j.uri.query.parse(key); // query.add( $query )
+                                                     // Not really a key, actually a query string or hash
                 for (key in hash) {
                     this.add(key, hash[key]);
                 }
             }
             else {
+
+                if (arguments.length > 2) { // query.add( $key, $value1, $value2, ... )
+                    value = Array.prototype.splice.call(arguments, 1);
+                }
+
                 var store_value;
                 if (b9j.isValue(store_value = this._store[key])) {
                     if (b9j.isArray( store_value )) {
                         if (b9j.isArray( value )) {
-                            store_value.splice(store_value.length, 0, value);
+                            this._store[key] = store_value.concat(value);
                         }
                         else {
                             store_value.push( value );
@@ -876,8 +925,6 @@
             return true;
         },
 
-// TODO More "empty query" testing
-
 /*
  * =head2 query.toString()
  *
@@ -886,18 +933,32 @@
  */
 
         toString: function() {
-// TODO Check if empty, first?
+            if (this.isEmpty()) {
+                return "";
+            }
             var toString = "";
             var keyValueList = [];
             for (key in this._store) {
+                key = encodeURIComponent(key);
                 var value = this._store[key];
+
                 if (b9j.isArray(value)) {
                     for (var ii = 0; ii < value.length; ii++) {
-                        keyValueList.push(encodeURIComponent(key) + "=" + encodeURIComponent(value[ii]));
+                        if (null != value[ii]) {
+                            keyValueList.push(key + "=" + encodeURIComponent(value[ii]));
+                        }
+                        else {
+                            keyValueList.push(key);
+                        }
                     }
                 }
                 else {
-                    keyValueList.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
+                    if (null != value) {
+                        keyValueList.push(key + "=" + encodeURIComponent(value));
+                    }
+                    else {
+                        keyValueList.push(key);
+                    }
                 }
             } 
             toString = keyValueList.join("&");
@@ -907,3 +968,36 @@
     };
 
 }());
+
+/*
+ * =head1 SEE ALSO
+ *
+ * [parseUri](http://blog.stevenlevithan.com/archives/parseuri)
+ *
+ * [js-uri](http://code.google.com/p/js-uri/)
+ *
+ * [b9j](http://appengine.bravo9.com/b9j)
+ *
+ * =head1 AUTHOR
+ *
+ * Robert Krimen, `<robertkrimen at gmail.com>`
+ *
+ * =head1 DOWNLOAD
+ *
+ * Available as part of [**b9j**](http://appengine.bravo9.com/b9j): [b9j-latest.zip](http://appengine.bravo9.com/b9j/b9j-latest.zip)
+ *
+ * =head1 SOURCE
+ *
+ * You can contribute or fork this project via GitHub:
+ *
+ * [http://github.com/robertkrimen/b9j/tree/master](http://github.com/robertkrimen/b9j/tree/master)
+ *
+ *      git clone git://github.com/robertkrimen/b9j.git
+ *
+ * =head1 COPYRIGHT & LICENSE
+ *
+ * Copyright 2008 Robert Krimen
+ *
+ * Code licensed under the BSD License: [http://appengine.bravo9.com/b9j/documentation/license.txt](http://appengine.bravo9.com/b9j/documentation/license.txt)
+ *
+ */

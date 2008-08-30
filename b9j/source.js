@@ -5,21 +5,28 @@
  *
  * =head1 VERSION
  *
- * Version 0.1.1
+ * Version 0.1.2
  *
- * =head1 COMPONENTS
+ * =head1 CATALOG
+ *
+ * [b9j.namespace](http://appengine.bravo9.com/b9j/documentation/namespace.html) - Namespace creation and aliasing  
+ * [b9j.test](http://appengine.bravo9.com/b9j/documentation/test.html) - A wrapper around YUI Test to make simple testing easy  
+ * [b9jTest](http://appengine.bravo9.com/b9j/documentation/b9jTest.html)  - A bundled version of b9j.test  
+ * [b9j.path](http://appengine.bravo9.com/b9j/documentation/path.html) - UNIX-style path parsing, manipulation, and generation  
+ * [b9j.uri](http://appengine.bravo9.com/b9j/documentation/uri.html)  - URI (Uniform Resource Identifier) parsing, manipulation, and generation  
+ * [b9j.uri.query](http://appengine.bravo9.com/b9j/documentation/uri.html) - URI query parsing, manipulation, and generation  
  *
  * =head2 b9j.namespace - Namespace creation and aliasing
  *
- *          declare     # Declare a namespace
- *          using       # Alias one or more namespace(s) to a shorthand name
+ *          declare         # Declare a namespace
+ *          using           # Alias one or more namespace(s) to a shorthand name
  *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/namespace.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/namespace.html)
  *
  * =head2 b9j.test - A wrapper around YUI Test to make simple testing easy
  *
- *          b9jTest     # An easy-to-use test framework based on YUI Test
- *                      # NOTE: Requires YUI Test to be loaded
+ *          b9jTest         # An easy-to-use test framework based on YUI Test
+ *                          # NOTE: Requires YUI Test to be loaded
  *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/test.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/test.html)
  *
@@ -27,32 +34,49 @@
  *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/b9jTest.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/b9jTest.html)
  *
- * =head2 b9j.path - Path handling made easy
+ * =head2 b9j.path - UNIX-style path parsing, manipulation, and generation
  *
- *          Path        # A class representing a URI/UNIX-style path
+ *          Path            # A class representing a URI/UNIX-style path
  *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/path.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/path.html)
+ *
+ * =head2 b9j.uri - URI (Uniform Resource Identifier) parsing, manipulation, and generation
+ *
+ *          URI             # A class representing a URI
+ *          parse           # Parse a URI string
+ *
+ * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/uri.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/uri.html)
+ *
+ * =head2 b9j.uri.query - URI query parsing, manipulation, and generation
+ *
+ *          Query           # A class representing a URI query
+ *          parse           # Parse a URI query string
+ *
+ * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/uri.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/uri.html)
  *
  * =head1 AUTHOR
  *
  * Robert Krimen, `<robertkrimen at gmail.com>`
  *
+ * =head1 DOWNLOAD
+ *
+ * Available as part of [**b9j**](http://appengine.bravo9.com/b9j): [b9j-latest.zip](http://appengine.bravo9.com/b9j/b9j-latest.zip)
+ *
  * =head1 SOURCE
  *
  * You can contribute or fork this project via GitHub:
  *
- * http://github.com/robertkrimen/b9j/tree/master
+ * [http://github.com/robertkrimen/b9j/tree/master](http://github.com/robertkrimen/b9j/tree/master)
  *
- *          git clone git://github.com/robertkrimen/b9j.git
+ *      git clone git://github.com/robertkrimen/b9j.git
  *
  * =head1 COPYRIGHT & LICENSE
  *
  * Copyright 2008 Robert Krimen
  *
- * This program is free software; you can redistribute it and/or modify it under the same terms as Perl.
+ * Code licensed under the BSD License: [http://appengine.bravo9.com/b9j/documentation/license.txt](http://appengine.bravo9.com/b9j/documentation/license.txt)
  *
  */
-
 
 if (typeof b9j == "undefined" || !b9j) {
     var b9j = {};
@@ -75,7 +99,7 @@ if (typeof b9j == "undefined" || !b9j) {
         namespace = namespace.valueOf();
         if ('string' == typeof namespace) {
             if (! namespaceRE.test(namespace)) {
-                throw new Error('"'+namespace+'" is not a valid namespace specification');
+            throw new Error('"'+namespace+'" is not a valid namespace specification');
             }
             var parts = namespace.split('.');
             for (ii = 0, limit = parts.length; ii < limit; ii++) {

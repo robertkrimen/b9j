@@ -5,7 +5,7 @@ BUILD_tmp := build/tmp
 BUILD_documentation := build/documentation
 BUILD_test := build/test
 
-b9j_VERSION := 0.1.1
+b9j_VERSION := 0.1.2
 SHIP := $(BUILD)/b9j-$(b9j_VERSION)
 SHIP_ZIP := $(BUILD)/b9j-$(b9j_VERSION).zip
 
@@ -58,9 +58,12 @@ $(BUILD)/b9j.js: $(BUILD)/b9j.uncompressed.js $(yuicompressor_JAR)
 
 build: _build $(BUILD)/b9j.bootstrap.js $(BUILD)/b9j.js documentation b9jTest $(PACKAGE_test)
 
-documentation: $(PACKAGE_documentation) $(BUILD_documentation)/b9jTest-example.html
+documentation: $(PACKAGE_documentation) $(BUILD_documentation)/b9jTest-example.html $(BUILD_documentation)/license.txt
 
 $(BUILD_documentation)/b9jTest-example.html: b9jTest/example.html
+	cp $< $@
+
+$(BUILD_documentation)/license.txt: license.txt
 	cp $< $@
 
 wipe: 

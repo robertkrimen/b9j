@@ -188,6 +188,30 @@
  *
  * [JSUnit](http://www.edwardh.com/jsunit/)
  *
+ * [b9j](http://appengine.bravo9.com/b9j)
+ *
+ * =head1 AUTHOR
+ *
+ * Robert Krimen, `<robertkrimen at gmail.com>`
+ *
+ * =head1 DOWNLOAD
+ *
+ * Available as part of [**b9j**](http://appengine.bravo9.com/b9j): [b9j-latest.zip](http://appengine.bravo9.com/b9j/b9j-latest.zip)
+ *
+ * =head1 SOURCE
+ *
+ * You can contribute or fork this project via GitHub:
+ *
+ * [http://github.com/robertkrimen/b9j/tree/master](http://github.com/robertkrimen/b9j/tree/master)
+ *
+ *      git clone git://github.com/robertkrimen/b9j.git
+ *
+ * =head1 COPYRIGHT & LICENSE
+ *
+ * Copyright 2008 Robert Krimen
+ *
+ * Code licensed under the BSD License: [http://appengine.bravo9.com/b9j/documentation/license.txt](http://appengine.bravo9.com/b9j/documentation/license.txt)
+ *
  */
 
 (function(){

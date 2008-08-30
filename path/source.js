@@ -1,7 +1,7 @@
 /* 
  * =head1 NAME
  * 
- * b9j.path - Path handling made easy
+ * b9j.path - UNIX-style path parsing, manipulation, and generation
  *
  * =head1 SYNOPSIS 
  *  
@@ -15,7 +15,7 @@
  *
  * =head1 DESCRIPTION
  *
- * b9j.path is a package for making path handling (path construction, manipulation and clean-up) easier
+ * This package provides a way to parse, manipulate, and generate UNIX-style paths.
  * 
  */
 
@@ -68,7 +68,8 @@
         return path;
     };
 
-/* =head1 METHODS
+/*
+ * =head1 METHODS
  *
  * =head2 new b9j.path.Path( )
  *
@@ -88,7 +89,8 @@
 
     pckg.Path.prototype = {
 
-/* =head2 path.clone()
+/*
+ * =head2 path.clone()
  *
  * Returns a clone of path
  *
@@ -97,7 +99,8 @@
             return new b9j.path.Path(this.get());
         },
 
-/* =head2 path.set( $path )
+/*
+ * =head2 path.set( $path )
  *
  * =head2 path.set( $part1, $part2, ...  )
  *
@@ -117,7 +120,8 @@
             return this;
         },
 
-/* =head2 path.toString()
+/*
+ * =head2 path.toString()
  *
  * =head2 path.get() 
  *
@@ -134,7 +138,8 @@
             return this._path.join('/');
         },
 
-/* =head2 path.pop( [ $count ] )
+/*
+ * =head2 path.pop( [ $count ] )
  *
  * Pop $count parts (a part is what is between slashes) off the end of path
  *
@@ -167,7 +172,8 @@
             return new b9j.path.Path(popped);
         },
 
-/* =head2 path.up( [ $count ] )
+/*
+ * =head2 path.up( [ $count ] )
  *
  * Behaves similarly to path.pop, in that it takes off $count parts from the end
  * of the path. However, path.up returns path, so you can use it for chaining:
@@ -181,7 +187,8 @@
             return this;
         },
 
-/* =head2 path.parent()
+/*
+ * =head2 path.parent()
  *
  * Returns the parent path of path as a new, separate b9j.path.Path object
  *
@@ -197,7 +204,8 @@
             return path;
         },
 
-/* =head2 path.push( $part1, [ $part2 ], ... )
+/*
+ * =head2 path.push( $part1, [ $part2 ], ... )
  *
  * =head2 path.down( $part1, [ $part2 ], ... )
  *
@@ -220,7 +228,8 @@
             return this;
         },
 
-/* =head2 path.child( $part1, [ $part2 ], ... )
+/*
+ * =head2 path.child( $part1, [ $part2 ], ... )
  *
  * Returns a child path of path as a new, separate b9j.path.Path object with $partN appended
  * (separated by slashes)
@@ -237,7 +246,8 @@
             return path;
         },
 
-/* =head2 path.isEmpty()
+/*
+ * =head2 path.isEmpty()
  *
  * Returns true if path is the empty path ("")
  *
@@ -251,7 +261,8 @@
             return 1 == this._path.length && "" == this._path[0] && ! this._root ? true : false;
         },
 
-/* =head2 path.isRoot()
+/*
+ * =head2 path.isRoot()
  *
  * Returns true if path is the root path ("/")
  *
@@ -264,7 +275,8 @@
             return 1 == this._path.length && "" == this._path[0] && this._root ? true : false;
         },
 
-/* =head2 path.isTree()
+/*
+ * =head2 path.isTree()
  *
  * Returns true if path begins with a slash
  *
@@ -278,7 +290,8 @@
             return this._root ? true : false;
         },
 
-/* =head2 path.isBranch()
+/*
+ * =head2 path.isBranch()
  *
  * Returns true if path does NOT begin with a slash
  *
@@ -292,7 +305,8 @@
             return ! this.isTree();
         },
 
-/* =head2 path.toTree()
+/*
+ * =head2 path.toTree()
  *
  * Modifies path by prepending a slash
  *
@@ -308,7 +322,8 @@
             this._path.splice(0, 0, "");
         },
 
-/* =head2 path.toBranch()
+/*
+ * =head2 path.toBranch()
  *
  * Modifies path by removing the leading slash, if any
  *
@@ -324,7 +339,8 @@
             this._path.splice(0, 1);
         },
 
-/* =head2 path.first()
+/*
+ * =head2 path.first()
  *
  * Returns the first part of path, not including any slashes
  *
@@ -335,7 +351,8 @@
             return this.at(0);
         },
 
-/* =head2 path.last()
+/*
+ * =head2 path.last()
  *
  * Returns the last part of path, not including any slashes
  *
@@ -346,7 +363,8 @@
             return this.at(-1);
         },
 
-/* =head2 path.at( $index )
+/*
+ * =head2 path.at( $index )
  *
  * Returns the part of path at $index, not including any slashes
  * You can use a negative $index to start from the end of path
@@ -371,7 +389,8 @@
             return this._path[ii];
         },
 
-/* =head2 path.beginning()
+/*
+ * =head2 path.beginning()
  *
  * Returns the first part of path, including the leading slash, if any
  *
@@ -388,7 +407,8 @@
             
         },
 
-/* =head2 path.ending()
+/*
+ * =head2 path.ending()
  *
  * Returns the last part of path, including the trailing slash, if any
  *
@@ -405,7 +425,8 @@
             
         },
 
-/* =head2 path.list()
+/*
+ * =head2 path.list()
  *
  * Returns an array of the parts of path
  *
@@ -426,3 +447,32 @@
     };
 
 }());
+
+/*
+ * =head1 SEE ALSO
+ *
+ * [b9j](http://appengine.bravo9.com/b9j)
+ *
+ * =head1 AUTHOR
+ *
+ * Robert Krimen, `<robertkrimen at gmail.com>`
+ *
+ * =head1 DOWNLOAD
+ *
+ * Available as part of [**b9j**](http://appengine.bravo9.com/b9j): [b9j-latest.zip](http://appengine.bravo9.com/b9j/b9j-latest.zip)
+ *
+ * =head1 SOURCE
+ *
+ * You can contribute or fork this project via GitHub:
+ *
+ * [http://github.com/robertkrimen/b9j/tree/master](http://github.com/robertkrimen/b9j/tree/master)
+ *
+ *      git clone git://github.com/robertkrimen/b9j.git
+ *
+ * =head1 COPYRIGHT & LICENSE
+ *
+ * Copyright 2008 Robert Krimen
+ *
+ * Code licensed under the BSD License: [http://appengine.bravo9.com/b9j/documentation/license.txt](http://appengine.bravo9.com/b9j/documentation/license.txt)
+ *
+ */
