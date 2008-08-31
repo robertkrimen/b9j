@@ -40,7 +40,7 @@
  *
  * =head2 base64( $input )
  *
- * Calculate the SHA-256 digest of $input and return the result as a base64 (ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=) value
+ * Calculate the SHA-256 digest of $input and return the result as a base64 (= padded) value
  *
  */
 

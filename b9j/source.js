@@ -15,7 +15,7 @@
  * [b9j.path](http://appengine.bravo9.com/b9j/documentation/path.html) - UNIX-style path parsing, manipulation, and generation  
  * [b9j.uri](http://appengine.bravo9.com/b9j/documentation/uri.html)  - URI (Uniform Resource Identifier) parsing, manipulation, and generation  
  * [b9j.uri.query](http://appengine.bravo9.com/b9j/documentation/uri.html) - URI query parsing, manipulation, and generation  
- * [b9j.digest.sha256](http://appengine.bravo9.com/b9j/documentation/digest.html) - A SHA-256 digester
+ * [b9j.digest.sha256](http://appengine.bravo9.com/b9j/documentation/digest.html) - A SHA-256 digester  
  * [b9j.random](http://appengine.bravo9.com/b9j/documentation/random.html) - Generate pseudo-random binary, hexadecimal, or base64 data of arbritrary length
  *
  * =head2 b9j.namespace - Namespace creation and aliasing
