@@ -1,13 +1,13 @@
 /* 
  * =head1 NAME
  * 
- * b9j.sha256 - A SHA-256 digester
+ * b9j.digest - A SHA-256 digester
  *
  * =head1 SYNOPSIS 
  *
- *      ... = b9j.sha256.calculate16( "Hello, World." ) // Hexadecimal, base 16
- *      ... = b9j.sha256.calculate64( "Hello, World." ) // Base 64
- *      ... = b9j.sha256.calculate( "Hello, World." ) // Binary string (byte string), base 256
+ *      ... = b9j.digest.sha256.calculate16( "Hello, World." ) // Hexadecimal, base 16
+ *      ... = b9j.digest.sha256.calculate64( "Hello, World." ) // Base 64
+ *      ... = b9j.digest.sha256.calculate( "Hello, World." ) // Binary string (byte string), base 256
  *  
  * =head1 DESCRIPTION
  *
@@ -19,7 +19,7 @@
 
 (function(){
 
-    var pckg = b9j.namespace.declare('b9j.sha256');
+    var pckg = b9j.namespace.declare('b9j.digest.sha256');
 
 /*
  * =head2 calculate16( $input )

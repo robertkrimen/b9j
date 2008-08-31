@@ -15,7 +15,7 @@
  * [b9j.path](http://appengine.bravo9.com/b9j/documentation/path.html) - UNIX-style path parsing, manipulation, and generation  
  * [b9j.uri](http://appengine.bravo9.com/b9j/documentation/uri.html)  - URI (Uniform Resource Identifier) parsing, manipulation, and generation  
  * [b9j.uri.query](http://appengine.bravo9.com/b9j/documentation/uri.html) - URI query parsing, manipulation, and generation  
- * [b9j.sha256](http://appengine.bravo9.com/b9j/documentation/sha256.html) - A SHA-256 digester
+ * [b9j.digest.sha256](http://appengine.bravo9.com/b9j/documentation/digest.html) - A SHA-256 digester
  * [b9j.random](http://appengine.bravo9.com/b9j/documentation/random.html) - Generate pseudo-random binary, hexadecimal, or base64 data of arbritrary length
  *
  * =head2 b9j.namespace - Namespace creation and aliasing
@@ -56,19 +56,19 @@
  *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/uri.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/uri.html)
  *
- * =head2 b9j.sha256 - A SHA-256 digester
+ * =head2 b9j.digest.sha256 - A SHA-256 digester
  *
- *          hex             # Return a SHA-256 digest as a hexadecimal (base16) value
- *          base64          # Return a SHA-256 digest as a base64 value
- *          string          # Return a SHA-256 digest as a binary value
+ *          calculate16     # Return a SHA-256 digest as a hexadecimal (base16) value
+ *          calculate64     # Return a SHA-256 digest as a base64 value
+ *          calculate       # Return a SHA-256 digest as a binary string (base256) value
  *
- * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/sha256.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/sha256.html)
+ * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/digest.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/digest.html)
  *
  * =head2 b9j.random - Generate pseudo-random binary, hexadecimal, or base64 data of arbritrary length
  *
- *          createHex       # Return a pseudo-random hexadecimal (base16) value
- *          createBase64    # Return a pseudo-random base64 value
- *          create          # Return a pseudo-random binary value
+ *          generate16      # Return a pseudo-random hexadecimal (base16) value
+ *          generate64      # Return a pseudo-random base64 value
+ *          generate        #  Return a pseudo-random binary value
  *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/random.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/random.html)
  *
