@@ -236,6 +236,25 @@ function _testURIQuery(test) {
         test.is("", query);
         test.isTrue(query.isEmpty());
     }
+
+    {
+        query = base.clone();
+        query.merge("d");
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&d=", query);
+
+        query = base.clone();
+        query.merge({ d: null });
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&d", query);
+
+        query = base.clone();
+        query.merge({ c: 7 });
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&c=7", query);
+
+        query = base.clone();
+        query.merge({ c: 7 }, { replace: 1 });
+        test.is("a=1&b=2&c=7", query);
+    }
+
 }
 
 b9jTest(function(test) {

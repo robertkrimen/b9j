@@ -5,9 +5,9 @@
  *
  * =head1 SYNOPSIS 
  *
- *      var hex = b9j.sha256.hex( "Hello, World." )
- *      var base64 = b9j.sha256.base64( "Hello, World." )
- *      var string = b9j.sha256.string( "Hello, World." ) // Binary string
+ *      ... = b9j.sha256.calculate16( "Hello, World." ) // Hexadecimal, base 16
+ *      ... = b9j.sha256.calculate64( "Hello, World." ) // Base 64
+ *      ... = b9j.sha256.calculate( "Hello, World." ) // Binary string (byte string), base 256
  *  
  * =head1 DESCRIPTION
  *
@@ -22,7 +22,7 @@
     var pckg = b9j.namespace.declare('b9j.sha256');
 
 /*
- * =head2 base16( $input )
+ * =head2 calculate16( $input )
  *
  * =head2 hexadecimal( $input )
  *
@@ -31,29 +31,33 @@
  * Calculate the SHA-256 digest of $input and return the result as a hexadecimal (base16) value
  *
  */
-    pckg.base16 = pckg.hexadecimal = pckg.hex = function(string) {
+    pckg.calculate16 = pckg.base16 = pckg.hexadecimal = pckg.hex = function(string) {
         return binb2hex(core_sha256(str2binb(string),string.length * chrsz));
     };
 
 /*
+ * =head2 calculate64( $input )
+ *
  * =head2 base64( $input )
  *
  * Calculate the SHA-256 digest of $input and return the result as a base64 (ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=) value
  *
  */
 
-    pckg.base64 = function(string) {
+    pckg.calculate64 = pckg.base64 = function(string) {
         return binb2b64(core_sha256(str2binb(string),string.length * chrsz));
     };
 
 /*
- * =head2 string( $input )
+ * =head2 calculate256( $input )
  *
- * Calculate the SHA-256 digest of $input and return the result as a binary string
+ * =head2 calculate( $input )
+ *
+ * Calculate the SHA-256 digest of $input and return the result as a binary string (byte string), base 256
  *
  */
 
-    pckg.string = function (string) {
+    pckg.calculate = pckg.calculate256 = function (string) {
         return binb2str(core_sha256(str2binb(string),string.length * chrsz));
     };
 
@@ -144,13 +148,13 @@
 /*
  * =head1 SEE ALSO
  *
- * [b9j](http://appengine.bravo9.com/b9j)
+ * [http://anmar.eu.org/projects/jssha2/](http://anmar.eu.org/projects/jssha2/)
  *
- * [http://bravo9.com](http://bravo9.com)
+ * [b9j](http://appengine.bravo9.com/b9j) - A JavaScript toolkit
  *
  * =head1 AUTHOR
  *
- * Robert Krimen, `<robertkrimen at gmail.com>`
+ * Robert Krimen `<robertkrimen at gmail.com>` [http://bravo9.com](http://bravo9.com)
  *
  * =head1 DOWNLOAD
  *

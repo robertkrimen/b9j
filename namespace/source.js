@@ -90,11 +90,11 @@
  *
  * [http://blog.higher-order.net/2008/02/18/designing-clientserver-web-applications/](http://blog.higher-order.net/2008/02/18/designing-clientserver-web-applications/)
  *
- * [b9j](http://appengine.bravo9.com/b9j)
+ * [b9j](http://appengine.bravo9.com/b9j) - A JavaScript toolkit
  *
  * =head1 AUTHOR
  *
- * Robert Krimen, `<robertkrimen at gmail.com>`
+ * Robert Krimen `<robertkrimen at gmail.com>` [http://bravo9.com](http://bravo9.com)
  *
  * =head1 DOWNLOAD
  *

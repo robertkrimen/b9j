@@ -192,11 +192,9 @@
  *
  */
 
-    pckg.URI = function(uri, query) {
-        this.set(uri);
-        if (query) { // TODO This should probably set query
-            this.mergeQuery(query);
-        }
+    pckg.URI = function(uri, query, $options) {
+        if (! $options) $options = {};
+        this.set(uri, query, $options);
     };
 
     pckg.URI.prototype = {
@@ -588,12 +586,24 @@
  * Set the uri to $uri, completely reinitializing the object (including path and query)
  *
  */
-        set: function(uri) {
-            this._uri = b9j.uri.parse(uri);
+        set: function(uri, query, $options) {
+            if ($options) this._options = $options;
+            this._uri = b9j.uri.parse(uri, this._options.strict);
             this.query(this._uri.queryHash ? this._uri.queryHash : this._uri.query);
 //            delete this._uri.query;
 //            delete this._uri.queryHash;
             this.path(this._uri.path);
+            if (query) {
+                if ($options.addQuery) {
+                    this.mergeQuery(query);
+                }
+                else if ($options.replaceQuery) {
+                    this.mergeQuery(query, { replace: 1 });
+                }
+                else { // by default, .setQuery
+                    this.query(query);
+                }
+            }
             return this;
         },
 
@@ -614,8 +624,8 @@
  *      uri.query.toString() // a=1&b=6&b=7&c=8&d=9
  *
  */
-        mergeQuery: function(query) {
-            this.query().merge(query);
+        mergeQuery: function(query, $options) {
+            this.query().merge(query, $options);
             return this;
         },
 
@@ -906,9 +916,14 @@
  * Returns query
  *
  */
-        merge: function(query) {
-            query = b9j.uri.parseQuery(query);
-            this._store = b9j.merge(this._store, query);
+        merge: function(query, $options) {
+            if ($options && $options.replace) {
+                query = b9j.uri.query.parse(query);
+                this._store = b9j.merge(this._store, query);
+            }
+            else {
+                this.add(query);
+            }
             return this;
         },
 
@@ -976,11 +991,11 @@
  *
  * [js-uri](http://code.google.com/p/js-uri/)
  *
- * [b9j](http://appengine.bravo9.com/b9j)
+ * [b9j](http://appengine.bravo9.com/b9j) - A JavaScript toolkit
  *
  * =head1 AUTHOR
  *
- * Robert Krimen, `<robertkrimen at gmail.com>`
+ * Robert Krimen `<robertkrimen at gmail.com>` [http://bravo9.com](http://bravo9.com)
  *
  * =head1 DOWNLOAD
  *
