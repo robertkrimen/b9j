@@ -6,3 +6,11 @@ body {
 #testLogger {
     float: right;
 }
+
+.fail {
+    color: red;
+}
+
+.pass {
+    color: green;
+}

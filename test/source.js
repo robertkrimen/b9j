@@ -281,21 +281,57 @@
         _endTest: function(error) {
             if (error) {
                 this._errors.push({ test: this._test, error: error });
-                this._inform("fail " + this._test + ":\n" + error);
+                this._fail("fail " + this._test + ":\n" + error);
             }
             else {
-                this._inform("pass " + this._test);
+                
+                this._pass("pass " + this._test);
+            }
+        },
+
+        _pass: function(message) {
+            this._inform(message);
+        },
+
+        _fail: function(message) {
+            this._inform("<span class=\"fail\">" + message + "</span>", message);
+        },
+
+        _summary: function(message) {
+            if (this._errors.length) {
+                this._fail(message);
+            }
+            else {
+                this._inform("<span class=\"pass\">" + message + "</span>", message);
             }
         },
 
         _doneTesting: function(testCase) {
+            var total = this._tests;
+            var passed = total - this._errors.length;
+            var failed = this._errors.length;
+            var fail = failed > 0 ? true : false;
+
+            this._summary(testCase.name + ": " + "Passed:" + passed + " Failed:" + failed + " Total:" + total + "\n" +
+                   "Failed " + failed + "/" + total + ", " + (passed/total).toFixed(2) * 100 + "% okay");
+
+            if (fail) {
+                for (ii = 0; ii < this._errors.length; ++ii) {
+                    this._inform("---");
+                    var error = this._errors[ii];
+                    this._fail("test " + error.test + ":\n" + error.error);
+                }
+            }
+
             document.body.scrollTop = document.body.scrollHeight;
-            this._inform(testCase.name + ": " + "Passed:" + (this._tests - this._errors.length) + " Failed:" + this._errors.length + " Total:" + this._tests);
+
             if (this._errors.length)
                 YAHOO.util.Assert.fail("FAIL " + this._errors.length + " / " + this._tests);
         },
 
-        _inform: function(message) {
+        _inform: function(message, loggerMessage) {
+            if (! loggerMessage)
+                loggerMessage = message;
             YAHOO.log(message, "info", "TestRunner");
             this._informer().innerHTML += message + "\n";
         },
