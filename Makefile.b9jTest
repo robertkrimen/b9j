@@ -9,8 +9,11 @@ $(BUILD)/b9jTest.js: $(BUILD)/b9jTest.uncompressed.js $(yuicompressor_JAR)
 $(BUILD)/b9jTest.css: $(BUILD)/b9jTest.uncompressed.css $(yuicompressor_JAR)
 	$(yuicompress) $< > $@
 
-$(BUILD)/b9jTest.uncompressed.js: $(BUILD_tmp)/yahoo-dom-event.js $(BUILD_tmp)/logger-min.js $(BUILD_tmp)/yuitest-min.js $(BUILD_tmp)/container-min.js $(BUILD)/b9j.js b9jTest/source.js
+$(BUILD)/b9jTest.uncompressed.js: $(BUILD_tmp)/jquery.js $(BUILD_tmp)/yahoo-dom-event.js $(BUILD_tmp)/logger-min.js $(BUILD_tmp)/yuitest-min.js $(BUILD_tmp)/container-min.js $(BUILD)/b9j.js b9jTest/source.js
 	cat $^ > $@
+
+$(BUILD_tmp)/jquery.js:
+	wget 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' -O $@
 
 $(BUILD_tmp)/yahoo-dom-event.js:
 	wget 'http://yui.yahooapis.com/$(yui_VERSION)/build/yahoo-dom-event/yahoo-dom-event.js' -O $@

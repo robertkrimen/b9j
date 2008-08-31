@@ -316,6 +316,7 @@
                    "Failed " + failed + "/" + total + ", " + (passed/total).toFixed(2) * 100 + "% okay");
 
             if (fail) {
+                this._skipYUILogger = true; // Yuck!
                 for (ii = 0; ii < this._errors.length; ++ii) {
                     this._inform("---");
                     var error = this._errors[ii];
@@ -330,9 +331,11 @@
         },
 
         _inform: function(message, loggerMessage) {
-            if (! loggerMessage)
-                loggerMessage = message;
-            YAHOO.log(message, "info", "TestRunner");
+            if (! this._skipYUILogger) {
+                if (! loggerMessage)
+                    loggerMessage = message;
+                YAHOO.log(message, "info", "TestRunner");
+            }
             this._informer().innerHTML += message + "\n";
         },
 
