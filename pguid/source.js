@@ -5,8 +5,8 @@
  *
  * =head1 SYNOPSIS 
  *
- *      pguid = b9j.pguid.next() // A unique id (suitable for an Element) is generated
- *      print( pguid) // Something like "b9j-pguid-20a9ff-0"
+ *      pguid = b9j.pguid.next() // A unique id (suitable for a DOM element) is generated
+ *                               // Something like "b9j-pguid-20a9ff-0"
  *      ...
  *      pguid = b9j.pguid.next() // Another unique one... "b9j-pguid-20a9ff-1"
  *      
@@ -27,6 +27,45 @@
 
     var pckg = b9j.namespace.declare('b9j.pguid');
     var clss;
+
+/*
+ * =head2 b9j.pguid.next()
+ *
+ * Returns the next identifier in the b9j.pguid sequence singleton
+ *
+ */
+
+    pckg.next = function() {
+        var _singleton = b9j.pguid.sequence();
+        return _singleton.next.apply(_singleton, arguments);
+    };
+
+/*
+ * =head2 b9j.pguid.assign( $element )
+ *
+ * Uses the b9j.pguid sequence singleton to assign a pguid to $element, if necessary
+ *
+ * Returns either the existing or newly-generated identifier
+ * 
+ */
+
+    pckg.assign = function() {
+        var _singleton = b9j.pguid.sequence();
+        return _singleton.assign.apply(_singleton, arguments);
+    };
+
+/*
+ * =head2 b9j.pguid.sequence()
+ *
+ * Returns the b9j.pguid sequence singleton, which is configured with the
+ * namespace "b9j-pguid"
+ *
+ */
+    var singleton;
+    pckg.sequence = function() {
+        if (singleton) return singleton;
+        return singleton = new b9j.pguid.Sequence({ namespace: "b9j-pguid" });
+    };
 
 /*
  * =head2 new b9j.pguid.Sequence( { ... } ) 
@@ -91,45 +130,6 @@
         }
     };
 
-    var singleton;
-
-/*
- * =head2 b9j.pguid.sequence()
- *
- * Returns the b9j.pguid sequence singleton, which is configured with the
- * namespace "b9j-pguid"
- *
- */
-    pckg.sequence = function() {
-        if (singleton) return singleton;
-        return singleton = new b9j.pguid.Sequence({ namespace: "b9j-pguid" });
-    };
-
-/*
- * =head2 b9j.pguid.next()
- *
- * Returns the next identifier in the b9j.pguid sequence singleton
- *
- */
-
-    pckg.next = function() {
-        var _singleton = b9j.pguid.sequence();
-        return _singleton.next.apply(_singleton, arguments);
-    };
-
-/*
- * =head2 b9j.pguid.assign( $element )
- *
- * Uses the b9j.pguid sequence singleton to assign a pguid to $element, if necessary
- *
- * Returns either the existing or newly-generated identifier
- * 
- */
-
-    pckg.assign = function() {
-        var _singleton = b9j.pguid.sequence();
-        return _singleton.assign.apply(_singleton, arguments);
-    };
 
 }());
 

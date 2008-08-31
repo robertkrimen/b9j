@@ -5,7 +5,7 @@ BUILD_tmp := build/tmp
 BUILD_documentation := build/documentation
 BUILD_test := build/test
 
-b9j_VERSION := 0.1.3
+b9j_VERSION := 0.1.4
 SHIP := $(BUILD)/b9j-$(b9j_VERSION)
 SHIP_ZIP := $(BUILD)/b9j-$(b9j_VERSION).zip
 

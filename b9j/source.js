@@ -5,7 +5,7 @@
  *
  * =head1 VERSION
  *
- * Version 0.1.3
+ * Version 0.1.4
  *
  * =head1 CATALOG
  *
@@ -17,6 +17,7 @@
  * [b9j.uri.query](http://appengine.bravo9.com/b9j/documentation/uri.html) - URI query parsing, manipulation, and generation  
  * [b9j.digest.sha256](http://appengine.bravo9.com/b9j/documentation/digest.html) - A SHA-256 digester  
  * [b9j.random](http://appengine.bravo9.com/b9j/documentation/random.html) - Generate pseudo-random binary, hexadecimal, or base64 data of arbritrary length
+ * [b9j.pguid](http://appengine.bravo9.com/b9j/documentation/pguid.html) - Page-unique identifier generation
  *
  * =head2 b9j.namespace - Namespace creation and aliasing
  *
@@ -68,9 +69,13 @@
  *
  *          generate16      # Return a pseudo-random hexadecimal (base16) value
  *          generate64      # Return a pseudo-random base64 value
- *          generate        #  Return a pseudo-random binary value
+ *          generate        # Return a pseudo-random binary value
  *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/random.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/random.html)
+ *
+ * =head2 b9j.pguid - Page-unique identifier generation
+ *
+ * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/pguid.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/pguid.html)
  *
  * =head1 AUTHOR
  *
