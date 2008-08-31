@@ -16,60 +16,62 @@
  * [b9j.uri](http://appengine.bravo9.com/b9j/documentation/uri.html)  - URI (Uniform Resource Identifier) parsing, manipulation, and generation  
  * [b9j.uri.query](http://appengine.bravo9.com/b9j/documentation/uri.html) - URI query parsing, manipulation, and generation  
  * [b9j.digest.sha256](http://appengine.bravo9.com/b9j/documentation/digest.html) - A SHA-256 digester  
- * [b9j.random](http://appengine.bravo9.com/b9j/documentation/random.html) - Generate pseudo-random binary, hexadecimal, or base64 data of arbritrary length
+ * [b9j.random](http://appengine.bravo9.com/b9j/documentation/random.html) - Generate pseudo-random binary, hexadecimal, or base64 data of arbritrary length  
  * [b9j.pguid](http://appengine.bravo9.com/b9j/documentation/pguid.html) - Page-unique identifier generation
  *
  * =head2 b9j.namespace - Namespace creation and aliasing
  *
- *          declare         # Declare a namespace
- *          using           # Alias one or more namespace(s) to a shorthand name
+ *          namespace.declare              # Declare a namespace
+ *          namespace.using                # Alias one or more namespace(s) to a shorthand name
  *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/namespace.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/namespace.html)
  *
  * =head2 b9j.test - A wrapper around YUI Test to make simple testing easy
  *
- *          b9jTest         # An easy-to-use test framework based on YUI Test
- *                          # NOTE: Requires YUI Test to be loaded
+ *          test.b9jTest                   # An easy-to-use test framework based on YUI Test
+ *                                         # NOTE: Requires YUI Test to be loaded
  *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/test.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/test.html)
  *
  * =head2 b9jTest - A bundled version of b9j.test
  *
+ *          b9jTest                        # An easy-to-use test framework based on YUI Test
+ *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/b9jTest.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/b9jTest.html)
  *
  * =head2 b9j.path - UNIX-style path parsing, manipulation, and generation
  *
- *          Path            # A class representing a URI/UNIX-style path
+ *          path.Path                      # A class representing a URI/UNIX-style path
  *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/path.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/path.html)
  *
  * =head2 b9j.uri - URI (Uniform Resource Identifier) parsing, manipulation, and generation
  *
- *          URI             # A class representing a URI
- *          parse           # Parse a URI string
+ *          uri.URI                        # A class representing a URI
+ *          uri.parse                      # Parse a URI string
  *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/uri.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/uri.html)
  *
  * =head2 b9j.uri.query - URI query parsing, manipulation, and generation
  *
- *          Query           # A class representing a URI query
- *          parse           # Parse a URI query string
+ *          uri.query.Query                # A class representing a URI query
+ *          uri.query.parse                # Parse a URI query string
  *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/uri.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/uri.html)
  *
  * =head2 b9j.digest.sha256 - A SHA-256 digester
  *
- *          calculate16     # Return a SHA-256 digest as a hexadecimal (base16) value
- *          calculate64     # Return a SHA-256 digest as a base64 value
- *          calculate       # Return a SHA-256 digest as a binary string (base256) value
+ *          digest.sha256.calculate16      # Calculate a hexadecimal (base 16) SHA-256 digest
+ *          digest.sha256.calculate64      # Calculate a base64 SHA-256 digest
+ *          digest.sha256.calculate        # Calculate a binary-string (base 256) SHA-256 digest
  *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/digest.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/digest.html)
  *
  * =head2 b9j.random - Generate pseudo-random binary, hexadecimal, or base64 data of arbritrary length
  *
- *          generate16      # Return a pseudo-random hexadecimal (base16) value
- *          generate64      # Return a pseudo-random base64 value
- *          generate        # Return a pseudo-random binary value
+ *          random.generate16              # Generate a pseudo-random hexadecimal (base 16) value
+ *          random.generate64              # Generate a pseudo-random base64 value
+ *          random.generate                # Generate a pseudo-random binary string (base 256)
  *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/random.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/random.html)
  *

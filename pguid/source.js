@@ -17,7 +17,7 @@
  * =head1 DESCRIPTION
  *
  * A page-unique identifier is useful when you need to assign some identifier to DOM element but can't
- * be bothered to dream up a custom one (every time). 
+ * be bothered to dream up a custom one (every time)
  *
  * =head1 METHODS
  *

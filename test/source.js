@@ -242,11 +242,13 @@
         YAHOO.util.Event.onDOMReady(function(){
 
             var logger = new YAHOO.tool.TestLogger("testLogger", { thresholdMin: 1000, thresholdMax: 1000 });
+            logger.collapse();
 
             var name, setUp, tearDown;
             name = "b9jTest";
             
             var tester = new b9j.test.Tester();
+            tester._informer();
 
             YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
 
@@ -279,18 +281,34 @@
         _endTest: function(error) {
             if (error) {
                 this._errors.push({ test: this._test, error: error });
-                YAHOO.log("fail " + this._test + ":\n" + error, "info", "TestRunner");
+                this._inform("fail " + this._test + ":\n" + error);
             }
             else {
-                YAHOO.log("pass " + this._test, "info", "TestRunner");
+                this._inform("pass " + this._test);
             }
         },
 
         _doneTesting: function(testCase) {
-            YAHOO.log(testCase.name + ": " + "Passed:" + (this._tests - this._errors.length) + " Failed:" + this._errors.length + " Total:" + this._tests, "info", "TestRunner");
+            document.body.scrollTop = document.body.scrollHeight;
+            this._inform(testCase.name + ": " + "Passed:" + (this._tests - this._errors.length) + " Failed:" + this._errors.length + " Total:" + this._tests);
             if (this._errors.length)
                 YAHOO.util.Assert.fail("FAIL " + this._errors.length + " / " + this._tests);
-        }
+        },
+
+        _inform: function(message) {
+            YAHOO.log(message, "info", "TestRunner");
+            this._informer().innerHTML += message + "\n";
+        },
+
+        _informer: function() {
+            if (this.informer)
+                return this.informer;
+            var informer = $("#testInformer").get(0);
+            if (! informer) {
+                $(document.body).append("<pre style=\"float: left; text-align: left;\" id=\"testInformer\"></pre>");
+            }
+            return this.informer = $("#testInformer").get(0);
+        },
 
     };
 

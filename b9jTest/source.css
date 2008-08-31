@@ -2,3 +2,7 @@ body {
     padding: 1em;
     font-size: 167%;
 }
+
+#testLogger {
+    float: right;
+}
