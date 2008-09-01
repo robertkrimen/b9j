@@ -77,6 +77,11 @@
  *
  * =head2 b9j.pguid - Page-unique identifier generation
  *
+ *          pguid.next                      # Generate a stock pguid
+ *          pguid.assign                    # Given an element, generate and assign the next
+ *                                          # stock pguid (unless the element already has one)
+ *          pguid.Sequence                  # A pguid-generator class
+ *
  * [&raquo; Documentation](http://appengine.bravo9.com/b9j/documentation/pguid.html) | [&raquo; Test](http://appengine.bravo9.com/b9j/test/pguid.html)
  *
  * =head1 AUTHOR
