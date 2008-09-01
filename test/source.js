@@ -235,9 +235,10 @@
     var Yl = YAHOO.lang;
     var Yu = YAHOO.util;
     var YuA = YAHOO.util.Assert;
+    var TestRunner = YAHOO.tool.TestRunner;
     var pckg = b9j.namespace.declare('b9j.test');
 
-    pckg.b9jTest = function(given) {
+    pckg.b9jTest = function(testRunner, reportHandler) {
 
         YAHOO.util.Event.onDOMReady(function(){
 
@@ -250,18 +251,25 @@
             var tester = new b9j.test.Tester();
             tester._informer();
 
-            YAHOO.tool.TestRunner.add(new YAHOO.tool.TestCase({
+            TestRunner.add(new YAHOO.tool.TestCase({
 
                 name: name,
 
                 testTest: function() {
-                    given(tester);
+                    testRunner(tester);
                     tester._doneTesting(this);
                 }
 
             }));    
 
-            YAHOO.tool.TestRunner.run();
+            if (reportHandler) {
+                TestRunner.subscribe(TestRunner.COMPLETE_EVENT, function (result) {
+                    reportHandler(tester._report(), result);
+                });
+            }
+
+            TestRunner.run();
+
         });
     };
 
@@ -348,6 +356,15 @@
             }
             return this.informer = $("#testInformer").get(0);
         },
+
+        _report: function() {
+            var total = this._tests;
+            var pass = total - this._errors.length;
+            var fail = this._errors.length;
+            var failed = this._errors;
+
+            return { total: total, pass: pass, fail: fail, failed: failed };
+        }
 
     };
 
