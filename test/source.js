@@ -268,6 +268,10 @@
                 });
             }
 
+            TestRunner.subscribe(TestRunner.COMPLETE_EVENT, function (result) {
+                reportHandler(tester._report(), result);
+            });
+
             TestRunner.run();
 
         });

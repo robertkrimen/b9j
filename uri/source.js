@@ -185,6 +185,17 @@
     };
 
 /*
+ * =head2 b9j.uri.location()
+ *
+ * Returns a new URI object representing the current value of `window.location`
+ *
+ */
+
+    pckg.location = function() {
+        return new b9j.uri.URI(window.location);
+    };
+
+/*
  * =head2 new b9j.uri.Uri( $uri )
  *
  * Returns a new URI object representing $uri, which can either be a string or a hash resulting
