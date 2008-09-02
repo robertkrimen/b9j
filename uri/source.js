@@ -192,7 +192,7 @@
  */
 
     pckg.location = function() {
-        return new b9j.uri.URI(window.location);
+        return new b9j.uri.URI(window.location.href);
     };
 
 /*

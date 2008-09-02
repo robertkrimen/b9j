@@ -4,7 +4,9 @@ b9jTest: $(BUILD)/b9jTest.js $(BUILD)/b9jTest.css
 yui_VERSION ?= 2.5.2
 
 $(BUILD)/b9jTest.js: $(BUILD)/b9jTest.uncompressed.js $(yuicompressor_JAR)
-	$(yuicompress) $< > $@
+	$(yuicompress) $< -o $@.tmp.js
+	js -C $@.tmp.js
+	mv $@.tmp.js $@
 
 $(BUILD)/b9jTest.css: $(BUILD)/b9jTest.uncompressed.css $(yuicompressor_JAR)
 	$(yuicompress) $< > $@

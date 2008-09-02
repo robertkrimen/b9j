@@ -46,7 +46,9 @@ $(BUILD)/b9j.bootstrap.uncompressed.js: b9j/source.js namespace/source.js test/s
 	cat $^ > $@
 
 $(BUILD)/b9j.bootstrap.js: $(BUILD)/b9j.bootstrap.uncompressed.js $(yuicompressor_JAR)
-	$(yuicompress) $< -o $@
+	$(yuicompress) $< -o $@.tmp.js
+	js -C $@.tmp.js
+	mv $@.tmp.js $@
 
 $(PACKAGE_documentation): $(BUILD_documentation)/%.html: %/source.js
 	mkdir -p $(BUILD_documentation)
@@ -62,7 +64,9 @@ $(BUILD)/b9j.uncompressed.js: $(b9j_source)
 	cat $^ > $@
 
 $(BUILD)/b9j.js: $(BUILD)/b9j.uncompressed.js $(yuicompressor_JAR)
-	$(yuicompress) $< -o $@
+	$(yuicompress) $< -o $@.tmp.js
+	js -C $@.tmp.js
+	mv $@.tmp.js $@
 
 build: _build $(BUILD)/b9j.bootstrap.js $(BUILD)/b9j.js documentation b9jTest $(PACKAGE_test)
 
