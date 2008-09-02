@@ -48,4 +48,13 @@
         });
     };
 
+/*
+    pckg._TestRunner_COMPLETE_EVENT = function(report) {
+        var uri = b9j.uri.location();
+        if (uri.query.get.b9jSmoke) {
+            console.log(report);
+        }
+    };
+*/
+
 }());

@@ -268,9 +268,11 @@
                 });
             }
 
+/*
             TestRunner.subscribe(TestRunner.COMPLETE_EVENT, function (result) {
-                reportHandler(tester._report(), result);
+                b9j.test.smoke._TestRunner_COMPLETE_EVENT(tester._report(), result);
             });
+*/
 
             TestRunner.run();
 

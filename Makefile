@@ -15,8 +15,13 @@ yuicompressor_JAR := $(BUILD_tmp)/yuicompressor-$(yuicompressor_VERSION)/$(BUILD
 yuicompressor_ZIP := $(BUILD_tmp)/yuicompressor-$(yuicompressor_VERSION).zip
 yuicompress := java -jar $(yuicompressor_JAR)
 
+#PACKAGE := b9j-YUI b9j namespace test b9jTest path uri digest random pguid
+#PACKAGE := b9j-YUI b9j namespace test
+#PACKAGE := test
 PACKAGE := b9j-YUI b9j namespace test b9jTest path uri digest random pguid
 PACKAGE_source := $(PACKAGE:%=%/source.js)
+b9j_source := $(filter-out b9jTest, $(PACKAGE))
+b9j_source := $(b9j_source:%=%/source.js)
 PACKAGE_documentation := $(PACKAGE:%=$(BUILD_documentation)/%.html)
 PACKAGE_test := $(PACKAGE:%=$(BUILD_test)/%.html)
 
@@ -34,7 +39,10 @@ $(yuicompressor_JAR): $(yuicompressor_ZIP)
 	(cd $(BUILD_tmp) && unzip `basename $(yuicompressor_ZIP)`)
 	touch $@
 
-$(BUILD)/b9j.bootstrap.uncompressed.js: b9j-YUI/source.js b9j/source.js namespace/source.js test/source.js
+# $(BUILD)/b9j.bootstrap.uncompressed.js: b9j-YUI/source.js b9j/source.js namespace/source.js test/source.js
+#     cat $^ > $@
+
+$(BUILD)/b9j.bootstrap.uncompressed.js: b9j/source.js namespace/source.js test/source.js
 	cat $^ > $@
 
 $(BUILD)/b9j.bootstrap.js: $(BUILD)/b9j.bootstrap.uncompressed.js $(yuicompressor_JAR)
@@ -50,7 +58,7 @@ $(PACKAGE_test): $(BUILD_test)/%.html: %/test.js test.html
 	cp test.html $@
 	perl -pi -e 'my $$file = "$@.js"; $$file =~ s/(?:.*\/)?([^\/]+)$$/$$1/; s{\$$TEST}{./$$file}' $@
 
-$(BUILD)/b9j.uncompressed.js: $(PACKAGE_source)
+$(BUILD)/b9j.uncompressed.js: $(b9j_source)
 	cat $^ > $@
 
 $(BUILD)/b9j.js: $(BUILD)/b9j.uncompressed.js $(yuicompressor_JAR)
