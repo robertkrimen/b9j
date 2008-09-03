@@ -1,5 +1,9 @@
 .PHONY: all clean build _build ship documentation
 
+CHECK_js := js -s -e 'var window = {}; var navigator = { userAgent: "" };' -f
+CHECK_js_with_YAHOO := js -s -e 'var YAHOO = { lang: {}, util: {}, tool: {} }; var window = {}; var navigator = { userAgent: "" };' -f
+CHECK_js_syntax := js -s -C
+
 BUILD := build
 BUILD_tmp := build/tmp
 BUILD_documentation := build/documentation
@@ -22,7 +26,8 @@ PACKAGE := b9j-YUI b9j namespace test b9jTest path uri digest random pguid
 PACKAGE_source := $(PACKAGE:%=%/source.js)
 b9j_source := $(filter-out b9jTest, $(PACKAGE))
 b9j_source := $(b9j_source:%=%/source.js)
-PACKAGE_documentation := $(PACKAGE:%=$(BUILD_documentation)/%.html)
+PACKAGE_documentation := $(filter-out b9j-YUI, $(PACKAGE))
+PACKAGE_documentation := $(PACKAGE_documentation:%=$(BUILD_documentation)/%.html)
 PACKAGE_test := $(PACKAGE:%=$(BUILD_test)/%.html)
 
 all: build
@@ -47,7 +52,7 @@ $(BUILD)/b9j.bootstrap.uncompressed.js: b9j/source.js namespace/source.js test/s
 
 $(BUILD)/b9j.bootstrap.js: $(BUILD)/b9j.bootstrap.uncompressed.js $(yuicompressor_JAR)
 	$(yuicompress) $< -o $@.tmp.js
-	js -C $@.tmp.js
+	$(CHECK_js_syntax) $@.tmp.js
 	mv $@.tmp.js $@
 
 $(PACKAGE_documentation): $(BUILD_documentation)/%.html: %/source.js
@@ -65,7 +70,7 @@ $(BUILD)/b9j.uncompressed.js: $(b9j_source)
 
 $(BUILD)/b9j.js: $(BUILD)/b9j.uncompressed.js $(yuicompressor_JAR)
 	$(yuicompress) $< -o $@.tmp.js
-	js -C $@.tmp.js
+	$(CHECK_js) $@.tmp.js
 	mv $@.tmp.js $@
 
 build: _build $(BUILD)/b9j.bootstrap.js $(BUILD)/b9j.js documentation b9jTest $(PACKAGE_test)
@@ -84,6 +89,7 @@ wipe:
 
 _build:
 	mkdir -p $(BUILD)
+	for source in $(PACKAGE_source); do $(CHECK_js_syntax) $$source; done
 
 ship: wipe build
 	find $(BUILD)/documentation $(BUILD)/test -name static -prune -or -type f -name "*.html"  -print -exec tidy -mi --vertical-space no --tidy-mark no -asxml --wrap 0 {} \;

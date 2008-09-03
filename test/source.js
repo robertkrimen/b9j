@@ -232,13 +232,14 @@
         };
     }
 
-    var Yl = YAHOO.lang;
-    var Yu = YAHOO.util;
-    var YuA = YAHOO.util.Assert;
-    var TestRunner = YAHOO.tool.TestRunner;
     var pckg = b9j.namespace.declare('b9j.test');
 
     pckg.b9jTest = function(testRunner, reportHandler) {
+
+        var Yl = YAHOO.lang;
+        var Yu = YAHOO.util;
+        var YuA = YAHOO.util.Assert;
+        var TestRunner = YAHOO.tool.TestRunner;
 
         YAHOO.util.Event.onDOMReady(function(){
 
@@ -278,6 +279,8 @@
     };
 
     pckg.Tester = function(given) {
+        if (! pckg._built_Tester) pckg._build_Tester()
+
         if (! given) given = {}; 
         this._errors = [];
         this._tests = 0;
@@ -372,56 +375,64 @@
 
     };
 
-    var _test = [
-'areEqual',
-'areNotEqual',
-'areSame',
-'areNotSame',
-'fail',
-'isTypeOf',
-'isArray',
-'isBoolean',
-'isFunction',
-'isNumber',
-'isObject',
-'isString',
-'isInstanceOf',
-'isTrue',
-'isFalse',
-'isNaN',
-'isNotNaN',
-'isNull',
-'isNotNull',
-'isUndefined',
-'isNotUndefined'
-    ];
+    pckg._build_Tester = function() {
 
-    for (ii = 0; ii < _test.length; ii++) {
-        var name = _test[ii];
-        pckg.Tester.prototype[name] = assertionToTest(YAHOO.util.Assert[name]);
+        var Yl = YAHOO.lang;
+        var Yu = YAHOO.util;
+        var YuA = YAHOO.util.Assert;
+        var TestRunner = YAHOO.tool.TestRunner;
+
+        var _test = [
+                'areEqual',
+                'areNotEqual',
+                'areSame',
+                'areNotSame',
+                'fail',
+                'isTypeOf',
+                'isArray',
+                'isBoolean',
+                'isFunction',
+                'isNumber',
+                'isObject',
+                'isString',
+                'isInstanceOf',
+                'isTrue',
+                'isFalse',
+                'isNaN',
+                'isNotNaN',
+                'isNull',
+                'isNotNull',
+                'isUndefined',
+                'isNotUndefined'
+            ];
+
+        for (ii = 0; ii < _test.length; ii++) {
+            var name = _test[ii];
+            pckg.Tester.prototype[name] = assertionToTest(YAHOO.util.Assert[name]);
+        }
+
+        pckg.Tester.prototype.like = assertionToTest(function(match, value, message) {
+            if (Yl.isString(match)) {
+                match = new RegExp(match);
+            }
+            if (! Yl.isValue(value) || ! Yl.isString(value) || ! value.match(match)) {
+                throw new Yu.ComparisonFailure(YuA._formatMessage(message, "Value does not match regular expression"), match, value);
+            }
+        });
+
+        pckg.Tester.prototype.unlike = assertionToTest(function(match, value, message) {
+            if (Yl.isString(match)) {
+                match = new RegExp(match);
+            }
+            if (! Yl.isValue(value) || ! Yl.isString(value) || ! value.match(match)) {
+                return;
+            }
+            throw new Yu.UnexpectedValue(YuA._formatMessage(message, "Value should not match regular expression"), match, value);
+        });
+
+        pckg.Tester.prototype.is = pckg.Tester.prototype.areEqual;
+
+        pckg.Tester.prototype.isnt = pckg.Tester.prototype.areNotEqual;
     }
-
-    pckg.Tester.prototype.like = assertionToTest(function(match, value, message) {
-        if (Yl.isString(match)) {
-            match = new RegExp(match);
-        }
-        if (! Yl.isValue(value) || ! Yl.isString(value) || ! value.match(match)) {
-            throw new Yu.ComparisonFailure(YuA._formatMessage(message, "Value does not match regular expression"), match, value);
-        }
-    });
-
-    pckg.Tester.prototype.unlike = assertionToTest(function(match, value, message) {
-        if (Yl.isString(match)) {
-            match = new RegExp(match);
-        }
-        if (! Yl.isValue(value) || ! Yl.isString(value) || ! value.match(match)) {
-            return;
-        }
-        throw new Yu.UnexpectedValue(YuA._formatMessage(message, "Value should not match regular expression"), match, value);
-    });
-
-    pckg.Tester.prototype.is = pckg.Tester.prototype.areEqual;
-
-    pckg.Tester.prototype.isnt = pckg.Tester.prototype.areNotEqual;
 
 }());

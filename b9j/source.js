@@ -110,6 +110,8 @@
 
 if (typeof b9j == "undefined" || !b9j) {
     var b9j = {};
+    if (! window.b9j) // Syntax checking hack
+        window.b9j = b9j
 }
 
 (function(){
@@ -229,9 +231,9 @@ if (typeof b9j == "undefined" || !b9j) {
             }
             else {
                 for (var ii = 0; ii < copy.length; ii++) {
-                    var value = copy[ii];
-                    if (b9j.isObject(value))
-                        copy[ii] = clone(value, given);
+                    var ii_value = copy[ii];
+                    if (b9j.isObject(ii_value))
+                        copy[ii] = clone(ii_value, given);
                 }
             }
             return copy;
@@ -243,18 +245,18 @@ if (typeof b9j == "undefined" || !b9j) {
             else if (given.shallowObject) {
                 for (ii in copy) {
                     if (copy.hasOwnProperty(ii)) {
-                        var value = copy[ii];
-                        if (b9j.isArray(value))
-                            copy[ii] = clone(value, given);
+                        var ii_value = copy[ii];
+                        if (b9j.isArray(ii_value))
+                            copy[ii] = clone(ii_value, given);
                     }
                 }
             }
             else {
                 for (ii in copy) {
                     if (copy.hasOwnProperty(ii)) {
-                        var value = copy[ii];
-                        if (b9j.isObject(value))
-                            copy[ii] = clone(value, given);
+                        var ii_value = copy[ii];
+                        if (b9j.isObject(ii_value))
+                            copy[ii] = clone(ii_value, given);
                     }
                 }
             }
