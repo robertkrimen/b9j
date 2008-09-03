@@ -216,22 +216,6 @@
 
 (function(){
 
-    function assertionToTest(test) {
-        return function() {
-            this._beginTest();
-            var error;
-            try {
-                test.apply(YuA, arguments);
-            }
-            catch (thrown) {
-                if (! thrown instanceof YAHOO.util.AssertionError) throw(thrown);
-                error = thrown;
-            }
-            this._endTest(error);
-            return error ? false : true;
-        };
-    }
-
     var pckg = b9j.namespace.declare('b9j.test');
 
     pckg.b9jTest = function(testRunner, reportHandler) {
@@ -381,6 +365,22 @@
         var Yu = YAHOO.util;
         var YuA = YAHOO.util.Assert;
         var TestRunner = YAHOO.tool.TestRunner;
+
+        var assertionToTest = function(test)  {
+            return function() {
+                this._beginTest();
+                var error;
+                try {
+                    test.apply(YuA, arguments);
+                }
+                catch (thrown) {
+                    if (! thrown instanceof YAHOO.util.AssertionError) throw(thrown);
+                    error = thrown;
+                }
+                this._endTest(error);
+                return error ? false : true;
+            };
+        }
 
         var _test = [
                 'areEqual',

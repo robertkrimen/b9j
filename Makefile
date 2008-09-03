@@ -9,7 +9,7 @@ BUILD_tmp := build/tmp
 BUILD_documentation := build/documentation
 BUILD_test := build/test
 
-b9j_VERSION := 0.1.5
+b9j_VERSION := 0.1.6
 SHIP := $(BUILD)/b9j-$(b9j_VERSION)
 SHIP_ZIP := $(BUILD)/b9j-$(b9j_VERSION).zip
 
@@ -22,7 +22,7 @@ yuicompress := java -jar $(yuicompressor_JAR)
 #PACKAGE := b9j-YUI b9j namespace test b9jTest path uri digest random pguid
 #PACKAGE := b9j-YUI b9j namespace test
 #PACKAGE := test
-PACKAGE := b9j-YUI b9j namespace test b9jTest path uri digest random pguid
+PACKAGE := b9j-YUI b9j namespace test b9jTest path uri digest random pguid chunker
 PACKAGE_source := $(PACKAGE:%=%/source.js)
 b9j_source := $(filter-out b9jTest, $(PACKAGE))
 b9j_source := $(b9j_source:%=%/source.js)
