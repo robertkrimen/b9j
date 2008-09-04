@@ -219,9 +219,9 @@
 
 
         clone: function() {
-            var uri = b9j.clone(this._uri);
-            uri.query = b9j.clone(this._query._store, { shallowObject: 1 });
-            return new b9j.uri.URI(uri);
+//            var uri = b9j.clone(this._uri);
+//            uri.query = b9j.clone(this._query._store, { shallowObject: 1 });
+            return new b9j.uri.URI(this.toString());
         },
 
         source: function(value) {
@@ -573,6 +573,7 @@
         parent: function() {
             var clone = this.clone();
             clone.up.apply(clone, arguments);
+            return clone;
         },
 
 /*
@@ -589,6 +590,7 @@
         child: function() {
             var clone = this.clone();
             clone.down.apply(clone, arguments);
+            return clone;
         },
 
 /*

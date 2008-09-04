@@ -70,8 +70,8 @@
         report.reporter_url = window.location.href;
 
         var toURI;
-        toURI = "http://localhost:8080/";
-        toURI = "http://browsersmoke.appspot.com/";
+        toURI = "http://localhost:8080/api/report/submit/";
+        toURI = "http://browsersmoke.appspot.com/api/report/submit/";
         b9j.chunker.send(toURI + "chunker", report);
         b9j.chunker.send(toURI + "chunker", report);
 

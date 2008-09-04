@@ -39,6 +39,14 @@ function _testURI(test) {
         test.is("http://example.com/a/b/c/", uri);
     }
 
+    {
+        uri = new b9j.uri.URI("http://example.com");
+        test.is("http://example.com/", uri);
+
+        test.is("http://example.com/a/b", uri.child("a", "b"));
+        test.is("http://example.com/a", uri.child("a", "c/").parent());
+    }
+
     uri = base = new b9j.uri.URI("http://user:password@example.com:80/path/?a=1&b=2&c=3&c=4&c=5#fragment");
     test.is("http://user:password@example.com:80/path/?a=1&b=2&c=3&c=4&c=5#fragment", uri);
     test.is("http", uri.scheme());
