@@ -255,6 +255,16 @@ function _testURIQuery(test) {
         test.is("a=1&b=2&c=7", query);
     }
 
+    {
+        query = base.clone();
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6", query);
+
+        query.append("d=7&d=1");
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6&d=7&d=1", query);
+
+        query.append(null);
+        test.is("a=1&b=2&c=3&c=4&c=5&c=6", query);
+    }
 }
 
 b9jTest(function(test) {

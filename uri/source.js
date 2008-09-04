@@ -939,6 +939,30 @@
         },
 
 /*
+ * =head2 query.append( $queryString )
+ *
+ * Append $query_string to the output of query.toString()
+ *
+ * This will NOT do any encoding on $queryString, nor can you otherwise
+ * manipulate the contests using query.set, etc.
+ *
+ * Pass in null to erase the previous $querString
+ *
+ * Returns query
+ *
+ */
+
+        append: function(queryString) {
+            if (b9j.isValue(queryString)) {
+                this._queryString = queryString;
+            }
+            else {
+                delete this._queryString;
+            }
+            return this;
+        },
+
+/*
  * =head2 query.isEmpty()
  *
  * Returns true if query is empty ("")
@@ -987,6 +1011,10 @@
                     }
                 }
             } 
+            var queryString = this._queryString;
+            if (null != queryString) {
+                keyValueList.push(queryString);
+            }
             toString = keyValueList.join("&");
             return toString;
         }
