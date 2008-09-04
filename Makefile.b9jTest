@@ -11,7 +11,7 @@ $(BUILD)/b9jTest.js: $(BUILD)/b9jTest.uncompressed.js $(yuicompressor_JAR)
 $(BUILD)/b9jTest.css: $(BUILD)/b9jTest.uncompressed.css $(yuicompressor_JAR)
 	$(yuicompress) $< > $@
 
-$(BUILD)/b9jTest.uncompressed.js: $(BUILD_tmp)/jquery.js $(BUILD_tmp)/yahoo.js $(BUILD_tmp)/dom.js $(BUILD_tmp)/event.js $(BUILD_tmp)/logger.js $(BUILD_tmp)/yuitest.js $(BUILD_tmp)/container.js $(BUILD)/b9j.uncompressed.js b9jTest/source.js
+$(BUILD)/b9jTest.uncompressed.js: $(BUILD_tmp)/jquery.js $(BUILD_tmp)/yahoo.js $(BUILD_tmp)/json.js $(BUILD_tmp)/dom.js $(BUILD_tmp)/event.js $(BUILD_tmp)/logger.js $(BUILD_tmp)/yuitest.js $(BUILD_tmp)/container.js $(BUILD)/b9j.uncompressed.js b9jTest/source.js
 	echo > $@
 	for file in $^; do cat $$file >> $@; echo >> $@; done
 
@@ -26,6 +26,9 @@ $(BUILD_tmp)/yahoo.js:
 
 $(BUILD_tmp)/dom.js:
 	wget 'http://yui.yahooapis.com/$(yui_VERSION)/build/dom/dom.js' -O $@
+
+$(BUILD_tmp)/json.js:
+	wget 'http://yui.yahooapis.com/$(yui_VERSION)/build/json/json.js' -O $@
 
 $(BUILD_tmp)/event.js:
 	wget 'http://yui.yahooapis.com/$(yui_VERSION)/build/event/event.js' -O $@

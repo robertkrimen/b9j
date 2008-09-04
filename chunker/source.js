@@ -39,7 +39,7 @@
             message = encodeURIComponent(message)
 
         var payload;
-        var payload_size = 10;
+        var payload_size = 1400;
         if (message.length > payload_size) {
             payload = [];
             var from = 0;
@@ -57,6 +57,7 @@
         else 
             payload = [ message ];
 
+        jQuery.ajaxSetup({ async: false });
         sendChunk(uri, { ml: payload.length }, payload[0], function(data){
             var rank = 0;
             if (data.complete && handler) {

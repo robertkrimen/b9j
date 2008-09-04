@@ -22,7 +22,7 @@ yuicompress := java -jar $(yuicompressor_JAR)
 #PACKAGE := b9j-YUI b9j namespace test b9jTest path uri digest random pguid
 #PACKAGE := b9j-YUI b9j namespace test
 #PACKAGE := test
-PACKAGE := b9j-YUI b9j namespace test b9jTest path uri digest random pguid chunker
+PACKAGE := b9j-YUI b9j namespace test test.smoke b9jTest path uri digest random pguid chunker
 PACKAGE_source := $(PACKAGE:%=%/source.js)
 b9j_source := $(filter-out b9jTest, $(PACKAGE))
 b9j_source := $(b9j_source:%=%/source.js)
