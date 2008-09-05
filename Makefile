@@ -1,4 +1,5 @@
 .PHONY: all clean build _build ship build_documentation build_test bootstrap
+.PHONY: source/test.html
 
 b9j_version := 0.1.6
 
@@ -50,19 +51,11 @@ yui_css := $(build_tmp)/yui.css
 
 all: build
 
-# $(BUILD)/b9jTest.js: $(BUILD)/b9jTest.uncompressed.js $(yuicompressor_JAR)
-#     $(yuicompress) $< -o $@.tmp.js
-#     js -C $@.tmp.js
-#     mv $@.tmp.js $@
+source/test.html:
+	echo '<html><head><link rel="stylesheet" type="text/css" href="../build/b9j.bootstrap.css"></head><body style="font-size: 88%; text-align: left;">' > $@
+	for package in $(sort $(package)); do echo "<h2><a href='./$$package/test.html'>$$package</a></h2><iframe width="100%" src='./$$package/test.html'></iframe><br/>"; done >> $@
+	echo '</body></html>' >> $@
 
-# $(BUILD)/b9jTest.css: $(BUILD)/b9jTest.uncompressed.css $(yuicompressor_JAR)
-#     $(yuicompress) $< > $@
-
-# $(BUILD)/b9jTest.uncompressed.js: $(BUILD_tmp)/jquery.js $(BUILD_tmp)/yahoo.js $(BUILD_tmp)/json.js $(BUILD_tmp)/dom.js $(BUILD_tmp)/event.js $(BUILD_tmp)/logger.js $(BUILD_tmp)/yuitest.js $(BUILD_tmp)/container.js $(BUILD)/b9j.uncompressed.js source/b9jTest/source.js
-#     echo > $@
-#     for file in $^; do cat $$file >> $@; echo >> $@; done
-#
-#
 
 _build: $(yuicompressor_jar) bootstrap
 	mkdir -p $(build)
