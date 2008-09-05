@@ -2,6 +2,7 @@
 
 b9jTest: $(BUILD)/b9jTest.js $(BUILD)/b9jTest.css
 yui_VERSION ?= 2.5.2
+# wget_YUI := wget http://yui.yahooapis.com/$(yui_VERSION)/build
 
 $(BUILD)/b9jTest.js: $(BUILD)/b9jTest.uncompressed.js $(yuicompressor_JAR)
 	$(yuicompress) $< -o $@.tmp.js
@@ -11,7 +12,7 @@ $(BUILD)/b9jTest.js: $(BUILD)/b9jTest.uncompressed.js $(yuicompressor_JAR)
 $(BUILD)/b9jTest.css: $(BUILD)/b9jTest.uncompressed.css $(yuicompressor_JAR)
 	$(yuicompress) $< > $@
 
-$(BUILD)/b9jTest.uncompressed.js: $(BUILD_tmp)/jquery.js $(BUILD_tmp)/yahoo.js $(BUILD_tmp)/json.js $(BUILD_tmp)/dom.js $(BUILD_tmp)/event.js $(BUILD_tmp)/logger.js $(BUILD_tmp)/yuitest.js $(BUILD_tmp)/container.js $(BUILD)/b9j.uncompressed.js b9jTest/source.js
+$(BUILD)/b9jTest.uncompressed.js: $(BUILD_tmp)/jquery.js $(BUILD_tmp)/yahoo.js $(BUILD_tmp)/json.js $(BUILD_tmp)/dom.js $(BUILD_tmp)/event.js $(BUILD_tmp)/logger.js $(BUILD_tmp)/yuitest.js $(BUILD_tmp)/container.js $(BUILD)/b9j.uncompressed.js source/b9jTest/source.js
 	echo > $@
 	for file in $^; do cat $$file >> $@; echo >> $@; done
 
@@ -42,7 +43,7 @@ $(BUILD_tmp)/yuitest.js:
 $(BUILD_tmp)/container.js:
 	wget 'http://yui.yahooapis.com/$(yui_VERSION)/build/container/container.js' -O $@
 
-$(BUILD)/b9jTest.uncompressed.css: $(BUILD_tmp)/reset-fonts-grids.css $(BUILD_tmp)/base-min.css $(BUILD_tmp)/logger.css $(BUILD_tmp)/yuitest.css b9jTest/source.css
+$(BUILD)/b9jTest.uncompressed.css: $(BUILD_tmp)/reset-fonts-grids.css $(BUILD_tmp)/base-min.css $(BUILD_tmp)/logger.css $(BUILD_tmp)/yuitest.css source/b9jTest/source.css
 	cat $^ > $@
 
 $(BUILD_tmp)/reset-fonts-grids.css:
