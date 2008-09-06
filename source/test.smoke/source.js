@@ -43,35 +43,23 @@
 
     pckg.report = function(b9jReport) {
 
-        var $ua = YAHOO.env.ua;
-        var bv, b;
-        var report = {};
-        if (0)
-            ;
-        else if ((bv = $ua.air) > 0) b = "air";
-        else if ((bv = $ua.gecko) > 0) b = "gecko";
-        else if ((bv = $ua.ie) > 0) b = "ie";
-        else if ((bv = $ua.opera) > 0) b = "opera";
-        else if ((bv = $ua.webkit) > 0) b = "webkit";
-        else {
-            b = "unknown";
-            bv = 0;
-        }
-            
 //        report.test_name = null;
 //        report.test_author = null;
 
+        var report = {};
         report.total = b9jReport.total;
         report.failed = b9jReport.failed;
-        report.reporter_user_agent = navigator.userAgent;
-        report.reporter_user_agent_browser = b;
-        report.reporter_user_agent_browser_version = bv;
-        report.reporter_user_agent_mobile = $ua.mobile;
-        report.reporter_url = window.location.href;
+
+        var reporter = b9j.environment.detect();
+            
+        for (key in reporter) {
+            report["reporter_" + key] = reporter[key];
+        }
+        report.url = window.location.href;
 
         var toURI;
-        toURI = "http://localhost:8080/api/report/submit/";
-        toURI = "http://browsersmoke.appspot.com/api/report/submit/";
+        toURI = "http://localhost:8080/api/test/report/submit/";
+        toURI = "http://browsersmoke.appspot.com/api/test/report/submit/";
         b9j.chunker.send(toURI + "chunker", report);
         b9j.chunker.send(toURI + "chunker", report);
 

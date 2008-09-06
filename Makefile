@@ -1,7 +1,7 @@
-.PHONY: all clean build _build ship build_documentation build_test bootstrap
+.PHONY: all clean build test _build ship build_documentation build_test bootstrap
 .PHONY: source/test.html
 
-b9j_version := 0.1.6
+b9j_version := 0.1.7
 
 yui_version := 2.5.2
 yuicompressor_version := 2.3.6
@@ -51,11 +51,13 @@ yui_css := $(build_tmp)/yui.css
 
 all: build
 
+test: source/test.html
+	firefox $<
+
 source/test.html:
 	echo '<html><head><link rel="stylesheet" type="text/css" href="../build/b9j.bootstrap.css"></head><body style="font-size: 88%; text-align: left;">' > $@
 	for package in $(sort $(package)); do echo "<h2><a href='./$$package/test.html'>$$package</a></h2><iframe width="100%" src='./$$package/test.html'></iframe><br/>"; done >> $@
 	echo '</body></html>' >> $@
-
 
 _build: $(yuicompressor_jar) bootstrap
 	mkdir -p $(build)
@@ -117,7 +119,7 @@ $(build)/b9j.uncompressed.js: $(b9j_source)
 $(build)/b9j.js: $(build)/b9j.uncompressed.js
 	$(call yuicompress_js,$<,$@)
 
-$(build)/b9jTest.js: $(bootstrap_js) $(build)/b9j.uncompressed.js
+$(build)/b9jTest.js: $(bootstrap_js) $(build)/b9j.uncompressed.js source/b9jTest/source.js
 	cat $^ > $@
 	$(call yuicompress_js,$@,$@)
 
