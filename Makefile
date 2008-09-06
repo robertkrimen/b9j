@@ -14,7 +14,7 @@ build_test := build/test
 ship := $(build)/b9j-$(b9j_version)
 ship_zip := $(build)/b9j-$(b9j_version).zip
 
-package := yui b9j namespace test test.smoke b9jTest path uri digest random pguid chunker
+package := yui b9j namespace test test.smoke b9jTest path uri digest random pguid chunker environment
 package_source := $(package:%=source/%/source.js)
 package_documentation := $(filter-out yui, $(package))
 package_documentation := $(package_documentation:%=$(build_documentation)/%.html)
