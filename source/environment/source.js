@@ -649,8 +649,6 @@
 /*
  * =head1 SEE ALSO
  *
- * [http://anmar.eu.org/projects/jssha2/](http://anmar.eu.org/projects/jssha2/)
- *
  * [b9j](http://appengine.bravo9.com/b9j) - A JavaScript toolkit
  *
  * =head1 AUTHOR

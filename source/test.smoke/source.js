@@ -48,7 +48,7 @@
 
         var report = {};
         report.total = b9jReport.total;
-        report.failed = b9jReport.failed;
+        report.fail = b9jReport.fail;
 
         var reporter = b9j.environment.detect();
             
@@ -61,8 +61,6 @@
         toURI = "http://localhost:8080/api/test/report/submit/";
         toURI = "http://browsersmoke.appspot.com/api/test/report/submit/";
         b9j.chunker.send(toURI + "chunker", report);
-        b9j.chunker.send(toURI + "chunker", report);
-
     };
 
     pckg._TestRunner_COMPLETE_EVENT = function(b9jReport) {

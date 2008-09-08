@@ -218,7 +218,7 @@
 
     var pckg = b9j.namespace.declare('b9j.test');
 
-    pckg.b9jTest = function(testRunner, reportHandler) {
+    pckg.b9jTest = function(toTest, reportHandler) {
 
         var Yl = YAHOO.lang;
         var Yu = YAHOO.util;
@@ -241,8 +241,18 @@
                 name: name,
 
                 testTest: function() {
-                    testRunner(tester);
+                    var error;
+                    try {
+                        toTest(tester);
+                    }
+                    catch (thrown) {
+                        tester.fail(thrown + "");
+                        logger.expand();
+                        error = thrown;
+                    }
                     tester._doneTesting(this);
+                    if (error)
+                        throw error;
                 }
 
             }));    
@@ -374,7 +384,8 @@
                     test.apply(YuA, arguments);
                 }
                 catch (thrown) {
-                    if (! thrown instanceof YAHOO.util.AssertionError) throw(thrown);
+                    if (! thrown instanceof YAHOO.util.AssertionError)
+                        throw (thrown);
                     error = thrown;
                 }
                 this._endTest(error);
