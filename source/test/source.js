@@ -249,6 +249,8 @@
                         tester.fail(thrown + "");
                         logger.expand();
                         error = thrown;
+//                        if (console)
+//                            console.log(thrown);
                     }
                     tester._doneTesting(this);
                     if (error)

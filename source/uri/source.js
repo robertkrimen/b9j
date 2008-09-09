@@ -593,6 +593,19 @@
             return clone;
         },
 
+        append: function() {
+            this._path.append.apply(this._path, arguments);
+            return this;
+        },
+
+        extension: function() {
+            var gotten = this._path.extension.apply(this._path, arguments);
+            if (gotten == this._path)
+                return this;
+            else
+                return gotten;
+        },
+
 /*
  * =head2 uri.set( $uri ) 
  *

@@ -163,6 +163,54 @@ function _testURI(test) {
         uri.path("a");
         test.is("http://user:password@example.com:80/a?a=1&b=2&c=3&c=4&c=5#fragment", uri);
     }
+
+    base.set("http://example.net/a/b#top");
+
+    {
+        // .append
+        uri = base.clone();
+
+        uri.append("c/d");
+        test.is("http://example.net/a/bc/d#top", uri + "");
+        test.is("d", uri.path().last());
+
+        uri.append("ef");
+        test.is("http://example.net/a/bc/def#top", uri + "");
+        test.is("def", uri.path().last());
+
+        uri.append("", "g/");
+        test.is("http://example.net/a/bc/def/g/#top", uri + "");
+        test.is("g", uri.path().last());
+    }
+
+    {
+        // .extension
+        uri.set("http://example.net/a.tar.gz.html#top");
+
+        test.is(".html", uri.extension());
+        test.is(".gz.html", uri.extension({ match: 2 }));
+        test.is(".tar.gz.html", uri.extension({ match: 3 }));
+        test.is(".tar.gz.html", uri.extension({ match: 4 }));
+        test.is("http://example.net/a#top", uri.clone().extension("", { match: 4 }));
+
+        test.is("http://example.net/a.tar.gz.txt#top", uri.clone().extension(".txt") + "");
+        test.is("http://example.net/a.tar.txt#top", uri.clone().extension(".txt", 2) + "");
+        test.is("http://example.net/a.txt#top", uri.clone().extension(".txt", 3) + "");
+        test.is("http://example.net/a.tar#top", uri.clone().extension(".txt", 3).extension(".tar") + "");
+        test.is("http://example.net/a#top", uri.clone().extension(".txt", 3).extension("") + "");
+
+        uri.set("http://example.net/#top");
+        test.is("", uri.extension());
+        test.is("http://example.net/.html#top", uri.clone().extension("html") + "");
+        test.is("http://example.net/.html#top", uri.clone().extension(".html") + "");
+        test.is("http://example.net/#top", uri.clone().extension("") + "");
+
+        uri.set("http://example.net/#top");
+        test.is("", uri.extension());
+        test.is("http://example.net/.html.gz#top", uri.clone().extension("html.gz") + "");
+        test.is("http://example.net/.html.gz#top", uri.clone().extension(".html.gz") + "");
+        test.is("http://example.net/#top", uri.clone().extension("") + "");
+    }
 }
 
 function _testURIQuery(test) {

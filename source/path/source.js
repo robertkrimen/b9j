@@ -247,6 +247,85 @@
         },
 
 /*
+ * =head2 path.append( $part1, [ $part2 ], ... )
+ *
+ * Modify path by appending $part1 WITHOUT separating it by a slash. Any, optional,
+ * following $part2, ..., will be separated by slashes as normal
+ *
+ *          var path = new b9j.path.Path( "a/b/c" )
+ *          path.append( "d", "ef/g", "h" ) // "a/b/cd/ef/g/h"
+ *
+ */
+
+        append: function() {
+            if (! arguments.length)
+                return;
+            var arguments_ = Array.prototype.slice.call(arguments);
+            this.set(this.toString() + arguments_.join("/"));
+        },
+
+        extension: function(extension, $options) {
+            if (arguments.length == 1 && "object" == typeof extension) {
+                $options = extension;
+                extension = null;
+            }
+            else if (arguments.length) {
+                if (null == extension)
+                    extension = "";
+            }
+
+            if (!$options)
+                $options = {};
+            else {
+                if (b9j.isFunction($options.exec)) { // $options is a RegExp object
+                    $options = { match: $options }
+                }
+                else if ("object" == typeof $options) {
+                }
+                else {
+                    $options = { match: $options }
+                }
+            }
+
+            var matcher = $options.match || 1;
+            if ("number" == typeof matcher) {
+                matcher = new RegExp("(\\.[^\\.]+){1," + matcher + "}$", "g");
+//                var _matcher = ""
+//                while (matcher--)
+//                    _matcher += "(\\.[^\\.]+)?"
+//                matcher = new RegExp(_matcher + "$", "g");
+            }
+            else if ("string" == typeof matcher) {
+                matcher = new RegExp(matcher);
+            }
+
+            var ending = this.ending();
+
+            if (null == extension) {
+                if (this.isEmpty() || this.isRoot())
+                    return "";
+                var match = matcher.exec(ending);
+                if (! match) 
+                    return "";
+                return match[0];
+            }
+            else {
+                if ("" == extension)
+                    ;
+                else if (extension[0] != ".")
+                    extension = "." + extension
+                if (this.isEmpty() || this.isRoot())
+                    this.append(extension);
+                else {
+                    ending = ending.replace(matcher, extension);
+                    this.pop();
+                    this.push(ending);
+                }
+                return this;
+            }
+        },
+
+/* 
  * =head2 path.isEmpty()
  *
  * Returns true if path is the empty path ("")
@@ -374,19 +453,45 @@
  *          new b9j.path.Path("/a/b/c/").at(1)  // b
  *
  */
-        at: function(ii) {
-            if (this.isEmpty()) return "";
+        _at: function(position) {
+            if (this.isEmpty()) return -1;
             if (1 == this._path.length && "" == this._path[0])
-                return "";
-            if (0 > ii)
-                ii += this._path.length;
+                return -1;
+            if (0 > position)
+                position += this._path.length;
             else if ("" == this._path[0])
-                ii += 1;
-            if (ii >= this._path.length)
+                position += 1;
+            if (position >= this._path.length)
+                return -1;
+            if (position == this._path.length - 1 && "" == this._path[position])
+                position -= 1;
+            return position;
+        },
+
+        at: function(position) {
+            position = this._at(position);
+            if (-1 == position)
                 return "";
-            if (ii == this._path.length - 1 && "" == this._path[ii])
-                ii -= 1;
-            return this._path[ii];
+            return this._path[position];
+//            if (this.isEmpty()) return "";
+//            if (1 == this._path.length && "" == this._path[0])
+//                return "";
+//            if (0 > ii)
+//                ii += this._path.length;
+//            else if ("" == this._path[0])
+//                ii += 1;
+//            if (ii >= this._path.length)
+//                return "";
+//            if (ii == this._path.length - 1 && "" == this._path[ii])
+//                ii -= 1;
+//            return this._path[ii];
+        },
+
+        setAt: function(position, value) {
+            position = this._at(position);
+            if (-1 == position)
+                return;
+            this._path[position] = value;
         },
 
 /*
