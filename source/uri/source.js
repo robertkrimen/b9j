@@ -593,11 +593,44 @@
             return clone;
         },
 
+/*
+ * =head2 uri.append( $part1, [ $part2 ], ... )
+ *
+ * Modify uri by appending $part1 WITHOUT separating it by a slash. Any, optional,
+ * following $part2, ..., will be separated by slashes as normal
+ *
+ *          var uri = new b9j.uri.URI( "http://example.net/a/b/c" )
+ *          uri.append( "d", "ef/g", "h" ) // "http://example.net/a/b/cd/ef/g/h"
+ *
+ */
         append: function() {
             this._path.append.apply(this._path, arguments);
             return this;
         },
 
+/*
+ * =head2 uri.extension()
+ *
+ * Returns the extension of uri, including the leading the dot
+ *
+ * Returns "" if uri does not have an extension
+ *
+ *          new b9j.uri.URI( "http://example.net/a/b/c.html" ).extension() // .html
+ *          new b9j.uri.URI( "http://example.net/a/b/c" ).extension() // ""
+ *          new b9j.uri.URI( "http://example.net/a/b/c.tar.gz" ).extension() // .gz
+ *          new b9j.uri.URI( "http://example.net/a/b/c.tar.gz" ).extension({ match: "*" }) // .tar.gz
+ *
+ * =head2 uri.extension( $extension )
+ *
+ * Modify uri by changing the existing extension of uri, if any, to $extension
+ *
+ *          new b9j.uri.URI( "http://example.net/a/b/c.html" ).extension( ".txt" ) // http://example.net/a/b/c.txt
+ *          new b9j.uri.URI( "http://example.net/a/b/c.html" ).extension( "zip" ) // http://example.net/a/b/c.zip
+ *          new b9j.uri.URI( "http://example.net/a/b/c.html" ).extension( "" ) // http://example.net/a/b/c
+ *
+ * Returns uri
+ *
+ */
         extension: function() {
             var gotten = this._path.extension.apply(this._path, arguments);
             if (gotten == this._path)

@@ -264,6 +264,29 @@
             this.set(this.toString() + arguments_.join("/"));
         },
 
+/*
+ * =head2 path.extension()
+ *
+ * Returns the extension of path, including the leading the dot
+ *
+ * Returns "" if path does not have an extension
+ *
+ *          new b9j.path.Path( "a/b/c.html" ).extension() // .html
+ *          new b9j.path.Path( "a/b/c" ).extension() // ""
+ *          new b9j.path.Path( "a/b/c.tar.gz" ).extension() // .gz
+ *          new b9j.path.Path( "a/b/c.tar.gz" ).extension({ match: "*" }) // .tar.gz
+ *
+ * =head2 path.extension( $extension )
+ *
+ * Modify path by changing the existing extension of path, if any, to $extension
+ *
+ *          new b9j.path.Path( "a/b/c.html" ).extension( ".txt" ) // a/b/c.txt
+ *          new b9j.path.Path( "a/b/c.html" ).extension( "zip" ) // a/b/c.zip
+ *          new b9j.path.Path( "a/b/c.html" ).extension( "" ) // a/b/c
+ *
+ * Returns path
+ *
+ */
         extension: function(extension, $options) {
             if (arguments.length == 1 && "object" == typeof extension) {
                 $options = extension;
@@ -288,7 +311,10 @@
             }
 
             var matcher = $options.match || 1;
-            if ("number" == typeof matcher) {
+            if ("*" == matcher)
+                matcher = "";
+            if ("" == matcher || "number" == typeof matcher) {
+                
                 matcher = new RegExp("(\\.[^\\.]+){1," + matcher + "}$", "g");
 //                var _matcher = ""
 //                while (matcher--)

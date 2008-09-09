@@ -149,6 +149,15 @@ b9jTest(function(test) {
         test.is("/.html.gz", path.clone().extension("html.gz") + "");
         test.is("/.html.gz", path.clone().extension(".html.gz") + "");
         test.is("/", path.clone().extension("") + "");
+
+        test.is(".html", new b9j.path.Path( "a/b/c.html" ).extension());
+        test.is("", new b9j.path.Path( "a/b/c" ).extension());
+        test.is(".gz", new b9j.path.Path( "a/b/c.tar.gz" ).extension());
+        test.is(".tar.gz", new b9j.path.Path( "a/b/c.tar.gz" ).extension({ match: "*" }));
+        test.is("a/b/c.txt", new b9j.path.Path( "a/b/c.html" ).extension( ".txt" ));
+        test.is("a/b/c.zip", new b9j.path.Path( "a/b/c.html" ).extension( "zip" ));
+        test.is("a/b/c", new b9j.path.Path( "a/b/c.html" ).extension( "" ));
+        test.is("a/b/c.", new b9j.path.Path( "a/b/c.html" ).extension( "." ));
     }
 
     {

@@ -52,7 +52,7 @@
         [ 3, 1000 * 60 * 60 * 24,                  "day", "days" ],
         [ 4, 1000 * 60 * 60 * 24 * 7,              "week", "weeks" ],
         [ 5, 1000 * 60 * 60 * 24 * 7 * 4.5,        "month", "months" ],
-        [ 6, 1000 * 60 * 60 * 24 * 7 * 365.2425,   "year", "years" ],
+        [ 6, 1000 * 60 * 60 * 24 * 7 * 365.2425,   "year", "years" ]
     ];
 
     pckg.Interval.prototype = {
@@ -81,7 +81,7 @@
             else {
                 return "now";
             }
-        },
+        }
     };
 
     pckg.Interval.prototype._inUnitValueFunction = [];
