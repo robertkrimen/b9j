@@ -13,6 +13,9 @@ body {
 }
 #uri {
     font-size: 167%;
+    background: #def;
+    padding: 4px;
+    border: 1px solid #bcd;
 }
 .uri-function {
     float: left;
@@ -36,6 +39,13 @@ body {
 .uri-function a:hover {
     background: #348;
 }
+a.uri-from-history {
+    text-decoration: none;
+    color: blue;
+}
+a:hover.uri-from-history {
+    text-decoration: underline;
+}
 .clear {
     clear: both;
 }
@@ -46,6 +56,13 @@ body {
 
 .uri-history {
     padding: 0.2em;
+}
+
+.bd {
+}
+
+hr {
+    color: #ccc;
 }
 
 .source-history {
@@ -59,39 +76,157 @@ body {
 
     <div id="doc">
 
-        <div class="uri-function">
-            <a href="#"id="uri-button-parent">parent</a>
-        </div>
-
-        <div class="uri-function">
-            <a href="#" id="uri-button-child">child</a>
-            <input id="uri-input-child" type="text"/>
-        </div>
-
-        <div class="clear"></div>
-
-        <div class="uri-function">
-            <a href="#" id="uri-button-scheme">scheme</a>
-            <input id="uri-input-scheme" type="text"/>
-        </div>
-
-        <div class="uri-function">
-            <a href="#" id="uri-button-scheme-http">http</a>
-            <a href="#" id="uri-button-scheme-https">https</a>
-            <a href="#" id="uri-button-scheme-ftp">ftp</a>
-        </div>
-
-        <div class="clear"></div>
-
-        <div class="uri-function">
-            <a href="#" id="uri-button-fragment">fragment</a>
-            <input id="uri-input-fragment" type="text"/>
-        </div>
-
-        <div class="clear"></div>
-
         <div id="uri" class="bd">
         </div>
+
+        <hr noshade>
+
+        <div class="bd">
+
+            <!-- scheme -->
+                <div class="uri-function">
+                    <a href="#" id="uri-button-scheme">scheme</a>
+                    <input id="uri-input-scheme" type="text" style="width: 6em;"/>
+
+                    <a href="#" id="uri-button-scheme-http">http</a>
+                    <a href="#" id="uri-button-scheme-https">https</a>
+                    <a href="#" id="uri-button-scheme-ftp">ftp</a>
+                </div>
+
+            <div class="clear"></div>
+
+            <!-- host -->
+                <div class="uri-function">
+                    <a href="#" id="uri-button-host">host</a>
+                    <input id="uri-input-host" type="text" style="width: 10em;"/>
+
+                    <a href="#" id="uri-button-host-example-com">example.com</a>
+                    <a href="#" id="uri-button-host-www-example-org">www.example.org</a>
+                </div>
+
+            <!-- port -->
+                <div class="uri-function">
+                    <a href="#" id="uri-button-port">port</a>
+                    <input id="uri-input-port" type="text" style="width: 4em;"/>
+
+                    <a href="#" id="uri-button-port-80">80</a>
+                    <a href="#" id="uri-button-port-443">443</a>
+                    <a href="#" id="uri-button-port-8080">8080</a>
+                </div>
+
+            <div class="clear"></div>
+
+            <!-- user/password -->
+                <div class="uri-function">
+                    <a href="#" id="uri-button-user">user</a>
+                    <input id="uri-input-user" type="text" style="width: 6em;"/>
+
+                    <a href="#" id="uri-button-user-alice">alice</a>
+                    <a href="#" id="uri-button-user-bob">bob</a>
+                </div>
+
+                <div class="uri-function">
+                    <a href="#" id="uri-button-password">password</a>
+                    <input id="uri-input-password" type="text" style="width: 6em;"/>
+
+                    <a href="#" id="uri-button-password-xyzzy">xyzzy</a>
+                    <a href="#" id="uri-button-password-frobozz">frobozz</a>
+                </div>
+
+            <div class="clear"></div>
+
+            <!-- path -->
+                <div class="uri-function">
+                    <a href="#" id="uri-button-path">path</a>
+                    <input id="uri-input-path" type="text"/>
+
+                    <a href="#" id="uri-button-path-a-b-c">a/b/c</a>
+                </div>
+
+                <div class="uri-function">
+                    <a href="#" id="uri-button-append">append</a>
+                    <input id="uri-input-append" type="text"/>
+
+                    <a href="#" id="uri-button-append-d-e-f">d/e/f</a>
+                </div>
+
+            <!-- parent/child -->
+                <div class="uri-function">
+                    <a href="#"id="uri-button-parent">parent</a>
+                </div>
+
+                <div class="uri-function">
+                    <a href="#" id="uri-button-child">child</a>
+                    <input id="uri-input-child" type="text"/>
+                </div>
+
+            <!-- extension -->
+                <div class="uri-function">
+                    <a href="#" id="uri-button-extension">extension</a>
+                    <input id="uri-input-extension" type="text" style="width: 6em;"/>
+
+                    <a href="#" id="uri-button-extension-html">html</a>
+                    <a href="#" id="uri-button-extension-txt">txt</a>
+                    <a href="#" id="uri-button-extension-js">js</a>
+                    <a href="#" id="uri-button-extension-css">css</a>
+                    <a href="#" id="uri-button-extension-pl">pl</a>
+                    <a href="#" id="uri-button-extension-php">php</a>
+                </div>
+
+            <div class="clear"></div>
+
+            <!-- fragment -->
+                <div class="uri-function">
+                    <a href="#" id="uri-button-fragment">fragment</a>
+                    <input id="uri-input-fragment" type="text" style="width: 10em;"/>
+
+                    <a href="#" id="uri-button-fragment-top">#top</a>
+                    <a href="#" id="uri-button-fragment-bottom">#bottom</a>
+                </div>
+
+            <div class="clear"></div>
+
+            <hr noshade>
+
+            <!-- query set -->
+                <div class="uri-function">
+                    <a href="#" id="uri-button-query-set">set</a>
+                    <input id="uri-input-query-set" type="text"/>
+
+                    <a href="#" id="uri-button-query-set-a-b-c">a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5</a>
+                    <a href="#" id="uri-button-query-set-hello-world">a="Hello, World!"</a>
+                    <a href="#" id="uri-button-query-set-a-6">a=6</a>
+                    <a href="#" id="uri-button-query-set-b-7">b=7</a>
+                    <a href="#" id="uri-button-query-set-c-8">c=8</a>
+
+                    <a href="#" id="uri-button-query-clear">clear</a>
+                </div>
+
+            <!-- query add -->
+                <div class="uri-function">
+                    <a href="#" id="uri-button-query-add">add</a>
+                    <input id="uri-input-query-add" type="text"/>
+
+                    <a href="#" id="uri-button-query-add-a-b-c">a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5</a>
+                    <a href="#" id="uri-button-query-add-hello-world">a="Hello, World!"</a>
+                    <a href="#" id="uri-button-query-add-a-6">a=6</a>
+                    <a href="#" id="uri-button-query-add-b-7">b=7</a>
+                    <a href="#" id="uri-button-query-add-c-8">c=8</a>
+                </div>
+
+            <!-- query append -->
+                <div class="uri-function">
+                    <a href="#" id="uri-button-query-append">append</a>
+                    <input id="uri-input-query-append" type="text"/>
+
+                    <a href="#" id="uri-button-query-append-hello-world">a="Hello, World!"</a>
+                </div>
+
+            <div class="clear"></div>
+
+        </div>
+
+        <hr noshade>
 
         <div id="uri-source-history" class="bd">
         </div>

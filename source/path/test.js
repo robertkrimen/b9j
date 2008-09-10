@@ -158,6 +158,10 @@ b9jTest(function(test) {
         test.is("a/b/c.zip", new b9j.path.Path( "a/b/c.html" ).extension( "zip" ));
         test.is("a/b/c", new b9j.path.Path( "a/b/c.html" ).extension( "" ));
         test.is("a/b/c.", new b9j.path.Path( "a/b/c.html" ).extension( "." ));
+
+        path = new b9j.path.Path("a/b/c");
+        test.is("a/b/c.html", path.extension(".html") + "");
+        test.is("a/b/c.html", path.extension(".html") + "");
     }
 
     {

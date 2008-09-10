@@ -439,6 +439,8 @@
             if (this._dirtyUserInformation) {
                 var userInformation = "";
                 userInformation = this.user() + ":" + this.password();
+                if (":" == userInformation)
+                    userInformation = "";
                 this._uri.userInformation = userInformation;
                 this._dirtyUserInformation = false;
             }
@@ -1020,7 +1022,7 @@
             for (var key in this._store) {
                 return false;
             }
-            return true;
+            return b9j.isEmpty(this._queryString);
         },
 
 /*

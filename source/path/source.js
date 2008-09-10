@@ -340,12 +340,18 @@
                     ;
                 else if (extension[0] != ".")
                     extension = "." + extension
+
                 if (this.isEmpty() || this.isRoot())
                     this.append(extension);
                 else {
-                    ending = ending.replace(matcher, extension);
-                    this.pop();
-                    this.push(ending);
+                    if (matcher.test(ending)) {
+                        ending = ending.replace(matcher, extension);
+                        this.pop();
+                        this.push(ending);
+                    }
+                    else {
+                        this.append(extension);
+                    }
                 }
                 return this;
             }

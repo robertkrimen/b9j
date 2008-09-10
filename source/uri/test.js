@@ -211,6 +211,17 @@ function _testURI(test) {
         test.is("http://example.net/.html.gz#top", uri.clone().extension(".html.gz") + "");
         test.is("http://example.net/#top", uri.clone().extension("") + "");
     }
+
+    {
+        uri.set("http://alice:xyzzy@example.net/");
+        test.is("http://alice:xyzzy@example.net/", uri + "");
+
+        uri.user("");
+        test.is("http://:xyzzy@example.net/", uri + "");
+
+        uri.password("");
+        test.is("http://example.net/", uri + "");
+    }
 }
 
 function _testURIQuery(test) {
@@ -320,6 +331,17 @@ function _testURIQuery(test) {
 
         query.append(null);
         test.is("a=1&b=2&c=3&c=4&c=5&c=6", query);
+    }
+
+    {
+        query = new b9j.uri.query.Query("");
+        test.isTrue(query.isEmpty());
+
+        query.append("d=7&d=1");
+        test.is("d=7&d=1", query + "");
+
+        query.append(null);
+        test.is("", query + "");
     }
 }
 

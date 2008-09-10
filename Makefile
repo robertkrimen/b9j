@@ -73,7 +73,7 @@ $(b9j_bootstrap_css): $(bootstrap_css) source/b9jTest/source.css
 	cat $^ > $@
 	$(call yuicompress,$@,$@)
 
-$(bootstrap_js): $(jquery_js) $(yui_js)
+$(bootstrap_js): $(jquery_js) assets/jquery.livequery.js $(yui_js)
 	cat $^ > $@
 	$(call yuicompress_js,$@,$@)
 
