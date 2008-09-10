@@ -67,6 +67,11 @@ $(document).ready(function(){
             arguments_ = [ $("#uri-input-child").val() ];
             uri_function("down", arguments_, "child"); 
         });
+
+        $("#uri-button-child-d-e-f").bind("click", function(){
+            arguments_ = [ "d/e/f" ];
+            uri_function("down", arguments_, "child");
+        });
     }
 
     {

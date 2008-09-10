@@ -1,7 +1,7 @@
 .PHONY: all clean build test _build ship build_documentation build_test bootstrap
 .PHONY: source/test.html
 
-b9j_version := 0.1.7
+b9j_version := 0.1.8
 
 yui_version := 2.5.2
 yuicompressor_version := 2.3.6
@@ -111,7 +111,13 @@ $(jquery_js):
 # build ##
 ##########
 
-build: _build $(build)/b9j.js $(build)/b9jTest.js $(build)/b9jTest.css build_documentation build_test
+build: _build $(build)/b9j.js $(build)/b9jTest.js $(build)/b9jTest.css $(build)/b9j.uri.js build_documentation build_test
+
+$(build)/b9j.uri.uncompressed.js: source/yui/source.js source/b9j/source.js source/namespace/source.js source/path/source.js source/uri/source.js
+	cat $^ > $@
+
+$(build)/b9j.uri.js: $(build)/b9j.uri.uncompressed.js
+	$(call yuicompress_js,$<,$@)
 
 $(build)/b9j.uncompressed.js: $(b9j_source)
 	cat $^ > $@
@@ -164,9 +170,10 @@ ship: wipe build
 	find $(build)/documentation $(build)/test -name static -prune -or -type f -name "*.html"  -print -exec tidy -mi --vertical-space no --tidy-mark no -asxml --wrap 0 {} \;
 	rm -rf $(ship) $(ship_zip)
 	mkdir -p $(ship) $(ship)/documentation $(ship)/test
-	(cd $(build) && cp b9jTest.css b9jTest.js b9j.js b9j.uncompressed.js ../$(ship))
+	(cd $(build) && cp b9jTest.css b9jTest.js b9j.js b9j.uncompressed.js b9j.uri*.js ../$(ship))
 	(cd $(build)/documentation && cp * ../../$(ship)/documentation)
 	(cd $(build)/test && cp * ../../$(ship)/test)
+	rsync -Cav example/ $(ship)/example/
 	(cd $(build) && zip -r ../$(ship_zip) `basename $(ship)`)
 	rm -f $(build)/b9j-latest*
 	ln -sf `basename $(ship)` $(build)/b9j-latest

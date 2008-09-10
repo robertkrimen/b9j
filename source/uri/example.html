@@ -2,79 +2,32 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <title>b9j.uri.URI Example</title>
-<link rel="stylesheet" type="text/css" href="../../build/b9j.bootstrap.css">
-<script type="text/javascript" src="../../build/b9j.bootstrap.js"></script>
-<script type="text/javascript" src="../path/source.js"></script>
-<script type="text/javascript" src="./source.js"></script>
+
+<!--<link rel="stylesheet" type="text/css" href="../../build/b9j.bootstrap.css">-->
+<!--<script type="text/javascript" src="../../build/b9j.bootstrap.js"></script>-->
+<!--<script type="text/javascript" src="../path/source.js"></script>-->
+<!--<script type="text/javascript" src="./source.js"></script>-->
+
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/reset-fonts-grids/reset-fonts-grids.css"> 
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/base/base-min.css"> 
+<script type="text/javascript" src="http://appengine.bravo9.com/b9j/jquery.js"></script>
+<script type="text/javascript" src="http://appengine.bravo9.com/b9j/jquery.livequery.js"></script>
+<script type="text/javascript" src="http://appengine.bravo9.com/b9j/b9j.uri.js"></script>
+
+<link rel="stylesheet" type="text/css" href="./example.css"> 
 <script type="text/javascript" src="./example.js"></script>
-<style>
-body {
-    font-size: 100%;
-}
-#uri {
-    font-size: 167%;
-    background: #def;
-    padding: 4px;
-    border: 1px solid #bcd;
-}
-.uri-function {
-    float: left;
-    padding: 0.25em;
-    line-height: 1.5em;
-    background: #ffc;
-    margin: 0.25em;
-    color: #666;
-    border: 1px solid #dda;
-}
-.uri-function a {
-    text-decoration: none;
-    color: white;
-    background: #999;
-    padding: 0.2em;
-    border: 1px dotted #56a;
-    //font-size: 88%;
-    //font-weight: 700;
-    //font-variant: small-caps;
-}
-.uri-function a:hover {
-    background: #348;
-}
-a.uri-from-history {
-    text-decoration: none;
-    color: blue;
-}
-a:hover.uri-from-history {
-    text-decoration: underline;
-}
-.clear {
-    clear: both;
-}
 
-.uri-source-history-line {
-    border-bottom: 1px dotted #aaa;
-}
-
-.uri-history {
-    padding: 0.2em;
-}
-
-.bd {
-}
-
-hr {
-    color: #ccc;
-}
-
-.source-history {
-    padding: 0.2em;
-    background: #eee;
-    color: #080;
-}
-</style>
 </head>
 <body>
 
     <div id="doc">
+
+        <div class="hd">
+            <a class="download" href="http://appengine.bravo9.com/b9j/b9j.uri.js">b9j.uri.js</a> (19kb) |
+            <a href="http://appengine.bravo9.com/b9j/b9j.uri.uncompressed.js">b9j.uri.uncompressed.js</a> |
+            <a href="http://appengine.bravo9.com/b9j/documentation/uri.html">documentation</a> |
+            <a href="http://github.com/robertkrimen/b9j/tree/master">@ github</a>
+        </div>
 
         <div id="uri" class="bd">
         </div>
@@ -143,13 +96,6 @@ hr {
                     <a href="#" id="uri-button-path-a-b-c">a/b/c</a>
                 </div>
 
-                <div class="uri-function">
-                    <a href="#" id="uri-button-append">append</a>
-                    <input id="uri-input-append" type="text"/>
-
-                    <a href="#" id="uri-button-append-d-e-f">d/e/f</a>
-                </div>
-
             <!-- parent/child -->
                 <div class="uri-function">
                     <a href="#"id="uri-button-parent">parent</a>
@@ -158,19 +104,31 @@ hr {
                 <div class="uri-function">
                     <a href="#" id="uri-button-child">child</a>
                     <input id="uri-input-child" type="text"/>
+
+                    <a href="#" id="uri-button-child-d-e-f">d/e/f</a>
                 </div>
 
+            <div class="clear"></div>
+
             <!-- extension -->
+
+                <div class="uri-function">
+                    <a href="#" id="uri-button-append">append</a>
+                    <input id="uri-input-append" type="text"/>
+
+                    <a href="#" id="uri-button-append-d-e-f">d/e/f</a>
+                </div>
+
                 <div class="uri-function">
                     <a href="#" id="uri-button-extension">extension</a>
                     <input id="uri-input-extension" type="text" style="width: 6em;"/>
 
-                    <a href="#" id="uri-button-extension-html">html</a>
-                    <a href="#" id="uri-button-extension-txt">txt</a>
-                    <a href="#" id="uri-button-extension-js">js</a>
-                    <a href="#" id="uri-button-extension-css">css</a>
-                    <a href="#" id="uri-button-extension-pl">pl</a>
-                    <a href="#" id="uri-button-extension-php">php</a>
+                    <a href="#" id="uri-button-extension-html">.html</a>
+                    <a href="#" id="uri-button-extension-txt">.txt</a>
+                    <a href="#" id="uri-button-extension-js">.js</a>
+                    <a href="#" id="uri-button-extension-css">.css</a>
+                    <a href="#" id="uri-button-extension-pl">.pl</a>
+                    <a href="#" id="uri-button-extension-php">.php</a>
                 </div>
 
             <div class="clear"></div>
@@ -230,6 +188,14 @@ hr {
 
         <div id="uri-source-history" class="bd">
         </div>
+
+    </div>
+
+    <div class="footer">
+
+        <a href="mailto:robertkrimen-gmail-com">robert krimen @ gmail com</a> |
+        <a href="/">http://bravo9.com</a> |
+        &copy; 2008 Robert Krimen
 
     </div>
 
