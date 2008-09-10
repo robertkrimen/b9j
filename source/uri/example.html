@@ -17,6 +17,41 @@ body {
 .uri-function {
     float: left;
     padding: 0.25em;
+    line-height: 1.5em;
+    background: #ffc;
+    margin: 0.25em;
+    color: #666;
+    border: 1px solid #dda;
+}
+.uri-function a {
+    text-decoration: none;
+    color: white;
+    background: #999;
+    padding: 0.2em;
+    border: 1px dotted #56a;
+    //font-size: 88%;
+    //font-weight: 700;
+    //font-variant: small-caps;
+}
+.uri-function a:hover {
+    background: #348;
+}
+.clear {
+    clear: both;
+}
+
+.uri-source-history-line {
+    border-bottom: 1px dotted #aaa;
+}
+
+.uri-history {
+    padding: 0.2em;
+}
+
+.source-history {
+    padding: 0.2em;
+    background: #eee;
+    color: #080;
 }
 </style>
 </head>
@@ -25,26 +60,35 @@ body {
     <div id="doc">
 
         <div class="uri-function">
-            <button id="uri-button-parent">parent</button>
+            <a href="#"id="uri-button-parent">parent</a>
         </div>
 
         <div class="uri-function">
-            <button id="uri-button-child">child</button>
+            <a href="#" id="uri-button-child">child</a>
             <input id="uri-input-child" type="text"/>
         </div>
 
+        <div class="clear"></div>
+
         <div class="uri-function">
-            scheme
-            <button id="uri-button-scheme-http">http</button>
-            <button id="uri-button-scheme-https">https</button>
+            <a href="#" id="uri-button-scheme">scheme</a>
+            <input id="uri-input-scheme" type="text"/>
         </div>
 
         <div class="uri-function">
-            <button id="uri-button-fragment">fragment</button>
+            <a href="#" id="uri-button-scheme-http">http</a>
+            <a href="#" id="uri-button-scheme-https">https</a>
+            <a href="#" id="uri-button-scheme-ftp">ftp</a>
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="uri-function">
+            <a href="#" id="uri-button-fragment">fragment</a>
             <input id="uri-input-fragment" type="text"/>
         </div>
 
-        <div style="clear: both;"></div>
+        <div class="clear"></div>
 
         <div id="uri" class="bd">
         </div>
