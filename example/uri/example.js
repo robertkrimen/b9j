@@ -26,7 +26,7 @@ function uri_function(fn, arguments_, fn_name) {
     uri[fn].apply(uri, arguments_);
     if (1 == arguments_.length && "" == arguments_[0])
         arguments_[0] = '""'
-    var arguments_string = b9j.isValue(arguments_[0]) || arguments_.length > 1 ? " " + Array.prototype.slice.call(arguments_).join(", ") + " " : "";
+    var arguments_string = b9j.isValue(arguments_[0]) || arguments_.length > 1 ? " " + Array.prototype.slice.call(arguments_).join(",") + " " : "";
     example_addHistory(uri, "uri." + fn_name + "(" + arguments_string + ");");
     example_update();
 }
@@ -38,7 +38,7 @@ function uri_query_function(fn, arguments_, fn_name) {
     query[fn].apply(query, arguments_);
     if (1 == arguments_.length && "" == arguments_[0])
         arguments_[0] = '""'
-    var arguments_string = b9j.isValue(arguments_[0]) || arguments_.length > 1 ? " " + Array.prototype.slice.call(arguments_).join(", ") + " " : "";
+    var arguments_string = b9j.isValue(arguments_[0]) || arguments_.length > 1 ? " " + Array.prototype.slice.call(arguments_).join(",") + " " : "";
     example_addHistory(uri, "uri.query()." + fn_name + "(" + arguments_string + ");");
     console.log(query, query.toString());
     example_update();
@@ -66,11 +66,6 @@ $(document).ready(function(){
         $("#uri-button-child").bind("click", function(){
             arguments_ = [ $("#uri-input-child").val() ];
             uri_function("down", arguments_, "child"); 
-        });
-
-        $("#uri-button-child-d-e-f").bind("click", function(){
-            arguments_ = [ "d/e/f" ];
-            uri_function("down", arguments_, "child");
         });
     }
 

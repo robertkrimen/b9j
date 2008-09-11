@@ -1,7 +1,7 @@
 /*
  * =head1 NAME 
  * 
- * b9j-YUI - YAHOO and YAHOO.lang
+ * b9j.yui - Minimally bootstrap YAHOO and YAHOO.lang (if not available)
  *
  */
 
