@@ -58,6 +58,19 @@ $(document).ready(function(){
     }
 
     {
+        $("#uri-button-set").bind("click", function(){
+            arguments_ = [ $("#uri-input-set").val() ];
+            uri_function("set", arguments_);
+        });
+
+        $("#uri-button-set-http-example-com").bind("click", function(){
+            arguments_ = [ "http://example.com" ];
+            uri_function("set", arguments_); 
+        });
+
+    }
+
+    {
         $("#uri-button-parent").bind("click", function(){
             arguments_ = [ ];
             uri_function("up", arguments_, "parent"); 

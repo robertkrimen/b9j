@@ -1,4 +1,4 @@
-.PHONY: all clean build test _build ship build_documentation build_test bootstrap
+.PHONY: all clean build test _build ship build_documentation build_test bootstrap example
 .PHONY: source/test.html
 
 b9j_version := 0.1.8
@@ -194,6 +194,9 @@ $(yuicompressor_zip):
 $(yuicompressor_jar): $(yuicompressor_zip)
 	(cd $(build_tmp) && unzip `basename $(yuicompressor_zip)`)
 	touch $@
+
+example:
+	cp source/uri/example.* example/uri
 
 # build := build
 # build_tmp := build/tmp
