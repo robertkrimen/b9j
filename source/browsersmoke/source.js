@@ -136,7 +136,10 @@
         var to = report.to;
         delete report.to;
 
-        b9j.chunker.send(to, report);
+        if (b9j.isFunction(to))
+            to(report);
+        else
+            b9j.chunker.send(to, report);
     };
 
 
