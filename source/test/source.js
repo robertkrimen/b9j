@@ -218,7 +218,7 @@
 
     var pckg = b9j.namespace.declare('b9j.test');
 
-    pckg.b9jTest = function(toTest, reportHandler) {
+    pckg.b9jTest = function(testCode, onCompleteCode) {
 
         var Yl = YAHOO.lang;
         var Yu = YAHOO.util;
@@ -243,14 +243,12 @@
                 testTest: function() {
                     var error;
                     try {
-                        toTest(tester);
+                        testCode(tester);
                     }
                     catch (thrown) {
                         tester.fail(thrown + "");
                         logger.expand();
                         error = thrown;
-//                        if (console)
-//                            console.log(thrown);
                     }
                     tester._doneTesting(this);
                     if (error)
@@ -259,15 +257,15 @@
 
             }));    
 
-            if (reportHandler) {
+            if (onCompleteCode) {
                 TestRunner.subscribe(TestRunner.COMPLETE_EVENT, function (result) {
-                    reportHandler(tester._report(), result);
+                    onCompleteCode(tester._report(), result);
                 });
             }
 
-            TestRunner.subscribe(TestRunner.COMPLETE_EVENT, function (result) {
-                b9j.test.smoke._TestRunner_COMPLETE_EVENT(tester._report(), result);
-            });
+//            TestRunner.subscribe(TestRunner.COMPLETE_EVENT, function (result) {
+//                b9j.browsersmoke._TestRunner_COMPLETE_EVENT(tester._report(), result);
+//            });
 
             TestRunner.run();
 
