@@ -49,6 +49,9 @@
         var report = {};
         report.total = b9jReport.total;
         report.fail = b9jReport.fail;
+        report.test_name = b9jReport.test_name;
+        report.product_name = b9jReport.product_name;
+        report.product_version = b9jReport.product_version;
 
         var reporter = b9j.environment.detect();
             
@@ -57,10 +60,12 @@
         }
         report.url = window.location.href;
 
-        var toURI;
-        toURI = "http://localhost:8080/api/test/report/submit/";
-        toURI = "http://browsersmoke.appspot.com/api/test/report/submit/";
-        b9j.chunker.send(toURI + "chunker", report);
+        var to;
+        to = "http://localhost:8080/api/test/report/submit/";
+        to = "http://browsersmoke.appspot.com/api/test/report/submit/";
+        if (b9jReport.to)
+            to = b9jReport.to;
+        b9j.chunker.send(to + "chunker", report);
     };
 
     pckg._TestRunner_COMPLETE_EVENT = function(b9jReport) {

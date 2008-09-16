@@ -224,6 +224,6 @@
  *
  */
 
-function b9jTest(given) {
-    b9j.test.b9jTest(given);
+function b9jTest() {
+    b9j.test.b9jTest.apply(b9j.test, arguments)
 }
