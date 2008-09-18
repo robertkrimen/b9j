@@ -45,6 +45,8 @@ function _testURI(test) {
 
         test.is("http://example.com/a/b", uri.child("a", "b"));
         test.is("http://example.com/a", uri.child("a", "c/").parent());
+
+        test.is("http://example.com/a/1", uri.child("a", 1));
     }
 
     uri = base = new b9j.uri.URI("http://user:password@example.com:80/path/?a=1&b=2&c=3&c=4&c=5#fragment");

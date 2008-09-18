@@ -103,6 +103,12 @@ b9jTest(function(test) {
         path.set("/");
         path.up();
         test.is("/", path + "");
+
+        path.down("a");
+        test.is("/a", path + "");
+
+        path.down(1);
+        test.is("/a/1", path + "");
     }
 
     {

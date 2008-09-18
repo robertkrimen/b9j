@@ -35,15 +35,24 @@
         if ("string" == typeof value) {
             array.push(value);
         }
+        else if ("number" == typeof value) {
+            array.push(value);
+        }
         else if ("object" == typeof value) {
-            if ("function" == typeof value.get) { // We probably have a Path object
-                array.push(value.get());
-            }
-            else { // Assume an array
+//            if ("function" == typeof value.get) { // We probably have a Path object
+//                array.push(value.get());
+//            }
+            if (undefined != value.length) { // Assume an array
                 for (var ii = 0; ii < value.length; ii++) {
                     _flatten(array, value[ii]);
                 }
             }
+            else {
+                array.push("" + value);
+            }
+        }
+        else {
+            array.push("" + value);
         }
     }
 

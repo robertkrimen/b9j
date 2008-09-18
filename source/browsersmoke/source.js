@@ -81,7 +81,19 @@
                 try {
                     b9j.test.b9jTest(b9jTest, function (b9jTestReport){
                         report.total = b9jTestReport.total;
-                        report.fail = b9jTestReport.fail ? b9jTestReport.failed : 0;
+                        var fail = [];
+                        if (b9jTestReport.fail) {
+                            var failed = b9jTestReport.failed;
+                            for (ii = 0; ii < failed.length; ++ii) {
+                                var failure = b9j.clone(failed[ii], { shallow: 1 });
+                                failure.error = failure.error + "";
+                                fail.push(failure);
+                            }
+                            report.fail = fail;
+                        }
+                        else {
+                            report.fail = 0;
+                        }
                         pckg.submitReport(given, report);
                     });
                     return;
