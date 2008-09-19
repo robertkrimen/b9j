@@ -1,7 +1,7 @@
 .PHONY: all clean build test _build ship build_documentation build_test bootstrap example
 .PHONY: source/test.html
 
-b9j_version := 0.1.8
+b9j_version := 0.1.9
 
 yui_version := 2.5.2
 yuicompressor_version := 2.3.6

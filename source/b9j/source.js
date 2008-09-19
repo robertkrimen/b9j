@@ -5,7 +5,7 @@
  *
  * =head1 VERSION
  *
- * Version 0.1.8
+ * Version 0.1.9
  *
  * =head1 CATALOG
  *
