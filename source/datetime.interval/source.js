@@ -9,11 +9,11 @@
  *
  */
 
-//http://www.zachleat.com/Lib/jquery/humane.js
-//http://www.zachleat.com/web/2008/03/23/yet-another-pretty-date-javascript/
-//http://deanlandolt.com/wp-content/uploads/humane.js
-//http://deanlandolt.com/archives/163
-//http://ejohn.org/blog/javascript-pretty-date/
+// http://www.zachleat.com/Lib/jquery/humane.js
+// http://www.zachleat.com/web/2008/03/23/yet-another-pretty-date-javascript/
+// http://deanlandolt.com/wp-content/uploads/humane.js
+// http://deanlandolt.com/archives/163
+// http://ejohn.org/blog/javascript-pretty-date/
 
 (function(){
 
@@ -65,10 +65,15 @@
 
             var interval = this._absolute_interval;
 
+            if (interval < 1000)
+                return 'just now';
+
+            var suffix = ' ago';
+
             for (var ii = atMost; ii >= 0; ii--) {
                 if (interval >= unitTable[ii][1]) {
                     var value = Math.floor(this.value(ii));
-                    return value + " " + (value == 1 ? unitTable[ii][2] : unitTable[ii][3]);
+                    return value + " " + (value == 1 ? unitTable[ii][2] : unitTable[ii][3]) + suffix;
                 }
             }
 
@@ -79,7 +84,7 @@
                 return least;
             }
             else {
-                return "now";
+                return 'just now';
             }
         }
     };

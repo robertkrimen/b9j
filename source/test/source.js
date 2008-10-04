@@ -242,6 +242,7 @@
 
                 testTest: function() {
                     var error;
+                    tester._beginTesting(this);
                     try {
                         testCode(tester);
                     }
@@ -250,7 +251,7 @@
                         logger.expand();
                         error = thrown;
                     }
-                    tester._doneTesting(this);
+                    tester._endTesting(this);
                     if (error)
                         throw error;
                 }
@@ -315,7 +316,15 @@
             }
         },
 
-        _doneTesting: function(testCase) {
+        _beginTesting: function() {
+            this._benchmarkStartDateTime = new Date();
+        },
+
+        _endTesting: function(testCase) {
+            this._benchmarkStopDateTime = new Date();
+            this._benchmarkTime = this._benchmarkStopDateTime - this._benchmarkStartDateTime;
+        
+
             var total = this._tests;
             var passed = total - this._errors.length;
             var failed = this._errors.length;
@@ -364,7 +373,15 @@
             var fail = this._errors.length;
             var failed = this._errors;
 
-            return { total: total, pass: pass, fail: fail, failed: failed };
+            return {
+                total: total,
+                pass: pass,
+                fail: fail,
+                failed: failed,
+                benchmark_start_datetime: this._benchmarkStartDateTime.toUTCString(),
+                benchmark_stop_datetime: this._benchmarkStopDateTime.toUTCString(),
+                benchmark_time: this._benchmarkTime
+             };
         }
 
     };
