@@ -40,7 +40,6 @@ function uri_query_function(fn, arguments_, fn_name) {
         arguments_[0] = '""'
     var arguments_string = b9j.isValue(arguments_[0]) || arguments_.length > 1 ? " " + Array.prototype.slice.call(arguments_).join(", ") + " " : "";
     example_addHistory(uri, "uri.query()." + fn_name + "(" + arguments_string + ");");
-    console.log(query, query.toString());
     example_update();
 }
 
