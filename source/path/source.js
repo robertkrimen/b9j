@@ -268,9 +268,10 @@
 
         append: function() {
             if (! arguments.length)
-                return;
+                return this;
             var arguments_ = Array.prototype.slice.call(arguments);
             this.set(this.toString() + arguments_.join("/"));
+            return this
         },
 
 /*
@@ -558,8 +559,8 @@
  *
  * Returns the last part of path, including the trailing slash, if any
  *
- *          new b9j.path.Path("/a/b/c/").beginning() // c/
- *          new b9j.path.Path("a/b/c/").beginning()  // c
+ *          new b9j.path.Path("/a/b/c/").ending() // c/
+ *          new b9j.path.Path("/a/b/c").ending()  // c
  *
  */
         ending: function() {
