@@ -1,7 +1,7 @@
 .PHONY: all clean build test _build ship build_documentation build_test bootstrap example
 .PHONY: source/test.html
 
-b9j_version := 0.1.9
+b9j_version := 0.2.0
 
 yui_version := 2.8.1
 yuicompressor_version := 2.4.2
@@ -36,7 +36,7 @@ yuicompressor_zip := $(build_tmp)/yuicompressor-$(yuicompressor_version).zip
 yuicompress_js = java -jar $(yuicompressor_jar) $1 -o $2.tmp.js && js -C $2.tmp.js && mv $2.tmp.js $2
 yuicompress = java -jar $(yuicompressor_jar) $1 -o $2
 
-b9j_source := $(filter-out b9jTest, $(package))
+b9j_source := $(filter-out test browsersmoke b9jTest, $(package))
 b9j_source := $(b9j_source:%=source/%/source.js)
 
 bootstrap_js := $(build)/bootstrap.js
@@ -115,18 +115,29 @@ $(jquery_js):
 # build ##
 ##########
 
-build: _build $(build)/b9j.js $(build)/browsersmoke.js $(build)/b9jTest.js $(build)/b9jTest.css $(build)/b9j.uri.js build_documentation build_test
-
-$(build)/b9j.uri.uncompressed.js: source/yui/source.js source/b9j/source.js source/namespace/source.js source/path/source.js source/uri/source.js
-	cat $^ > $@
-
-$(build)/b9j.uri.js: $(build)/b9j.uri.uncompressed.js
-	$(call yuicompress_js,$<,$@)
+build:	_build \
+	$(build)/b9j.js \
+	$(build)/browsersmoke.js \
+	$(build)/b9jTest.js \
+	$(build)/b9jTest.css \
+	$(build)/b9j.uri.js \
+	build_documentation build_test
 
 $(build)/b9j.uncompressed.js: $(b9j_source)
 	cat $^ > $@
 
+$(build)/b9j.uri.uncompressed.js: \
+	source/yui/source.js \
+	source/b9j/source.js \
+	source/namespace/source.js \
+	source/path/source.js \
+	source/uri/source.js
+	cat $^ > $@
+
 $(build)/b9j.js: $(build)/b9j.uncompressed.js
+	$(call yuicompress_js,$<,$@)
+
+$(build)/b9j.uri.js: $(build)/b9j.uri.uncompressed.js
 	$(call yuicompress_js,$<,$@)
 
 $(build)/b9jTest.js: $(bootstrap_js) $(build)/b9j.uncompressed.js source/b9jTest/source.js
