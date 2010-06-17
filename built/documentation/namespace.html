@@ -1,0 +1,250 @@
+<!doctype html>
+<html>
+<head>
+<title>b9j.namespace - Namespace creation and aliasing</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/combo?2.8.1/build/reset-fonts-grids/reset-fonts-grids.css&2.8.1/build/base/base-min.css" type="text/css"/>
+
+<style type="text/css">body {
+    font-size: 116%;
+    background: #eee;
+}
+
+a {
+    color: #069;
+}
+
+.index a {
+    text-decoration: none;
+}
+
+.index a:hover {
+    text-decoration: underline;
+}
+
+ul.index {
+    margin-left: 0;
+}
+
+.index li {
+    list-style-type: none;
+}
+
+.index li.index-head1 {
+    margin-left: 0;
+    font-weight: 700;
+}
+
+.index li.index-head2 {
+    margin-left: 1em;
+}
+
+.index li.index-head3 {
+    margin-left: 2em;
+}
+
+.index li.index-head4 {
+    margin-left: 3em;
+}
+
+h1.content-head {
+    text-decoration: underline;
+}
+
+.content-head {
+    color: #333;
+}
+
+pre {
+    border: 1px solid #888;
+    background: #eee;
+    padding: 1em;
+    font-family: monospace;
+    line-height: 100%;
+}
+
+.hd {
+    background: #def;
+/*    border-bottom: 2px solid #ccc;*/
+    padding: 0.25em 1em;
+    text-align: left;
+    color: #555;
+    font-size: 131%;
+}
+
+.bd {
+    padding: 0 1em;
+}
+
+.name {
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 85%;
+}
+
+
+.dcmt-document {
+    border: 3px solid #ccc;
+    border-top: none;
+    border-bottom: none;
+    background: #fff;
+}
+
+.dcmt-content {
+/*    border-left: 2px solid #aaa;*/
+}
+</style>
+
+</head>
+<body>
+
+<div id="doc2">
+
+<div class="dcmt-document">
+    <div class="hd">
+        <span class="name">b9j.namespace </span> <span class="subtitle">Namespace creation and aliasing</span>
+    </div>
+        <div class="bd">
+    <div class="dcmt-content">
+            <ul class="index">
+                    <li class="index-head1"><a href="#NAME">NAME</a></li>
+                    <li class="index-head1"><a href="#SYNPOSIS">SYNPOSIS</a></li>
+                    <li class="index-head1"><a href="#DESCRIPTION">DESCRIPTION</a></li>
+                    <li class="index-head1"><a href="#METHODS">METHODS</a></li>
+                    <li class="index-head2"><a href="#b9j.namespace.declare( $namespace, [ $context ] )">b9j.namespace.declare( $namespace, [ $context ] )</a></li>
+                    <li class="index-head2"><a href="#b9j.namespace.using( $namespace1, $namespace2, ... )">b9j.namespace.using( $namespace1, $namespace2, ... )</a></li>
+                    <li class="index-head1"><a href="#SEE ALSO">SEE ALSO</a></li>
+                    <li class="index-head1"><a href="#AUTHOR">AUTHOR</a></li>
+                    <li class="index-head1"><a href="#DOWNLOAD">DOWNLOAD</a></li>
+                    <li class="index-head1"><a href="#SOURCE">SOURCE</a></li>
+                    <li class="index-head1"><a href="#COPYRIGHT & LICENSE">COPYRIGHT & LICENSE</a></li>
+                </ul>
+        <h1 class="content-head1 content-head"><a name="NAME"></a>NAME</h1>
+
+<p>b9j.namespace - Namespace creation and aliasing</p>
+
+<h1 class="content-head1 content-head"><a name="SYNPOSIS"></a>SYNPOSIS</h1>
+
+<pre><code>     var declare = b9j.namespace.declare; 
+     var using = b9j.namespace.using;
+
+     declare("YAHOO.util");
+
+     declare({ com: {
+       example:
+           [ 'apple', 'banana', 'cherry.grape' ] }
+     });
+
+     using(com.example.apple,
+         com.example.cherry.grape).run(function(apple, grape){
+
+             apple.xyzzy();
+             ...
+             grape.frobozz();
+             ...
+     })
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="DESCRIPTION"></a>DESCRIPTION</h1>
+
+<p>b9j.namespace provides methods for setting up and using namespaces</p>
+
+<p>The methods contained within are modeled after: <br />
+<a href="http://blog.higher-order.net/2008/02/18/designing-clientserver-web-applications/">http://blog.higher-order.net/2008/02/18/designing-clientserver-web-applications/</a> (by Karl Krukow)</p>
+
+<h1 class="content-head1 content-head"><a name="METHODS"></a>METHODS</h1>
+
+<h2 class="content-head2 content-head"><a name="b9j.namespace.declare( $namespace, [ $context ] )"></a>b9j.namespace.declare( $namespace, [ $context ] )</h2>
+
+<p>Create $namespace under $context</p>
+
+<p>If $context is not given, then it will default to window</p>
+
+<p>$namespace can be any of:</p>
+
+<pre><code> string          # $namespace should be in a dotted path form, as in
+                 # "YAHOO.lang" or "b9j.namespace" or "com.example.xyzzy"
+                 # The endpoint namespace (object) will be created, along with each
+                 # namespace encountered along the way (if it doesn't already exist)
+
+ array           # For each element in the array, declare a namespace using that element
+                 # and $context. Essentially does this:
+
+                     b9j.namespace.declare($namespace[0], $context);
+                     b9j.namespace.declare($namespace[1], $context);
+                     ...
+
+ hash (object)   # For each key in the hash, create a namespace in $context under
+                 # the key, then recursively declare a new namespace with the value
+                 # in the hash and $context[key]. For example:
+
+                     b9j.namespace.declare({ com: {
+                         example:
+                             [ 'apple', 'banana', 'cherry.grape' ] }
+                     });
+
+                 # The above will create:
+
+                     com
+                     com.example
+                     com.example.apple
+                     com.example.banana
+                     com.example.cherry
+                     com.example.cherry.grape
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="b9j.namespace.using( $namespace1, $namespace2, ... )"></a>b9j.namespace.using( $namespace1, $namespace2, ... )</h2>
+
+<p>Returns an object with a single method called run. By passing a function
+to run with place arguments corresponding to $namespace1, $namespace2, ..., you
+can alias a long namespace identifier to a short one. For example:</p>
+
+<pre><code>     b9j.namespace.using(com.example.apple,
+         com.example.cherry.grape).run(function(apple, grape){
+
+             apple.xyzzy();
+             ...
+             grape.frobozz();
+             ...
+     })
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="SEE ALSO"></a>SEE ALSO</h1>
+
+<p><a href="http://blog.higher-order.net/2008/02/18/designing-clientserver-web-applications/">http://blog.higher-order.net/2008/02/18/designing-clientserver-web-applications/</a></p>
+
+<p><a href="http://appengine.bravo9.com/b9j">b9j</a> - A JavaScript toolkit</p>
+
+<h1 class="content-head1 content-head"><a name="AUTHOR"></a>AUTHOR</h1>
+
+<p>Robert Krimen <code>&lt;robertkrimen at gmail.com&gt;</code> <a href="http://bravo9.com">http://bravo9.com</a></p>
+
+<h1 class="content-head1 content-head"><a name="DOWNLOAD"></a>DOWNLOAD</h1>
+
+<p>Available as part of <a href="http://appengine.bravo9.com/b9j"><strong>b9j</strong></a>: <a href="http://appengine.bravo9.com/b9j/b9j-latest.zip">b9j-latest.zip</a></p>
+
+<h1 class="content-head1 content-head"><a name="SOURCE"></a>SOURCE</h1>
+
+<p>You can contribute or fork this project via GitHub:</p>
+
+<p><a href="http://github.com/robertkrimen/b9j/tree/master">http://github.com/robertkrimen/b9j/tree/master</a></p>
+
+<pre><code> git clone git://github.com/robertkrimen/b9j.git
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="COPYRIGHT & LICENSE"></a>COPYRIGHT & LICENSE</h1>
+
+<p>Copyright 2008 Robert Krimen</p>
+
+<p>Code licensed under the BSD License: <a href="http://appengine.bravo9.com/b9j/documentation/license.txt">http://appengine.bravo9.com/b9j/documentation/license.txt</a></p>
+
+</div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

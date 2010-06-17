@@ -186,6 +186,8 @@ ship: wipe build
 	rm -f $(build)/b9j-latest*
 	ln -sf `basename $(ship)` $(build)/b9j-latest
 	ln -sf `basename $(ship_zip)` $(build)/b9j-latest.zip
+	rm -rf built
+	rsync -Cav $(build)/b9j-latest/ built/
 
 clean:
 	rm -rf build

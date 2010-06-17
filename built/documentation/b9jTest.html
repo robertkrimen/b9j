@@ -1,0 +1,389 @@
+<!doctype html>
+<html>
+<head>
+<title>b9jTest - A wrapper around YUI Test to make simple testing quick and easy</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/combo?2.8.1/build/reset-fonts-grids/reset-fonts-grids.css&2.8.1/build/base/base-min.css" type="text/css"/>
+
+<style type="text/css">body {
+    font-size: 116%;
+    background: #eee;
+}
+
+a {
+    color: #069;
+}
+
+.index a {
+    text-decoration: none;
+}
+
+.index a:hover {
+    text-decoration: underline;
+}
+
+ul.index {
+    margin-left: 0;
+}
+
+.index li {
+    list-style-type: none;
+}
+
+.index li.index-head1 {
+    margin-left: 0;
+    font-weight: 700;
+}
+
+.index li.index-head2 {
+    margin-left: 1em;
+}
+
+.index li.index-head3 {
+    margin-left: 2em;
+}
+
+.index li.index-head4 {
+    margin-left: 3em;
+}
+
+h1.content-head {
+    text-decoration: underline;
+}
+
+.content-head {
+    color: #333;
+}
+
+pre {
+    border: 1px solid #888;
+    background: #eee;
+    padding: 1em;
+    font-family: monospace;
+    line-height: 100%;
+}
+
+.hd {
+    background: #def;
+/*    border-bottom: 2px solid #ccc;*/
+    padding: 0.25em 1em;
+    text-align: left;
+    color: #555;
+    font-size: 131%;
+}
+
+.bd {
+    padding: 0 1em;
+}
+
+.name {
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 85%;
+}
+
+
+.dcmt-document {
+    border: 3px solid #ccc;
+    border-top: none;
+    border-bottom: none;
+    background: #fff;
+}
+
+.dcmt-content {
+/*    border-left: 2px solid #aaa;*/
+}
+</style>
+
+</head>
+<body>
+
+<div id="doc2">
+
+<div class="dcmt-document">
+    <div class="hd">
+        <span class="name">b9jTest </span> <span class="subtitle">A wrapper around YUI Test to make simple testing quick and easy</span>
+    </div>
+        <div class="bd">
+    <div class="dcmt-content">
+            <ul class="index">
+                    <li class="index-head1"><a href="#NAME">NAME</a></li>
+                    <li class="index-head1"><a href="#SYNOPSIS">SYNOPSIS</a></li>
+                    <li class="index-head1"><a href="#YUI VERSION">YUI VERSION</a></li>
+                    <li class="index-head1"><a href="#DESCRIPTION">DESCRIPTION</a></li>
+                    <li class="index-head1"><a href="#DOWNLOAD">DOWNLOAD</a></li>
+                    <li class="index-head1"><a href="#Example HTML test document">Example HTML test document</a></li>
+                    <li class="index-head1"><a href="#METHODS">METHODS</a></li>
+                    <li class="index-head2"><a href="#b9jTest( $function )">b9jTest( $function )</a></li>
+                    <li class="index-head1"><a href="#Test functions">Test functions</a></li>
+                    <li class="index-head2"><a href="#areEqual( $want, $have, [ $message ] )">areEqual( $want, $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#is( $want, $have, [ $message ] )">is( $want, $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#areNotEqual( $want, $have, [ $message ] )">areNotEqual( $want, $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isnt( $want, $have, [ $message ] )">isnt( $want, $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#like( $re, $value, [ $message ] )">like( $re, $value, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#unlike( $re, $value, [ $message ] )">unlike( $re, $value, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#areSame( $want, $have, [ $message ] )">areSame( $want, $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#areNotSame( $want, $have, [ $message ] )">areNotSame( $want, $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#fail( [ $message ] )">fail( [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isTypeOf( $wantType, $value, [ $message ] )">isTypeOf( $wantType, $value, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isArray( $have, [ $message ] )">isArray( $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isBoolean( $have, [ $message ] )">isBoolean( $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isFunction( $have, [ $message ] )">isFunction( $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isNumber( $have, [ $message ] )">isNumber( $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isOjbect( $have, [ $message ] )">isOjbect( $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isString( $have, [ $message ] )">isString( $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isTrue( $have, [ $message ] )">isTrue( $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isFalse( $have, [ $message ] )">isFalse( $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isNaN( $have, [ $message ] )">isNaN( $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isNotNaN( $have, [ $message ] )">isNotNaN( $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isNull( $have, [ $message ] )">isNull( $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isNotNull( $have, [ $message ] )">isNotNull( $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isUndefined( $have, [ $message ] )">isUndefined( $have, [ $message ] )</a></li>
+                    <li class="index-head2"><a href="#isNotUndefined( $have, [ $message ] )">isNotUndefined( $have, [ $message ] )</a></li>
+                    <li class="index-head1"><a href="#SEE ALSO">SEE ALSO</a></li>
+                    <li class="index-head1"><a href="#AUTHOR">AUTHOR</a></li>
+                    <li class="index-head1"><a href="#DOWNLOAD">DOWNLOAD</a></li>
+                    <li class="index-head1"><a href="#SOURCE">SOURCE</a></li>
+                    <li class="index-head1"><a href="#COPYRIGHT & LICENSE">COPYRIGHT & LICENSE</a></li>
+                </ul>
+        <h1 class="content-head1 content-head"><a name="NAME"></a>NAME</h1>
+
+<p>b9jTest - A wrapper around YUI Test to make simple testing quick and easy</p>
+
+<h1 class="content-head1 content-head"><a name="SYNOPSIS"></a>SYNOPSIS</h1>
+
+<pre><code>b9jTest(function(test) {
+
+    test.areEqual("xyzzy", "xyzzy");
+    test.areEqual("apple", "apple");
+    test.like(/banana/, "banana");
+
+});
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="YUI VERSION"></a>YUI VERSION</h1>
+
+<p>YUI 2.3.6</p>
+
+<h1 class="content-head1 content-head"><a name="DESCRIPTION"></a>DESCRIPTION</h1>
+
+<p>b9jTest is a convenience package for running tests. It is comprised
+of b9jTest.js and b9jTest.css, which include every YUI and b9j component you need
+to run tests.</p>
+
+<h1 class="content-head1 content-head"><a name="DOWNLOAD"></a>DOWNLOAD</h1>
+
+<ul>
+<li><p><a href="http://appengine.bravo9.com/b9j/b9jTest.js">b9jTest.js</a></p></li>
+<li><p><a href="http://appengine.bravo9.com/b9j/b9jTest.css">b9jTest.css</a></p></li>
+</ul>
+
+<h1 class="content-head1 content-head"><a name="Example HTML test document"></a>Example HTML test document</h1>
+
+<p>The following is a functioning example of b9jTest in action:</p>
+
+<pre><code>    &lt;html&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv="content-type" content="text/html; charset=utf-8"&gt;
+    &lt;title&gt;b9jTest example&lt;/title&gt;
+    &lt;link rel="stylesheet" type="text/css" href="http://appengine.bravo9.com/b9j/b9jTest.css"&gt;
+    &lt;script type="text/javascript" src="http://appengine.bravo9.com/b9j/b9jTest.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body class="yui-skin-sam"&gt;
+    &lt;div id="testLogger"&gt;&lt;/div&gt;
+    &lt;script type="text/javascript"&gt;
+
+        b9jTest(function(test) {
+            test.areEqual("xyzzy", "xyzzy");
+            test.areEqual("apple", "apple");
+            test.like(/banana/, "banana");
+        });
+
+    &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+</code></pre>
+
+<p>Try this example: <a href="http://appengine.bravo9.com/b9j/documentation/b9jTest-example.html">http://appengine.bravo9.com/b9j/documentation/b9jTest-example.html</a></p>
+
+<h1 class="content-head1 content-head"><a name="METHODS"></a>METHODS</h1>
+
+<h2 class="content-head2 content-head"><a name="b9jTest( $function )"></a>b9jTest( $function )</h2>
+
+<p>Run the given $function with a tester object as the first argument</p>
+
+<pre><code>    b9jTest(function(test) {
+
+        test.areEqual( ... )
+        ...
+
+    });
+</code></pre>
+
+<p>In order to report test results, b9jTest expects to be run in an HTML document that includes an
+element with the id of "testLogger" wrapped in the "yui-skin-sam" CSS skin:</p>
+
+<pre><code>    &lt;body class="yui-skin-sam"&gt;
+    &lt;div id="testLogger"&gt;&lt;/div&gt;
+    &lt;script type="text/javascript"&gt;
+
+        b9jTest(function(test) {
+             ...
+        });
+
+    &lt;/script&gt;
+    &lt;/body&gt;
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="Test functions"></a>Test functions</h1>
+
+<p>The following test functions are available on passed in tester object.</p>
+
+<p>Most of these are wrappers around functions found in the <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html">YAHOO.util.Assert</a> package. A
+detailed description of their workings can be found at: <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html">http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html</a></p>
+
+<h2 class="content-head2 content-head"><a name="areEqual( $want, $have, [ $message ] )"></a>areEqual( $want, $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_areEqual">YAHOO.util.Assert.areEqual</a></p>
+
+<h2 class="content-head2 content-head"><a name="is( $want, $have, [ $message ] )"></a>is( $want, $have, [ $message ] )</h2>
+
+<p>An alias for areEqual</p>
+
+<h2 class="content-head2 content-head"><a name="areNotEqual( $want, $have, [ $message ] )"></a>areNotEqual( $want, $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_areNotEqual">YAHOO.util.Assert.areNotEqual</a></p>
+
+<h2 class="content-head2 content-head"><a name="isnt( $want, $have, [ $message ] )"></a>isnt( $want, $have, [ $message ] )</h2>
+
+<p>An alias for areNotEqual</p>
+
+<h2 class="content-head2 content-head"><a name="like( $re, $value, [ $message ] )"></a>like( $re, $value, [ $message ] )</h2>
+
+<p>The test passes if $value matches $re (which is a regular expression)</p>
+
+<pre><code>     test.like(/xyzzy/, "applexyzzy")
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="unlike( $re, $value, [ $message ] )"></a>unlike( $re, $value, [ $message ] )</h2>
+
+<p>The test passes if $value does NOT match $re (which is a regular expression)</p>
+
+<pre><code>     test.unlike(/xyzzy/, "banana")
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="areSame( $want, $have, [ $message ] )"></a>areSame( $want, $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_areSame">YAHOO.util.Assert.areSame</a></p>
+
+<h2 class="content-head2 content-head"><a name="areNotSame( $want, $have, [ $message ] )"></a>areNotSame( $want, $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_areNotSame">YAHOO.util.Assert.areNotSame</a></p>
+
+<h2 class="content-head2 content-head"><a name="fail( [ $message ] )"></a>fail( [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_fail">YAHOO.util.Assert.fail</a></p>
+
+<h2 class="content-head2 content-head"><a name="isTypeOf( $wantType, $value, [ $message ] )"></a>isTypeOf( $wantType, $value, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_isTypeOf">YAHOO.util.Assert.isTypeOf</a></p>
+
+<h2 class="content-head2 content-head"><a name="isArray( $have, [ $message ] )"></a>isArray( $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_isArray">YAHOO.util.Assert.isArray</a></p>
+
+<h2 class="content-head2 content-head"><a name="isBoolean( $have, [ $message ] )"></a>isBoolean( $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_isBoolean">YAHOO.util.Assert.isBoolean</a></p>
+
+<h2 class="content-head2 content-head"><a name="isFunction( $have, [ $message ] )"></a>isFunction( $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_isFunction">YAHOO.util.Assert.isFunction</a></p>
+
+<h2 class="content-head2 content-head"><a name="isNumber( $have, [ $message ] )"></a>isNumber( $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_isNumber">YAHOO.util.Assert.isNumber</a></p>
+
+<h2 class="content-head2 content-head"><a name="isOjbect( $have, [ $message ] )"></a>isOjbect( $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_isObject">YAHOO.util.Assert.isObject</a></p>
+
+<h2 class="content-head2 content-head"><a name="isString( $have, [ $message ] )"></a>isString( $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_isString">YAHOO.util.Assert.isString</a></p>
+
+<h2 class="content-head2 content-head"><a name="isTrue( $have, [ $message ] )"></a>isTrue( $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_isTrue">YAHOO.util.Assert.isTrue</a></p>
+
+<h2 class="content-head2 content-head"><a name="isFalse( $have, [ $message ] )"></a>isFalse( $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_isFalse">YAHOO.util.Assert.isFalse</a></p>
+
+<h2 class="content-head2 content-head"><a name="isNaN( $have, [ $message ] )"></a>isNaN( $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_isNaN">YAHOO.util.Assert.isNaN</a></p>
+
+<h2 class="content-head2 content-head"><a name="isNotNaN( $have, [ $message ] )"></a>isNotNaN( $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_isNotNaN">YAHOO.util.Assert.isNotNaN</a></p>
+
+<h2 class="content-head2 content-head"><a name="isNull( $have, [ $message ] )"></a>isNull( $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_isNull">YAHOO.util.Assert.isNull</a></p>
+
+<h2 class="content-head2 content-head"><a name="isNotNull( $have, [ $message ] )"></a>isNotNull( $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_isNotNull">YAHOO.util.Assert.isNotNull</a></p>
+
+<h2 class="content-head2 content-head"><a name="isUndefined( $have, [ $message ] )"></a>isUndefined( $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_isUndefined">YAHOO.util.Assert.isUndefined</a></p>
+
+<h2 class="content-head2 content-head"><a name="isNotUndefined( $have, [ $message ] )"></a>isNotUndefined( $have, [ $message ] )</h2>
+
+<p>&raquo; <a href="http://developer.yahoo.com/yui/docs/YAHOO.util.Assert.html#method_isNotUndefined">YAHOO.util.Assert.isNotUndefined</a></p>
+
+<h1 class="content-head1 content-head"><a name="SEE ALSO"></a>SEE ALSO</h1>
+
+<p><a href="http://developer.yahoo.com/yui/yuitest/">YUI Test</a></p>
+
+<p><a href="http://search.cpan.org/dist/JS-Test-Simple/lib/JS/Test/Simple.pod">JS-Test-Simple</a></p>
+
+<p><a href="http://www.edwardh.com/jsunit/">JSUnit</a></p>
+
+<p><a href="http://appengine.bravo9.com/b9j">b9j</a> - A JavaScript toolkit</p>
+
+<h1 class="content-head1 content-head"><a name="AUTHOR"></a>AUTHOR</h1>
+
+<p>Robert Krimen <code>&lt;robertkrimen at gmail.com&gt;</code> <a href="http://bravo9.com">http://bravo9.com</a></p>
+
+<h1 class="content-head1 content-head"><a name="DOWNLOAD"></a>DOWNLOAD</h1>
+
+<p>Available as part of <a href="http://appengine.bravo9.com/b9j"><strong>b9j</strong></a>: <a href="http://appengine.bravo9.com/b9j/b9j-latest.zip">b9j-latest.zip</a></p>
+
+<h1 class="content-head1 content-head"><a name="SOURCE"></a>SOURCE</h1>
+
+<p>You can contribute or fork this project via GitHub:</p>
+
+<p><a href="http://github.com/robertkrimen/b9j/tree/master">http://github.com/robertkrimen/b9j/tree/master</a></p>
+
+<pre><code> git clone git://github.com/robertkrimen/b9j.git
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="COPYRIGHT & LICENSE"></a>COPYRIGHT & LICENSE</h1>
+
+<p>Copyright 2008 Robert Krimen</p>
+
+<p>Code licensed under the BSD License: <a href="http://appengine.bravo9.com/b9j/documentation/license.txt">http://appengine.bravo9.com/b9j/documentation/license.txt</a></p>
+
+</div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

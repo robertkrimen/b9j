@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+<head>
+<title>b9j.pguid - Page-unique identifier generation</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/combo?2.8.1/build/reset-fonts-grids/reset-fonts-grids.css&2.8.1/build/base/base-min.css" type="text/css"/>
+
+<style type="text/css">body {
+    font-size: 116%;
+    background: #eee;
+}
+
+a {
+    color: #069;
+}
+
+.index a {
+    text-decoration: none;
+}
+
+.index a:hover {
+    text-decoration: underline;
+}
+
+ul.index {
+    margin-left: 0;
+}
+
+.index li {
+    list-style-type: none;
+}
+
+.index li.index-head1 {
+    margin-left: 0;
+    font-weight: 700;
+}
+
+.index li.index-head2 {
+    margin-left: 1em;
+}
+
+.index li.index-head3 {
+    margin-left: 2em;
+}
+
+.index li.index-head4 {
+    margin-left: 3em;
+}
+
+h1.content-head {
+    text-decoration: underline;
+}
+
+.content-head {
+    color: #333;
+}
+
+pre {
+    border: 1px solid #888;
+    background: #eee;
+    padding: 1em;
+    font-family: monospace;
+    line-height: 100%;
+}
+
+.hd {
+    background: #def;
+/*    border-bottom: 2px solid #ccc;*/
+    padding: 0.25em 1em;
+    text-align: left;
+    color: #555;
+    font-size: 131%;
+}
+
+.bd {
+    padding: 0 1em;
+}
+
+.name {
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 85%;
+}
+
+
+.dcmt-document {
+    border: 3px solid #ccc;
+    border-top: none;
+    border-bottom: none;
+    background: #fff;
+}
+
+.dcmt-content {
+/*    border-left: 2px solid #aaa;*/
+}
+</style>
+
+</head>
+<body>
+
+<div id="doc2">
+
+<div class="dcmt-document">
+    <div class="hd">
+        <span class="name">b9j.pguid </span> <span class="subtitle">Page-unique identifier generation</span>
+    </div>
+        <div class="bd">
+    <div class="dcmt-content">
+            <ul class="index">
+                    <li class="index-head1"><a href="#NAME">NAME</a></li>
+                    <li class="index-head1"><a href="#SYNOPSIS">SYNOPSIS</a></li>
+                    <li class="index-head1"><a href="#DESCRIPTION">DESCRIPTION</a></li>
+                    <li class="index-head1"><a href="#METHODS">METHODS</a></li>
+                    <li class="index-head2"><a href="#b9j.pguid.next()">b9j.pguid.next()</a></li>
+                    <li class="index-head2"><a href="#b9j.pguid.assign( $element )">b9j.pguid.assign( $element )</a></li>
+                    <li class="index-head2"><a href="#b9j.pguid.sequence()">b9j.pguid.sequence()</a></li>
+                    <li class="index-head2"><a href="#new b9j.pguid.Sequence( { ... } )">new b9j.pguid.Sequence( { ... } )</a></li>
+                    <li class="index-head2"><a href="#sequence.next()">sequence.next()</a></li>
+                    <li class="index-head2"><a href="#sequence.assign( $element )">sequence.assign( $element )</a></li>
+                    <li class="index-head1"><a href="#SEE ALSO">SEE ALSO</a></li>
+                    <li class="index-head1"><a href="#AUTHOR">AUTHOR</a></li>
+                    <li class="index-head1"><a href="#DOWNLOAD">DOWNLOAD</a></li>
+                    <li class="index-head1"><a href="#SOURCE">SOURCE</a></li>
+                    <li class="index-head1"><a href="#COPYRIGHT & LICENSE">COPYRIGHT & LICENSE</a></li>
+                </ul>
+        <h1 class="content-head1 content-head"><a name="NAME"></a>NAME</h1>
+
+<p>b9j.pguid - Page-unique identifier generation</p>
+
+<h1 class="content-head1 content-head"><a name="SYNOPSIS"></a>SYNOPSIS</h1>
+
+<pre><code> pguid = b9j.pguid.next() // A unique id (suitable for a DOM element) is generated
+                          // Something like "b9j-pguid-20a9ff-0"
+ ...
+ pguid = b9j.pguid.next() // Another unique one... "b9j-pguid-20a9ff-1"
+
+ // Build a custom generator
+ var sequence = new b9j.pguid.Sequence({ namespace: "frobozz" })
+ pguid = sequence.next() "frobozz-c861e1-0"
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="DESCRIPTION"></a>DESCRIPTION</h1>
+
+<p>A page-unique identifier is useful when you need to assign some identifier to DOM element but can't
+be bothered to dream up a custom one (every time)</p>
+
+<h1 class="content-head1 content-head"><a name="METHODS"></a>METHODS</h1>
+
+<h2 class="content-head2 content-head"><a name="b9j.pguid.next()"></a>b9j.pguid.next()</h2>
+
+<p>Returns the next identifier in the b9j.pguid sequence singleton</p>
+
+<h2 class="content-head2 content-head"><a name="b9j.pguid.assign( $element )"></a>b9j.pguid.assign( $element )</h2>
+
+<p>Uses the b9j.pguid sequence singleton to assign a pguid to $element, if necessary</p>
+
+<p>Returns either the existing or newly-generated identifier</p>
+
+<h2 class="content-head2 content-head"><a name="b9j.pguid.sequence()"></a>b9j.pguid.sequence()</h2>
+
+<p>Returns the b9j.pguid sequence singleton, which is configured with the
+namespace "b9j-pguid"</p>
+
+<h2 class="content-head2 content-head"><a name="new b9j.pguid.Sequence( { ... } )"></a>new b9j.pguid.Sequence( { ... } )</h2>
+
+<p>Returns a new pguid generator configured with the following options:</p>
+
+<pre><code> namespace       # The prefix for each generated identifier
+                 # By default, this is "pguid"
+
+ start           # The number to start counting at
+                 # By default, this is 0
+</code></pre>
+
+<p>An example:</p>
+
+<pre><code> ... = new b9j.pguid.Sequence({ namespace: "frobozz", start: 3 })
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="sequence.next()"></a>sequence.next()</h2>
+
+<p>Returns the next identifier in the sequence</p>
+
+<h2 class="content-head2 content-head"><a name="sequence.assign( $element )"></a>sequence.assign( $element )</h2>
+
+<p>If $element does not have an "id" property, then generate the next unique
+identifier in the sequence, assign it to $element.id, and return the identifier</p>
+
+<p>If $element already has an "id" property, then simply return $element.id (no
+new identifier is generated)</p>
+
+<h1 class="content-head1 content-head"><a name="SEE ALSO"></a>SEE ALSO</h1>
+
+<p><a href="http://developer.yahoo.com/yui//docs/YAHOO.util.Dom.html#method_generateId">YAHOO.util.Dom.generateId</a> - The inspiration for this module</p>
+
+<p><a href="http://appengine.bravo9.com/b9j">b9j</a> - A JavaScript toolkit</p>
+
+<h1 class="content-head1 content-head"><a name="AUTHOR"></a>AUTHOR</h1>
+
+<p>Robert Krimen <code>&lt;robertkrimen at gmail.com&gt;</code> <a href="http://bravo9.com">http://bravo9.com</a></p>
+
+<h1 class="content-head1 content-head"><a name="DOWNLOAD"></a>DOWNLOAD</h1>
+
+<p>Available as part of <a href="http://appengine.bravo9.com/b9j"><strong>b9j</strong></a>: <a href="http://appengine.bravo9.com/b9j/b9j-latest.zip">b9j-latest.zip</a></p>
+
+<h1 class="content-head1 content-head"><a name="SOURCE"></a>SOURCE</h1>
+
+<p>You can contribute or fork this project via GitHub:</p>
+
+<p><a href="http://github.com/robertkrimen/b9j/tree/master">http://github.com/robertkrimen/b9j/tree/master</a></p>
+
+<pre><code> git clone git://github.com/robertkrimen/b9j.git
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="COPYRIGHT & LICENSE"></a>COPYRIGHT & LICENSE</h1>
+
+<p>Copyright 2008 Robert Krimen</p>
+
+<p>Code licensed under the BSD License: <a href="http://appengine.bravo9.com/b9j/documentation/license.txt">http://appengine.bravo9.com/b9j/documentation/license.txt</a></p>
+
+</div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

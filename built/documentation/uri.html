@@ -1,0 +1,679 @@
+<!doctype html>
+<html>
+<head>
+<title>b9j.uri - URI (Uniform Resource Identifier) parsing, manipulation, and generation</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/combo?2.8.1/build/reset-fonts-grids/reset-fonts-grids.css&2.8.1/build/base/base-min.css" type="text/css"/>
+
+<style type="text/css">body {
+    font-size: 116%;
+    background: #eee;
+}
+
+a {
+    color: #069;
+}
+
+.index a {
+    text-decoration: none;
+}
+
+.index a:hover {
+    text-decoration: underline;
+}
+
+ul.index {
+    margin-left: 0;
+}
+
+.index li {
+    list-style-type: none;
+}
+
+.index li.index-head1 {
+    margin-left: 0;
+    font-weight: 700;
+}
+
+.index li.index-head2 {
+    margin-left: 1em;
+}
+
+.index li.index-head3 {
+    margin-left: 2em;
+}
+
+.index li.index-head4 {
+    margin-left: 3em;
+}
+
+h1.content-head {
+    text-decoration: underline;
+}
+
+.content-head {
+    color: #333;
+}
+
+pre {
+    border: 1px solid #888;
+    background: #eee;
+    padding: 1em;
+    font-family: monospace;
+    line-height: 100%;
+}
+
+.hd {
+    background: #def;
+/*    border-bottom: 2px solid #ccc;*/
+    padding: 0.25em 1em;
+    text-align: left;
+    color: #555;
+    font-size: 131%;
+}
+
+.bd {
+    padding: 0 1em;
+}
+
+.name {
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 85%;
+}
+
+
+.dcmt-document {
+    border: 3px solid #ccc;
+    border-top: none;
+    border-bottom: none;
+    background: #fff;
+}
+
+.dcmt-content {
+/*    border-left: 2px solid #aaa;*/
+}
+</style>
+
+</head>
+<body>
+
+<div id="doc2">
+
+<div class="dcmt-document">
+    <div class="hd">
+        <span class="name">b9j.uri </span> <span class="subtitle">URI (Uniform Resource Identifier) parsing, manipulation, and generation</span>
+    </div>
+        <div class="bd">
+    <div class="dcmt-content">
+            <ul class="index">
+                    <li class="index-head1"><a href="#NAME">NAME</a></li>
+                    <li class="index-head1"><a href="#SYNOPSIS">SYNOPSIS</a></li>
+                    <li class="index-head1"><a href="#DESCRIPTION">DESCRIPTION</a></li>
+                    <li class="index-head1"><a href="#METHODS">METHODS</a></li>
+                    <li class="index-head2"><a href="#b9j.uri.parse( $uri )">b9j.uri.parse( $uri )</a></li>
+                    <li class="index-head2"><a href="#b9j.uri.parseQuery( $query )">b9j.uri.parseQuery( $query )</a></li>
+                    <li class="index-head2"><a href="#b9j.uri.location()">b9j.uri.location()</a></li>
+                    <li class="index-head2"><a href="#new b9j.uri.Uri( $uri )">new b9j.uri.Uri( $uri )</a></li>
+                    <li class="index-head2"><a href="#uri.clone()">uri.clone()</a></li>
+                    <li class="index-head2"><a href="#uri.scheme()">uri.scheme()</a></li>
+                    <li class="index-head2"><a href="#uri.scheme( $scheme )">uri.scheme( $scheme )</a></li>
+                    <li class="index-head2"><a href="#uri.protocol()">uri.protocol()</a></li>
+                    <li class="index-head2"><a href="#uri.protocol( $protocol )">uri.protocol( $protocol )</a></li>
+                    <li class="index-head2"><a href="#uri.authority()">uri.authority()</a></li>
+                    <li class="index-head2"><a href="#uri.authority( $authority )">uri.authority( $authority )</a></li>
+                    <li class="index-head2"><a href="#uri.host()">uri.host()</a></li>
+                    <li class="index-head2"><a href="#uri.host( $host )">uri.host( $host )</a></li>
+                    <li class="index-head2"><a href="#uri.port()">uri.port()</a></li>
+                    <li class="index-head2"><a href="#uri.port( $port )">uri.port( $port )</a></li>
+                    <li class="index-head2"><a href="#uri.user()">uri.user()</a></li>
+                    <li class="index-head2"><a href="#uri.user( $user )">uri.user( $user )</a></li>
+                    <li class="index-head2"><a href="#uri.password()">uri.password()</a></li>
+                    <li class="index-head2"><a href="#uri.password( $password )">uri.password( $password )</a></li>
+                    <li class="index-head2"><a href="#uri.userInformation()">uri.userInformation()</a></li>
+                    <li class="index-head2"><a href="#uri.userInfo()">uri.userInfo()</a></li>
+                    <li class="index-head2"><a href="#uri.userInformation( $userInformation )">uri.userInformation( $userInformation )</a></li>
+                    <li class="index-head2"><a href="#uri.userInfo( $userInformation )">uri.userInfo( $userInformation )</a></li>
+                    <li class="index-head2"><a href="#uri.fragment()">uri.fragment()</a></li>
+                    <li class="index-head2"><a href="#uri.fragment( $fragment )">uri.fragment( $fragment )</a></li>
+                    <li class="index-head2"><a href="#uri.query()">uri.query()</a></li>
+                    <li class="index-head2"><a href="#uri.query( $query )">uri.query( $query )</a></li>
+                    <li class="index-head2"><a href="#uri.path()">uri.path()</a></li>
+                    <li class="index-head2"><a href="#uri.path( $path )">uri.path( $path )</a></li>
+                    <li class="index-head2"><a href="#uri.up()">uri.up()</a></li>
+                    <li class="index-head2"><a href="#uri.down( $path )">uri.down( $path )</a></li>
+                    <li class="index-head2"><a href="#uri.parent()">uri.parent()</a></li>
+                    <li class="index-head2"><a href="#uri.child( $path )">uri.child( $path )</a></li>
+                    <li class="index-head2"><a href="#uri.append( $part1, [ $part2 ], ... )">uri.append( $part1, [ $part2 ], ... )</a></li>
+                    <li class="index-head2"><a href="#uri.extension()">uri.extension()</a></li>
+                    <li class="index-head2"><a href="#uri.extension( $extension )">uri.extension( $extension )</a></li>
+                    <li class="index-head2"><a href="#uri.set( $uri )">uri.set( $uri )</a></li>
+                    <li class="index-head2"><a href="#uri.mergeQuery( $query )">uri.mergeQuery( $query )</a></li>
+                    <li class="index-head2"><a href="#uri.toString()">uri.toString()</a></li>
+                    <li class="index-head2"><a href="#b9j.uri.query.parse( $query )">b9j.uri.query.parse( $query )</a></li>
+                    <li class="index-head2"><a href="#new b9j.uri.query.Query( $query )">new b9j.uri.query.Query( $query )</a></li>
+                    <li class="index-head2"><a href="#query.clone()">query.clone()</a></li>
+                    <li class="index-head2"><a href="#query.get()">query.get()</a></li>
+                    <li class="index-head2"><a href="#query.get( $key )">query.get( $key )</a></li>
+                    <li class="index-head2"><a href="#query.getAll( $key )">query.getAll( $key )</a></li>
+                    <li class="index-head2"><a href="#query.set( $key, $value )">query.set( $key, $value )</a></li>
+                    <li class="index-head2"><a href="#query.set( $key, $value1, $value2, ... )">query.set( $key, $value1, $value2, ... )</a></li>
+                    <li class="index-head2"><a href="#query.set( $query )">query.set( $query )</a></li>
+                    <li class="index-head2"><a href="#query.add( $query )">query.add( $query )</a></li>
+                    <li class="index-head2"><a href="#query.add( $key, $value )">query.add( $key, $value )</a></li>
+                    <li class="index-head2"><a href="#query.add( $key, $value1, $value2, ... )">query.add( $key, $value1, $value2, ... )</a></li>
+                    <li class="index-head2"><a href="#query.clear( $key )">query.clear( $key )</a></li>
+                    <li class="index-head2"><a href="#query.clear()">query.clear()</a></li>
+                    <li class="index-head2"><a href="#query.merge( $query )">query.merge( $query )</a></li>
+                    <li class="index-head2"><a href="#query.append( $queryString )">query.append( $queryString )</a></li>
+                    <li class="index-head2"><a href="#query.isEmpty()">query.isEmpty()</a></li>
+                    <li class="index-head2"><a href="#query.toString()">query.toString()</a></li>
+                    <li class="index-head1"><a href="#SEE ALSO">SEE ALSO</a></li>
+                    <li class="index-head1"><a href="#AUTHOR">AUTHOR</a></li>
+                    <li class="index-head1"><a href="#DOWNLOAD">DOWNLOAD</a></li>
+                    <li class="index-head1"><a href="#SOURCE">SOURCE</a></li>
+                    <li class="index-head1"><a href="#COPYRIGHT & LICENSE">COPYRIGHT & LICENSE</a></li>
+                </ul>
+        <h1 class="content-head1 content-head"><a name="NAME"></a>NAME</h1>
+
+<p>b9j.uri - URI (Uniform Resource Identifier) parsing, manipulation, and generation</p>
+
+<h1 class="content-head1 content-head"><a name="SYNOPSIS"></a>SYNOPSIS</h1>
+
+<pre><code> var uri = new b9j.uri.URI( "http://example.com/a/b?a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5" )
+ var host = uri.host()
+
+ var uriChild = uri.child("c.html")          // http://example.com/a/b/c.html?a=1&amp;b=2&amp; ...
+ uriChild.query.add({ c: [ 6, 7 ], d: 8 })   // ... ?a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5&amp;c=6&amp;c=7&amp;d=8
+ uriChild.query.set("b", 9)                  // ... ?a=1&amp;b=9&amp;c ...
+
+ return uriChild.toString()
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="DESCRIPTION"></a>DESCRIPTION</h1>
+
+<p>This package provides a way to parse, manipulate, and generate URIs. Specifically, it
+splits up a URI into three objects: the URI, the path, and the query. The path and query are subordinate, 
+and changes to either object will be reflected in their "owner" URI.</p>
+
+<p>It uses a modified parseUri (by Steven Levithan) for URI parsing: <a href="http://blog.stevenlevithan.com/archives/parseuri">http://blog.stevenlevithan.com/archives/parseuri</a></p>
+
+<h1 class="content-head1 content-head"><a name="METHODS"></a>METHODS</h1>
+
+<h2 class="content-head2 content-head"><a name="b9j.uri.parse( $uri )"></a>b9j.uri.parse( $uri )</h2>
+
+<p>Parse $uri (which should be a string) and return a hash containing the following:</p>
+
+<pre><code> scheme
+ authority
+ userInformation
+ user
+ password
+ host
+ port
+ relative
+ path
+ directory
+ file
+ query
+ queryHash
+ fragment
+</code></pre>
+
+<p>An example:</p>
+
+<pre><code> ... = b9j.uri.parse("http://example.com:8080/?a=1&amp;b=2")
+</code></pre>
+
+<p>See also <a href="http://tools.ietf.org/html/rfc3986">RFC3986 (http://tools.ietf.org/html/rfc3986)</a></p>
+
+<p>This method is adapted from <a href="http://blog.stevenlevithan.com/archives/parseuri">parseUri 1.2</a> by Steven Levithan</p>
+
+<h2 class="content-head2 content-head"><a name="b9j.uri.parseQuery( $query )"></a>b9j.uri.parseQuery( $query )</h2>
+
+<p>Parse $query (which should be a string) and return a key/value hash:</p>
+
+<pre><code> var hash = b9j.uri.parseQuery("a=1&amp;b=2")
+ // hash is { a: 1, b: 2 }
+</code></pre>
+
+<p>If the the query string contains a multi-value key, then that key is represented
+in the hash by an array instead of a simple value:</p>
+
+<pre><code> var hash = b9j.uri.parseQuery("a=1&amp;b=2&amp;c=4&amp;c=5&amp;c=6")
+ // hash is { a: 1, b: 2, c: [ 4, 5, 6 ] }
+</code></pre>
+
+<p>This function is an alias for b9j.uri.query.parse( ... )</p>
+
+<h2 class="content-head2 content-head"><a name="b9j.uri.location()"></a>b9j.uri.location()</h2>
+
+<p>Returns a new URI object representing the current value of <code>window.location</code></p>
+
+<h2 class="content-head2 content-head"><a name="new b9j.uri.Uri( $uri )"></a>new b9j.uri.Uri( $uri )</h2>
+
+<p>Returns a new URI object representing $uri, which can either be a string or a hash resulting
+from b9j.uri.parse</p>
+
+<h2 class="content-head2 content-head"><a name="uri.clone()"></a>uri.clone()</h2>
+
+<p>Returns a clone of uri</p>
+
+<h2 class="content-head2 content-head"><a name="uri.scheme()"></a>uri.scheme()</h2>
+
+<h2 class="content-head2 content-head"><a name="uri.scheme( $scheme )"></a>uri.scheme( $scheme )</h2>
+
+<p>Returns the scheme of uri, which is something like <code>http</code>, <code>https</code>, <code>ftp</code>, ...</p>
+
+<pre><code> http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5#top =&gt; http
+</code></pre>
+
+<p>Sets the scheme of uri to $scheme</p>
+
+<p>Returns uri</p>
+
+<h2 class="content-head2 content-head"><a name="uri.protocol()"></a>uri.protocol()</h2>
+
+<h2 class="content-head2 content-head"><a name="uri.protocol( $protocol )"></a>uri.protocol( $protocol )</h2>
+
+<p>An alias for uri.scheme() and uri.scheme( ... )</p>
+
+<h2 class="content-head2 content-head"><a name="uri.authority()"></a>uri.authority()</h2>
+
+<p>Returns the authority of uri, which is something like <code>example.com:80</code> or <code>user:password@www.example.net</code></p>
+
+<pre><code> http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5#top =&gt; alice:xyzzy@www.example.net
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="uri.authority( $authority )"></a>uri.authority( $authority )</h2>
+
+<p>Sets the authority of uri to $authority</p>
+
+<p>Returns uri</p>
+
+<h2 class="content-head2 content-head"><a name="uri.host()"></a>uri.host()</h2>
+
+<p>Returns the host of uri, which is something like <code>example.com</code> or <code>www.example.net</code></p>
+
+<pre><code> http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5#top =&gt; www.example.net
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="uri.host( $host )"></a>uri.host( $host )</h2>
+
+<p>Sets the host of uri to $host</p>
+
+<p>Returns uri</p>
+
+<h2 class="content-head2 content-head"><a name="uri.port()"></a>uri.port()</h2>
+
+<p>Returns the port of uri, which can be empty (think default port) or something like <code>8080</code>, <code>8000</code>, ...</p>
+
+<pre><code> http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5#top =&gt; 8080
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="uri.port( $port )"></a>uri.port( $port )</h2>
+
+<p>Sets the port of uri to $port</p>
+
+<p>Returns uri</p>
+
+<h2 class="content-head2 content-head"><a name="uri.user()"></a>uri.user()</h2>
+
+<p>Returns the user of uri, if any</p>
+
+<pre><code> http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5#top =&gt; alice
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="uri.user( $user )"></a>uri.user( $user )</h2>
+
+<p>Sets the user of uri to $user</p>
+
+<p>Returns uri</p>
+
+<h2 class="content-head2 content-head"><a name="uri.password()"></a>uri.password()</h2>
+
+<p>Returns the password of uri, if any</p>
+
+<pre><code> http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5#top =&gt; xyzzy
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="uri.password( $password )"></a>uri.password( $password )</h2>
+
+<p>Sets the password of uri to $password</p>
+
+<p>Returns uri</p>
+
+<h2 class="content-head2 content-head"><a name="uri.userInformation()"></a>uri.userInformation()</h2>
+
+<h2 class="content-head2 content-head"><a name="uri.userInfo()"></a>uri.userInfo()</h2>
+
+<p>Returns the userInformation of uri, if any. The user information is usually something like <code>user:password</code></p>
+
+<pre><code> http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5#top =&gt; alice:xyzzy
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="uri.userInformation( $userInformation )"></a>uri.userInformation( $userInformation )</h2>
+
+<h2 class="content-head2 content-head"><a name="uri.userInfo( $userInformation )"></a>uri.userInfo( $userInformation )</h2>
+
+<p>Sets the userInformation of uri $userInformation, which will in turn update user, password, and authority appropiately</p>
+
+<p>Returns uri</p>
+
+<h2 class="content-head2 content-head"><a name="uri.fragment()"></a>uri.fragment()</h2>
+
+<p>Returns the fragment of uri, if any</p>
+
+<pre><code> http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5#top =&gt; top
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="uri.fragment( $fragment )"></a>uri.fragment( $fragment )</h2>
+
+<p>Sets the fragment of uri to $fragment</p>
+
+<p>Returns uri</p>
+
+<h2 class="content-head2 content-head"><a name="uri.query()"></a>uri.query()</h2>
+
+<p>Returns the query of uri, which is a b9j.uri.query.Query object</p>
+
+<pre><code> http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5#top =&gt; a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5
+</code></pre>
+
+<p>You can make changes to the returned query object, and these will be reflected in uri</p>
+
+<h2 class="content-head2 content-head"><a name="uri.query( $query )"></a>uri.query( $query )</h2>
+
+<p>Sets the query of uri to $query, which can be either a string or a key/value hash. For example</p>
+
+<pre><code> // The following are equivalent
+ uri.query( "a=1&amp;b=1&amp;b=2" )
+ uri.query( { a: 1, b: [ 1, 2 ] } ) 
+</code></pre>
+
+<p>Returns uri</p>
+
+<h2 class="content-head2 content-head"><a name="uri.path()"></a>uri.path()</h2>
+
+<p>Returns the path of uri, which is a b9j.path.Path object</p>
+
+<pre><code> http://alice:xyzzy@www.example.net:8080/apple/banana/?a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5#top =&gt; /apple/banana/
+</code></pre>
+
+<p>You can make changes to the returned path object, and these will be reflected in uri</p>
+
+<h2 class="content-head2 content-head"><a name="uri.path( $path )"></a>uri.path( $path )</h2>
+
+<p>Sets the path of uri to $path, which can be either a string or an array of path parts</p>
+
+<pre><code> // The following are equivalent
+ uri.path( "a/b/c" )
+ uri.path( [ 'a', 'b', 'c' ] )
+</code></pre>
+
+<p>Returns uri</p>
+
+<h2 class="content-head2 content-head"><a name="uri.up()"></a>uri.up()</h2>
+
+<p>Modify uri by updating the path to the parent of the current path. For example:</p>
+
+<pre><code> var uri = new b9j.uri.URI("http://example.com/a/b/c")
+ uri.up()
+ uri.toString() // http://example.com/a/b
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="uri.down( $path )"></a>uri.down( $path )</h2>
+
+<p>Modify uri by updating the path to the child of the current path by $path. For example:</p>
+
+<pre><code> var uri = new b9j.uri.URI("http://example.com/a/b/c")
+ uri.down( "c/d", "e/" )
+ uri.toString() // http://example.com/a/b/c/d/e/
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="uri.parent()"></a>uri.parent()</h2>
+
+<p>Returns a clone of uri that is the parent (path-wise) of uri. For example:</p>
+
+<pre><code> var uri = new b9j.uri.URI("http://example.com/a/b/c")
+ var parent = uri.parent()
+ uri.toString() // http://example.com/a/b/c
+ parent.toString() // http://example.com/a/b
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="uri.child( $path )"></a>uri.child( $path )</h2>
+
+<p>Returns a clone of uri that is the child (path-wise) of uri by $path. For example:</p>
+
+<pre><code> var uri = new b9j.uri.URI("http://example.com/a/b/c")
+ var child = uri.child( "c/d", "e" )
+ uri.toString() // http://example.com/a/b/c
+ child.toString() // http://example.com/a/b/c/d/e/
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="uri.append( $part1, [ $part2 ], ... )"></a>uri.append( $part1, [ $part2 ], ... )</h2>
+
+<p>Modify uri by appending $part1 WITHOUT separating it by a slash. Any, optional,
+following $part2, ..., will be separated by slashes as normal</p>
+
+<pre><code>     var uri = new b9j.uri.URI( "http://example.net/a/b/c" )
+     uri.append( "d", "ef/g", "h" ) // "http://example.net/a/b/cd/ef/g/h"
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="uri.extension()"></a>uri.extension()</h2>
+
+<p>Returns the extension of uri, including the leading the dot</p>
+
+<p>Returns "" if uri does not have an extension</p>
+
+<pre><code>     new b9j.uri.URI( "http://example.net/a/b/c.html" ).extension() // .html
+     new b9j.uri.URI( "http://example.net/a/b/c" ).extension() // ""
+     new b9j.uri.URI( "http://example.net/a/b/c.tar.gz" ).extension() // .gz
+     new b9j.uri.URI( "http://example.net/a/b/c.tar.gz" ).extension({ match: "*" }) // .tar.gz
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="uri.extension( $extension )"></a>uri.extension( $extension )</h2>
+
+<p>Modify uri by changing the existing extension of uri, if any, to $extension</p>
+
+<pre><code>     new b9j.uri.URI( "http://example.net/a/b/c.html" ).extension( ".txt" ) // http://example.net/a/b/c.txt
+     new b9j.uri.URI( "http://example.net/a/b/c.html" ).extension( "zip" ) // http://example.net/a/b/c.zip
+     new b9j.uri.URI( "http://example.net/a/b/c.html" ).extension( "" ) // http://example.net/a/b/c
+</code></pre>
+
+<p>Returns uri</p>
+
+<h2 class="content-head2 content-head"><a name="uri.set( $uri )"></a>uri.set( $uri )</h2>
+
+<p>Set the uri to $uri, completely reinitializing the object (including path and query)</p>
+
+<h2 class="content-head2 content-head"><a name="uri.mergeQuery( $query )"></a>uri.mergeQuery( $query )</h2>
+
+<p>Merge $query with the current query of uri</p>
+
+<p>$query can either be a query string or hash (simple object). An example:</p>
+
+<pre><code> var uri = new b9j.uri.URI("http://example.com/?a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5")
+
+ // The following are equivalent
+ uri.mergeQuery( "b=6&amp;b=7&amp;c=8&amp;d=9" )
+ uri.mergeQuery( { b: [ 6, 7 ], c: 8, d: 9 }
+
+ // And will result in
+ uri.query.toString() // a=1&amp;b=6&amp;b=7&amp;c=8&amp;d=9
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="uri.toString()"></a>uri.toString()</h2>
+
+<p>Returns uri in string-form</p>
+
+<h2 class="content-head2 content-head"><a name="b9j.uri.query.parse( $query )"></a>b9j.uri.query.parse( $query )</h2>
+
+<p>Parse $query (which should be a string) and return a key/value hash:</p>
+
+<pre><code> var hash = b9j.uri.parseQuery("a=1&amp;b=2")
+ // hash is { a: 1, b: 2 }
+</code></pre>
+
+<p>If the the query string contains a multi-value key, then that key is represented
+in the hash by an array instead of a simple value:</p>
+
+<pre><code> var hash = b9j.uri.parseQuery("a=1&amp;b=2&amp;c=4&amp;c=5&amp;c=6")
+ // hash is { a: 1, b: 2, c: [ 4, 5, 6 ] }
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="new b9j.uri.query.Query( $query )"></a>new b9j.uri.query.Query( $query )</h2>
+
+<p>Returns a new Query object representing $query, which can either be a (query) string or a hash resulting
+from b9j.uri.query.parse</p>
+
+<h2 class="content-head2 content-head"><a name="query.clone()"></a>query.clone()</h2>
+
+<p>Returns a clone of query</p>
+
+<h2 class="content-head2 content-head"><a name="query.get()"></a>query.get()</h2>
+
+<p>Returns the query store directly as a hash (simple object), so you can do the following:</p>
+
+<pre><code> var hash = new b9j.uri.query.Query("a=1&amp;b=2")
+ if (query.get.a) { ...
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="query.get( $key )"></a>query.get( $key )</h2>
+
+<p>Returns the value for $key
+If $key is multi-value, then return only the first value of $key</p>
+
+<h2 class="content-head2 content-head"><a name="query.getAll( $key )"></a>query.getAll( $key )</h2>
+
+<p>Returns an array containing every value for $key
+If $key is a single-value, then return an array with one element.</p>
+
+<h2 class="content-head2 content-head"><a name="query.set( $key, $value )"></a>query.set( $key, $value )</h2>
+
+<p>Set $key to $value in query
+$value can be a single value or an array</p>
+
+<h2 class="content-head2 content-head"><a name="query.set( $key, $value1, $value2, ... )"></a>query.set( $key, $value1, $value2, ... )</h2>
+
+<p>Set $key to an array of [ $value1, $value2, ... ]</p>
+
+<p>Returns query</p>
+
+<h2 class="content-head2 content-head"><a name="query.set( $query )"></a>query.set( $query )</h2>
+
+<p>Set query uri to $uri, completely reinitializing the object</p>
+
+<p>$query can be a query string or hash (simple object)</p>
+
+<p>Returns query</p>
+
+<h2 class="content-head2 content-head"><a name="query.add( $query )"></a>query.add( $query )</h2>
+
+<p>Add $query to query, where $query can be a query string or hash (simple object)</p>
+
+<p>Returns query</p>
+
+<h2 class="content-head2 content-head"><a name="query.add( $key, $value )"></a>query.add( $key, $value )</h2>
+
+<p>Add $value to $key</p>
+
+<p>If $key does not exist, then $key is set to $value <br />
+If $key already has a value, multiple or otherwise, then $value is appended  </p>
+
+<h2 class="content-head2 content-head"><a name="query.add( $key, $value1, $value2, ... )"></a>query.add( $key, $value1, $value2, ... )</h2>
+
+<p>Add $value1, $value2, ... to $key, turning it into a multi-value key</p>
+
+<p>Returns query</p>
+
+<h2 class="content-head2 content-head"><a name="query.clear( $key )"></a>query.clear( $key )</h2>
+
+<p>Clear $key from query</p>
+
+<p>Returns query</p>
+
+<h2 class="content-head2 content-head"><a name="query.clear()"></a>query.clear()</h2>
+
+<p>Clear every key/value from query, essentially turning it into the empty query</p>
+
+<p>Returns query</p>
+
+<h2 class="content-head2 content-head"><a name="query.merge( $query )"></a>query.merge( $query )</h2>
+
+<p>Merge $query with the query</p>
+
+<p>$query can either be a query string or hash (simple object). An example:</p>
+
+<pre><code> var query = new b9j.uri.query.Query("a=1&amp;b=2&amp;c=3&amp;c=4&amp;c=5")
+
+ // The following are equivalent
+ query.merge( "b=6&amp;b=7&amp;c=8&amp;d=9" )
+ query.merge( { b: [ 6, 7 ], c: 8, d: 9 }
+
+ // And will result in
+ query.toString() // a=1&amp;b=6&amp;b=7&amp;c=8&amp;d=9
+</code></pre>
+
+<p>Returns query</p>
+
+<h2 class="content-head2 content-head"><a name="query.append( $queryString )"></a>query.append( $queryString )</h2>
+
+<p>Append $query_string to the output of query.toString()</p>
+
+<p>This will NOT do any encoding on $queryString, nor can you otherwise
+manipulate the contests using query.set, etc.</p>
+
+<p>Pass in null to erase the previous $querString</p>
+
+<p>Returns query</p>
+
+<h2 class="content-head2 content-head"><a name="query.isEmpty()"></a>query.isEmpty()</h2>
+
+<p>Returns true if query is empty ("")</p>
+
+<h2 class="content-head2 content-head"><a name="query.toString()"></a>query.toString()</h2>
+
+<p>Returns query in string-form</p>
+
+<h1 class="content-head1 content-head"><a name="SEE ALSO"></a>SEE ALSO</h1>
+
+<p><a href="http://blog.stevenlevithan.com/archives/parseuri">parseUri</a></p>
+
+<p><a href="http://code.google.com/p/js-uri/">js-uri</a></p>
+
+<p><a href="http://appengine.bravo9.com/b9j">b9j</a> - A JavaScript toolkit</p>
+
+<h1 class="content-head1 content-head"><a name="AUTHOR"></a>AUTHOR</h1>
+
+<p>Robert Krimen <code>&lt;robertkrimen at gmail.com&gt;</code> <a href="http://bravo9.com">http://bravo9.com</a></p>
+
+<h1 class="content-head1 content-head"><a name="DOWNLOAD"></a>DOWNLOAD</h1>
+
+<p>Available as part of <a href="http://appengine.bravo9.com/b9j"><strong>b9j</strong></a>: <a href="http://appengine.bravo9.com/b9j/b9j-latest.zip">b9j-latest.zip</a></p>
+
+<h1 class="content-head1 content-head"><a name="SOURCE"></a>SOURCE</h1>
+
+<p>You can contribute or fork this project via GitHub:</p>
+
+<p><a href="http://github.com/robertkrimen/b9j/tree/master">http://github.com/robertkrimen/b9j/tree/master</a></p>
+
+<pre><code> git clone git://github.com/robertkrimen/b9j.git
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="COPYRIGHT & LICENSE"></a>COPYRIGHT & LICENSE</h1>
+
+<p>Copyright 2008 Robert Krimen</p>
+
+<p>Code licensed under the BSD License: <a href="http://appengine.bravo9.com/b9j/documentation/license.txt">http://appengine.bravo9.com/b9j/documentation/license.txt</a></p>
+
+</div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

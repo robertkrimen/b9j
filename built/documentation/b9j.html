@@ -1,0 +1,253 @@
+<!doctype html>
+<html>
+<head>
+<title>b9j - A JavaScript toolkit</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/combo?2.8.1/build/reset-fonts-grids/reset-fonts-grids.css&2.8.1/build/base/base-min.css" type="text/css"/>
+
+<style type="text/css">body {
+    font-size: 116%;
+    background: #eee;
+}
+
+a {
+    color: #069;
+}
+
+.index a {
+    text-decoration: none;
+}
+
+.index a:hover {
+    text-decoration: underline;
+}
+
+ul.index {
+    margin-left: 0;
+}
+
+.index li {
+    list-style-type: none;
+}
+
+.index li.index-head1 {
+    margin-left: 0;
+    font-weight: 700;
+}
+
+.index li.index-head2 {
+    margin-left: 1em;
+}
+
+.index li.index-head3 {
+    margin-left: 2em;
+}
+
+.index li.index-head4 {
+    margin-left: 3em;
+}
+
+h1.content-head {
+    text-decoration: underline;
+}
+
+.content-head {
+    color: #333;
+}
+
+pre {
+    border: 1px solid #888;
+    background: #eee;
+    padding: 1em;
+    font-family: monospace;
+    line-height: 100%;
+}
+
+.hd {
+    background: #def;
+/*    border-bottom: 2px solid #ccc;*/
+    padding: 0.25em 1em;
+    text-align: left;
+    color: #555;
+    font-size: 131%;
+}
+
+.bd {
+    padding: 0 1em;
+}
+
+.name {
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 85%;
+}
+
+
+.dcmt-document {
+    border: 3px solid #ccc;
+    border-top: none;
+    border-bottom: none;
+    background: #fff;
+}
+
+.dcmt-content {
+/*    border-left: 2px solid #aaa;*/
+}
+</style>
+
+</head>
+<body>
+
+<div id="doc2">
+
+<div class="dcmt-document">
+    <div class="hd">
+        <span class="name">b9j </span> <span class="subtitle">A JavaScript toolkit</span>
+    </div>
+        <div class="bd">
+    <div class="dcmt-content">
+            <ul class="index">
+                    <li class="index-head1"><a href="#NAME">NAME</a></li>
+                    <li class="index-head1"><a href="#VERSION">VERSION</a></li>
+                    <li class="index-head1"><a href="#CATALOG">CATALOG</a></li>
+                    <li class="index-head2"><a href="#b9j.namespace - Namespace creation and aliasing">b9j.namespace - Namespace creation and aliasing</a></li>
+                    <li class="index-head2"><a href="#b9j.test - A wrapper around YUI Test to make simple testing easy">b9j.test - A wrapper around YUI Test to make simple testing easy</a></li>
+                    <li class="index-head2"><a href="#b9jTest - A bundled version of b9j.test">b9jTest - A bundled version of b9j.test</a></li>
+                    <li class="index-head2"><a href="#b9j.path - UNIX-style path parsing, manipulation, and generation">b9j.path - UNIX-style path parsing, manipulation, and generation</a></li>
+                    <li class="index-head2"><a href="#b9j.uri - URI (Uniform Resource Identifier) parsing, manipulation, and generation">b9j.uri - URI (Uniform Resource Identifier) parsing, manipulation, and generation</a></li>
+                    <li class="index-head2"><a href="#b9j.uri.query - URI query parsing, manipulation, and generation">b9j.uri.query - URI query parsing, manipulation, and generation</a></li>
+                    <li class="index-head2"><a href="#b9j.digest.sha256 - A SHA-256 digester">b9j.digest.sha256 - A SHA-256 digester</a></li>
+                    <li class="index-head2"><a href="#b9j.random - Generate pseudo-random binary, hexadecimal, or base64 data of arbritrary length">b9j.random - Generate pseudo-random binary, hexadecimal, or base64 data of arbritrary length</a></li>
+                    <li class="index-head2"><a href="#b9j.pguid - Page-unique identifier generation">b9j.pguid - Page-unique identifier generation</a></li>
+                    <li class="index-head1"><a href="#AUTHOR">AUTHOR</a></li>
+                    <li class="index-head1"><a href="#DOWNLOAD">DOWNLOAD</a></li>
+                    <li class="index-head1"><a href="#SOURCE">SOURCE</a></li>
+                    <li class="index-head1"><a href="#COPYRIGHT & LICENSE">COPYRIGHT & LICENSE</a></li>
+                </ul>
+        <h1 class="content-head1 content-head"><a name="NAME"></a>NAME</h1>
+
+<p>b9j - A JavaScript toolkit</p>
+
+<h1 class="content-head1 content-head"><a name="VERSION"></a>VERSION</h1>
+
+<p>Version 0.1.9</p>
+
+<h1 class="content-head1 content-head"><a name="CATALOG"></a>CATALOG</h1>
+
+<p><a href="http://appengine.bravo9.com/b9j/documentation/namespace.html">b9j.namespace</a> - Namespace creation and aliasing <br />
+<a href="http://appengine.bravo9.com/b9j/documentation/test.html">b9j.test</a> - A wrapper around YUI Test to make simple testing easy <br />
+<a href="http://appengine.bravo9.com/b9j/documentation/b9jTest.html">b9jTest</a>  - A bundled version of b9j.test <br />
+<a href="http://appengine.bravo9.com/b9j/documentation/path.html">b9j.path</a> - UNIX-style path parsing, manipulation, and generation <br />
+<a href="http://appengine.bravo9.com/b9j/documentation/uri.html">b9j.uri</a>  - URI (Uniform Resource Identifier) parsing, manipulation, and generation <br />
+<a href="http://appengine.bravo9.com/b9j/documentation/uri.html">b9j.uri.query</a> - URI query parsing, manipulation, and generation <br />
+<a href="http://appengine.bravo9.com/b9j/documentation/digest.html">b9j.digest.sha256</a> - A SHA-256 digester <br />
+<a href="http://appengine.bravo9.com/b9j/documentation/random.html">b9j.random</a> - Generate pseudo-random binary, hexadecimal, or base64 data of arbritrary length <br />
+<a href="http://appengine.bravo9.com/b9j/documentation/pguid.html">b9j.pguid</a> - Page-unique identifier generation</p>
+
+<h2 class="content-head2 content-head"><a name="b9j.namespace - Namespace creation and aliasing"></a>b9j.namespace - Namespace creation and aliasing</h2>
+
+<pre><code>     namespace.declare              # Declare a namespace
+     namespace.using                # Alias one or more namespace(s) to a shorthand name
+</code></pre>
+
+<p><a href="http://appengine.bravo9.com/b9j/documentation/namespace.html">&raquo; Documentation</a> | <a href="http://appengine.bravo9.com/b9j/test/namespace.html">&raquo; Test</a></p>
+
+<h2 class="content-head2 content-head"><a name="b9j.test - A wrapper around YUI Test to make simple testing easy"></a>b9j.test - A wrapper around YUI Test to make simple testing easy</h2>
+
+<pre><code>     test.b9jTest                   # An easy-to-use test framework based on YUI Test
+                                    # NOTE: Requires YUI Test to be loaded
+</code></pre>
+
+<p><a href="http://appengine.bravo9.com/b9j/documentation/test.html">&raquo; Documentation</a> | <a href="http://appengine.bravo9.com/b9j/test/test.html">&raquo; Test</a></p>
+
+<h2 class="content-head2 content-head"><a name="b9jTest - A bundled version of b9j.test"></a>b9jTest - A bundled version of b9j.test</h2>
+
+<pre><code>     b9jTest                        # An easy-to-use test framework based on YUI Test
+</code></pre>
+
+<p><a href="http://appengine.bravo9.com/b9j/documentation/b9jTest.html">&raquo; Documentation</a> | <a href="http://appengine.bravo9.com/b9j/test/b9jTest.html">&raquo; Test</a></p>
+
+<h2 class="content-head2 content-head"><a name="b9j.path - UNIX-style path parsing, manipulation, and generation"></a>b9j.path - UNIX-style path parsing, manipulation, and generation</h2>
+
+<pre><code>     path.Path                      # A class representing a URI/UNIX-style path
+</code></pre>
+
+<p><a href="http://appengine.bravo9.com/b9j/documentation/path.html">&raquo; Documentation</a> | <a href="http://appengine.bravo9.com/b9j/test/path.html">&raquo; Test</a></p>
+
+<h2 class="content-head2 content-head"><a name="b9j.uri - URI (Uniform Resource Identifier) parsing, manipulation, and generation"></a>b9j.uri - URI (Uniform Resource Identifier) parsing, manipulation, and generation</h2>
+
+<pre><code>     uri.URI                        # A class representing a URI
+     uri.parse                      # Parse a URI string
+</code></pre>
+
+<p><a href="http://appengine.bravo9.com/b9j/documentation/uri.html">&raquo; Documentation</a> | <a href="http://appengine.bravo9.com/b9j/test/uri.html">&raquo; Test</a></p>
+
+<h2 class="content-head2 content-head"><a name="b9j.uri.query - URI query parsing, manipulation, and generation"></a>b9j.uri.query - URI query parsing, manipulation, and generation</h2>
+
+<pre><code>     uri.query.Query                # A class representing a URI query
+     uri.query.parse                # Parse a URI query string
+</code></pre>
+
+<p><a href="http://appengine.bravo9.com/b9j/documentation/uri.html">&raquo; Documentation</a> | <a href="http://appengine.bravo9.com/b9j/test/uri.html">&raquo; Test</a></p>
+
+<h2 class="content-head2 content-head"><a name="b9j.digest.sha256 - A SHA-256 digester"></a>b9j.digest.sha256 - A SHA-256 digester</h2>
+
+<pre><code>     digest.sha256.calculate16      # Calculate a hexadecimal (base 16) SHA-256 digest
+     digest.sha256.calculate64      # Calculate a base64 SHA-256 digest
+     digest.sha256.calculate        # Calculate a binary-string (base 256) SHA-256 digest
+</code></pre>
+
+<p><a href="http://appengine.bravo9.com/b9j/documentation/digest.html">&raquo; Documentation</a> | <a href="http://appengine.bravo9.com/b9j/test/digest.html">&raquo; Test</a></p>
+
+<h2 class="content-head2 content-head"><a name="b9j.random - Generate pseudo-random binary, hexadecimal, or base64 data of arbritrary length"></a>b9j.random - Generate pseudo-random binary, hexadecimal, or base64 data of arbritrary length</h2>
+
+<pre><code>     random.generate16              # Generate a pseudo-random hexadecimal (base 16) value
+     random.generate64              # Generate a pseudo-random base64 value
+     random.generate                # Generate a pseudo-random binary string (base 256)
+</code></pre>
+
+<p><a href="http://appengine.bravo9.com/b9j/documentation/random.html">&raquo; Documentation</a> | <a href="http://appengine.bravo9.com/b9j/test/random.html">&raquo; Test</a></p>
+
+<h2 class="content-head2 content-head"><a name="b9j.pguid - Page-unique identifier generation"></a>b9j.pguid - Page-unique identifier generation</h2>
+
+<pre><code>     pguid.next                      # Generate a stock pguid
+     pguid.assign                    # Given an element, generate and assign the next
+                                     # stock pguid (unless the element already has one)
+     pguid.Sequence                  # A pguid-generator class
+</code></pre>
+
+<p><a href="http://appengine.bravo9.com/b9j/documentation/pguid.html">&raquo; Documentation</a> | <a href="http://appengine.bravo9.com/b9j/test/pguid.html">&raquo; Test</a></p>
+
+<h1 class="content-head1 content-head"><a name="AUTHOR"></a>AUTHOR</h1>
+
+<p>Robert Krimen <code>&lt;robertkrimen at gmail.com&gt;</code> <a href="http://bravo9.com">http://bravo9.com</a></p>
+
+<h1 class="content-head1 content-head"><a name="DOWNLOAD"></a>DOWNLOAD</h1>
+
+<p>Available as part of <a href="http://appengine.bravo9.com/b9j"><strong>b9j</strong></a>: <a href="http://appengine.bravo9.com/b9j/b9j-latest.zip">b9j-latest.zip</a></p>
+
+<h1 class="content-head1 content-head"><a name="SOURCE"></a>SOURCE</h1>
+
+<p>You can contribute or fork this project via GitHub:</p>
+
+<p><a href="http://github.com/robertkrimen/b9j/tree/master">http://github.com/robertkrimen/b9j/tree/master</a></p>
+
+<pre><code> git clone git://github.com/robertkrimen/b9j.git
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="COPYRIGHT & LICENSE"></a>COPYRIGHT & LICENSE</h1>
+
+<p>Copyright 2008 Robert Krimen</p>
+
+<p>Code licensed under the BSD License: <a href="http://appengine.bravo9.com/b9j/documentation/license.txt">http://appengine.bravo9.com/b9j/documentation/license.txt</a></p>
+
+</div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

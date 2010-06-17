@@ -1,0 +1,432 @@
+<!doctype html>
+<html>
+<head>
+<title>b9j.path - UNIX-style path parsing, manipulation, and generation</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/combo?2.8.1/build/reset-fonts-grids/reset-fonts-grids.css&2.8.1/build/base/base-min.css" type="text/css"/>
+
+<style type="text/css">body {
+    font-size: 116%;
+    background: #eee;
+}
+
+a {
+    color: #069;
+}
+
+.index a {
+    text-decoration: none;
+}
+
+.index a:hover {
+    text-decoration: underline;
+}
+
+ul.index {
+    margin-left: 0;
+}
+
+.index li {
+    list-style-type: none;
+}
+
+.index li.index-head1 {
+    margin-left: 0;
+    font-weight: 700;
+}
+
+.index li.index-head2 {
+    margin-left: 1em;
+}
+
+.index li.index-head3 {
+    margin-left: 2em;
+}
+
+.index li.index-head4 {
+    margin-left: 3em;
+}
+
+h1.content-head {
+    text-decoration: underline;
+}
+
+.content-head {
+    color: #333;
+}
+
+pre {
+    border: 1px solid #888;
+    background: #eee;
+    padding: 1em;
+    font-family: monospace;
+    line-height: 100%;
+}
+
+.hd {
+    background: #def;
+/*    border-bottom: 2px solid #ccc;*/
+    padding: 0.25em 1em;
+    text-align: left;
+    color: #555;
+    font-size: 131%;
+}
+
+.bd {
+    padding: 0 1em;
+}
+
+.name {
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 85%;
+}
+
+
+.dcmt-document {
+    border: 3px solid #ccc;
+    border-top: none;
+    border-bottom: none;
+    background: #fff;
+}
+
+.dcmt-content {
+/*    border-left: 2px solid #aaa;*/
+}
+</style>
+
+</head>
+<body>
+
+<div id="doc2">
+
+<div class="dcmt-document">
+    <div class="hd">
+        <span class="name">b9j.path </span> <span class="subtitle">UNIX-style path parsing, manipulation, and generation</span>
+    </div>
+        <div class="bd">
+    <div class="dcmt-content">
+            <ul class="index">
+                    <li class="index-head1"><a href="#NAME">NAME</a></li>
+                    <li class="index-head1"><a href="#SYNOPSIS">SYNOPSIS</a></li>
+                    <li class="index-head1"><a href="#DESCRIPTION">DESCRIPTION</a></li>
+                    <li class="index-head1"><a href="#METHODS">METHODS</a></li>
+                    <li class="index-head2"><a href="#new b9j.path.Path( )">new b9j.path.Path( )</a></li>
+                    <li class="index-head2"><a href="#new b9j.path.Path( $part1, [ $part2, ... ] )">new b9j.path.Path( $part1, [ $part2, ... ] )</a></li>
+                    <li class="index-head2"><a href="#path.clone()">path.clone()</a></li>
+                    <li class="index-head2"><a href="#path.set( $path )">path.set( $path )</a></li>
+                    <li class="index-head2"><a href="#path.set( $part1, $part2, ...  )">path.set( $part1, $part2, ...  )</a></li>
+                    <li class="index-head2"><a href="#path.toString()">path.toString()</a></li>
+                    <li class="index-head2"><a href="#path.get()">path.get()</a></li>
+                    <li class="index-head2"><a href="#path.pop( [ $count ] )">path.pop( [ $count ] )</a></li>
+                    <li class="index-head2"><a href="#path.up( [ $count ] )">path.up( [ $count ] )</a></li>
+                    <li class="index-head2"><a href="#path.parent()">path.parent()</a></li>
+                    <li class="index-head2"><a href="#path.push( $part1, [ $part2 ], ... )">path.push( $part1, [ $part2 ], ... )</a></li>
+                    <li class="index-head2"><a href="#path.down( $part1, [ $part2 ], ... )">path.down( $part1, [ $part2 ], ... )</a></li>
+                    <li class="index-head2"><a href="#path.child( $part1, [ $part2 ], ... )">path.child( $part1, [ $part2 ], ... )</a></li>
+                    <li class="index-head2"><a href="#path.append( $part1, [ $part2 ], ... )">path.append( $part1, [ $part2 ], ... )</a></li>
+                    <li class="index-head2"><a href="#path.extension()">path.extension()</a></li>
+                    <li class="index-head2"><a href="#path.extension( $extension )">path.extension( $extension )</a></li>
+                    <li class="index-head2"><a href="#path.isEmpty()">path.isEmpty()</a></li>
+                    <li class="index-head2"><a href="#path.isRoot()">path.isRoot()</a></li>
+                    <li class="index-head2"><a href="#path.isTree()">path.isTree()</a></li>
+                    <li class="index-head2"><a href="#path.isBranch()">path.isBranch()</a></li>
+                    <li class="index-head2"><a href="#path.toTree()">path.toTree()</a></li>
+                    <li class="index-head2"><a href="#path.toBranch()">path.toBranch()</a></li>
+                    <li class="index-head2"><a href="#path.first()">path.first()</a></li>
+                    <li class="index-head2"><a href="#path.last()">path.last()</a></li>
+                    <li class="index-head2"><a href="#path.at( $index )">path.at( $index )</a></li>
+                    <li class="index-head2"><a href="#path.beginning()">path.beginning()</a></li>
+                    <li class="index-head2"><a href="#path.ending()">path.ending()</a></li>
+                    <li class="index-head2"><a href="#path.list()">path.list()</a></li>
+                    <li class="index-head1"><a href="#SEE ALSO">SEE ALSO</a></li>
+                    <li class="index-head1"><a href="#AUTHOR">AUTHOR</a></li>
+                    <li class="index-head1"><a href="#DOWNLOAD">DOWNLOAD</a></li>
+                    <li class="index-head1"><a href="#SOURCE">SOURCE</a></li>
+                    <li class="index-head1"><a href="#COPYRIGHT & LICENSE">COPYRIGHT & LICENSE</a></li>
+                </ul>
+        <h1 class="content-head1 content-head"><a name="NAME"></a>NAME</h1>
+
+<p>b9j.path - UNIX-style path parsing, manipulation, and generation</p>
+
+<h1 class="content-head1 content-head"><a name="SYNOPSIS"></a>SYNOPSIS</h1>
+
+<pre><code> var path = new b9j.path.Path("/a/b/c")
+
+ // /a/b/c/xyzzy
+ var child = path.child("xyzzy")
+
+ // /a/b
+ var parent = path.parent()
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="DESCRIPTION"></a>DESCRIPTION</h1>
+
+<p>This package provides a way to parse, manipulate, and generate UNIX-style paths.</p>
+
+<h1 class="content-head1 content-head"><a name="METHODS"></a>METHODS</h1>
+
+<h2 class="content-head2 content-head"><a name="new b9j.path.Path( )"></a>new b9j.path.Path( )</h2>
+
+<p>Returns a new object representing the empty path</p>
+
+<h2 class="content-head2 content-head"><a name="new b9j.path.Path( $part1, [ $part2, ... ] )"></a>new b9j.path.Path( $part1, [ $part2, ... ] )</h2>
+
+<p>Returns a new object representing a path formed by joining $partN together with '/'</p>
+
+<pre><code>     var path = b9j.path.Path( "a/b", "c", "d//e/f/" ) // a/b/c/d/e/f/
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.clone()"></a>path.clone()</h2>
+
+<p>Returns a clone of path</p>
+
+<h2 class="content-head2 content-head"><a name="path.set( $path )"></a>path.set( $path )</h2>
+
+<h2 class="content-head2 content-head"><a name="path.set( $part1, $part2, ...  )"></a>path.set( $part1, $part2, ...  )</h2>
+
+<p>Set the path to a cleaned-up version of the arguments</p>
+
+<pre><code>     path.set( "////a", "b/c" ) // /a/b/c
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.toString()"></a>path.toString()</h2>
+
+<h2 class="content-head2 content-head"><a name="path.get()"></a>path.get()</h2>
+
+<p>Return a string representing path</p>
+
+<h2 class="content-head2 content-head"><a name="path.pop( [ $count ] )"></a>path.pop( [ $count ] )</h2>
+
+<p>Pop $count parts (a part is what is between slashes) off the end of path</p>
+
+<p>If $count is not specified, then it defaults to 1</p>
+
+<p>Returns a b9j.path.Path object representing the popped parts</p>
+
+<pre><code>     var path = new b9j.path.Path( "a/b/c/d/e/f/g" )
+     var popped_path = path.pop(3)
+     // path is a/b/c/d
+     // popped_path is e/f/g
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.up( [ $count ] )"></a>path.up( [ $count ] )</h2>
+
+<p>Behaves similarly to path.pop, in that it takes off $count parts from the end
+of the path. However, path.up returns path, so you can use it for chaining:</p>
+
+<pre><code>     var path = new b9j.path.Path( "a/b/c/d/e/f/g" )
+     path.up().up(2).toString() // a/b/c/d
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.parent()"></a>path.parent()</h2>
+
+<p>Returns the parent path of path as a new, separate b9j.path.Path object</p>
+
+<pre><code>     var path = new b9j.path.Path( "a/b/c" )
+     var parent_path = path.parent()
+     // path is STILL a/b/c
+     // parent_path is a/b
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.push( $part1, [ $part2 ], ... )"></a>path.push( $part1, [ $part2 ], ... )</h2>
+
+<h2 class="content-head2 content-head"><a name="path.down( $part1, [ $part2 ], ... )"></a>path.down( $part1, [ $part2 ], ... )</h2>
+
+<p>Modifies path by appending $part1, $part2, to path separated by slashes</p>
+
+<p>Returns path so you can use it for chaining:</p>
+
+<pre><code>     var path = new b9j.path.Path( "a/b/c" )
+     path.down( "d//e", "f" ).down( "g" ) // "a/b/c/d/e/f/g
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.child( $part1, [ $part2 ], ... )"></a>path.child( $part1, [ $part2 ], ... )</h2>
+
+<p>Returns a child path of path as a new, separate b9j.path.Path object with $partN appended
+(separated by slashes)</p>
+
+<pre><code>     var path = new b9j.path.Path( "a/b/c" )
+     var child_path = path.child( "d/e" )
+     // path is STILL a/b/c
+     // child_path is a/b/c/d/e
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.append( $part1, [ $part2 ], ... )"></a>path.append( $part1, [ $part2 ], ... )</h2>
+
+<p>Modify path by appending $part1 WITHOUT separating it by a slash. Any, optional,
+following $part2, ..., will be separated by slashes as normal</p>
+
+<pre><code>     var path = new b9j.path.Path( "a/b/c" )
+     path.append( "d", "ef/g", "h" ) // "a/b/cd/ef/g/h"
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.extension()"></a>path.extension()</h2>
+
+<p>Returns the extension of path, including the leading the dot</p>
+
+<p>Returns "" if path does not have an extension</p>
+
+<pre><code>     new b9j.path.Path( "a/b/c.html" ).extension() // .html
+     new b9j.path.Path( "a/b/c" ).extension() // ""
+     new b9j.path.Path( "a/b/c.tar.gz" ).extension() // .gz
+     new b9j.path.Path( "a/b/c.tar.gz" ).extension({ match: "*" }) // .tar.gz
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.extension( $extension )"></a>path.extension( $extension )</h2>
+
+<p>Modify path by changing the existing extension of path, if any, to $extension</p>
+
+<pre><code>     new b9j.path.Path( "a/b/c.html" ).extension( ".txt" ) // a/b/c.txt
+     new b9j.path.Path( "a/b/c.html" ).extension( "zip" ) // a/b/c.zip
+     new b9j.path.Path( "a/b/c.html" ).extension( "" ) // a/b/c
+</code></pre>
+
+<p>Returns path</p>
+
+<h2 class="content-head2 content-head"><a name="path.isEmpty()"></a>path.isEmpty()</h2>
+
+<p>Returns true if path is the empty path ("")</p>
+
+<pre><code>     new b9j.path.Path().isEmpty()     // true
+     new b9j.path.Path("").isEmpty()   // true
+     new b9j.path.Path("/").isEmpty()  // false
+     new b9j.path.Path("a").isEmpty()  // false
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.isRoot()"></a>path.isRoot()</h2>
+
+<p>Returns true if path is the root path ("/")</p>
+
+<pre><code>     new b9j.path.Path("").isRoot()   // false
+     new b9j.path.Path("/").isRoot()  // true
+     new b9j.path.Path("a").isRoot()  // false
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.isTree()"></a>path.isTree()</h2>
+
+<p>Returns true if path begins with a slash</p>
+
+<pre><code>     new b9j.path.Path("").isTree()    // false
+     new b9j.path.Path("/").isTree()   // true
+     new b9j.path.Path("a").isTree()   // false
+     new b9j.path.Path("/a").isTree()  // true
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.isBranch()"></a>path.isBranch()</h2>
+
+<p>Returns true if path does NOT begin with a slash</p>
+
+<pre><code>     new b9j.path.Path("").isBranch()    // true
+     new b9j.path.Path("/").isBranch()   // false
+     new b9j.path.Path("a").isBranch()   // true
+     new b9j.path.Path("/a").isBranch()  // false
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.toTree()"></a>path.toTree()</h2>
+
+<p>Modifies path by prepending a slash</p>
+
+<pre><code>     new b9j.path.Path("").toTree()    // /
+     new b9j.path.Path("/").toTree()   // /
+     new b9j.path.Path("a").toTree()   // /a
+     new b9j.path.Path("/a").toTree()  // /a
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.toBranch()"></a>path.toBranch()</h2>
+
+<p>Modifies path by removing the leading slash, if any</p>
+
+<pre><code>     new b9j.path.Path("").toBranch()    // ""
+     new b9j.path.Path("/").toBranch()   // ""
+     new b9j.path.Path("a").toBranch()   // a
+     new b9j.path.Path("/a").toBranch()  // a
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.first()"></a>path.first()</h2>
+
+<p>Returns the first part of path, not including any slashes</p>
+
+<pre><code>     new b9j.path.Path("/a/b/c/").first()  // a
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.last()"></a>path.last()</h2>
+
+<p>Returns the last part of path, not including any slashes</p>
+
+<pre><code>     new b9j.path.Path("/a/b/c/").last()  // c
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.at( $index )"></a>path.at( $index )</h2>
+
+<p>Returns the part of path at $index, not including any slashes
+You can use a negative $index to start from the end of path</p>
+
+<pre><code>     new b9j.path.Path("/a/b/c/").at(0)  // a (equivalent to path.first())
+     new b9j.path.Path("/a/b/c/").at(-1) // c (equivalent to path.last())
+     new b9j.path.Path("/a/b/c/").at(1)  // b
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.beginning()"></a>path.beginning()</h2>
+
+<p>Returns the first part of path, including the leading slash, if any</p>
+
+<pre><code>     new b9j.path.Path("/a/b/c/").beginning() // /a
+     new b9j.path.Path("a/b/c/").beginning()  // a
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.ending()"></a>path.ending()</h2>
+
+<p>Returns the last part of path, including the trailing slash, if any</p>
+
+<pre><code>     new b9j.path.Path("/a/b/c/").ending() // c/
+     new b9j.path.Path("/a/b/c").ending()  // c
+</code></pre>
+
+<h2 class="content-head2 content-head"><a name="path.list()"></a>path.list()</h2>
+
+<p>Returns an array of the parts of path</p>
+
+<pre><code>     new b9j.path.Path().list()          // []
+     new b9j.path.Path("/").list()       // []
+     new b9j.path.Path("/a/b/c/").list() // [ "a", "b", "c" ]
+     new b9j.path.Path("a/b/c/").list()  // [ "a", "b", "c" ]
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="SEE ALSO"></a>SEE ALSO</h1>
+
+<p><a href="http://appengine.bravo9.com/b9j">b9j</a> - A JavaScript toolkit</p>
+
+<h1 class="content-head1 content-head"><a name="AUTHOR"></a>AUTHOR</h1>
+
+<p>Robert Krimen <code>&lt;robertkrimen at gmail.com&gt;</code> <a href="http://bravo9.com">http://bravo9.com</a></p>
+
+<h1 class="content-head1 content-head"><a name="DOWNLOAD"></a>DOWNLOAD</h1>
+
+<p>Available as part of <a href="http://appengine.bravo9.com/b9j"><strong>b9j</strong></a>: <a href="http://appengine.bravo9.com/b9j/b9j-latest.zip">b9j-latest.zip</a></p>
+
+<h1 class="content-head1 content-head"><a name="SOURCE"></a>SOURCE</h1>
+
+<p>You can contribute or fork this project via GitHub:</p>
+
+<p><a href="http://github.com/robertkrimen/b9j/tree/master">http://github.com/robertkrimen/b9j/tree/master</a></p>
+
+<pre><code> git clone git://github.com/robertkrimen/b9j.git
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="COPYRIGHT & LICENSE"></a>COPYRIGHT & LICENSE</h1>
+
+<p>Copyright 2008 Robert Krimen</p>
+
+<p>Code licensed under the BSD License: <a href="http://appengine.bravo9.com/b9j/documentation/license.txt">http://appengine.bravo9.com/b9j/documentation/license.txt</a></p>
+
+</div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

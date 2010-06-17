@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+<head>
+<title>b9j.random - Generate pseudo-random binary-string, hexadecimal, or base64 data of arbritrary length</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/combo?2.8.1/build/reset-fonts-grids/reset-fonts-grids.css&2.8.1/build/base/base-min.css" type="text/css"/>
+
+<style type="text/css">body {
+    font-size: 116%;
+    background: #eee;
+}
+
+a {
+    color: #069;
+}
+
+.index a {
+    text-decoration: none;
+}
+
+.index a:hover {
+    text-decoration: underline;
+}
+
+ul.index {
+    margin-left: 0;
+}
+
+.index li {
+    list-style-type: none;
+}
+
+.index li.index-head1 {
+    margin-left: 0;
+    font-weight: 700;
+}
+
+.index li.index-head2 {
+    margin-left: 1em;
+}
+
+.index li.index-head3 {
+    margin-left: 2em;
+}
+
+.index li.index-head4 {
+    margin-left: 3em;
+}
+
+h1.content-head {
+    text-decoration: underline;
+}
+
+.content-head {
+    color: #333;
+}
+
+pre {
+    border: 1px solid #888;
+    background: #eee;
+    padding: 1em;
+    font-family: monospace;
+    line-height: 100%;
+}
+
+.hd {
+    background: #def;
+/*    border-bottom: 2px solid #ccc;*/
+    padding: 0.25em 1em;
+    text-align: left;
+    color: #555;
+    font-size: 131%;
+}
+
+.bd {
+    padding: 0 1em;
+}
+
+.name {
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 85%;
+}
+
+
+.dcmt-document {
+    border: 3px solid #ccc;
+    border-top: none;
+    border-bottom: none;
+    background: #fff;
+}
+
+.dcmt-content {
+/*    border-left: 2px solid #aaa;*/
+}
+</style>
+
+</head>
+<body>
+
+<div id="doc2">
+
+<div class="dcmt-document">
+    <div class="hd">
+        <span class="name">b9j.random </span> <span class="subtitle">Generate pseudo-random binary-string, hexadecimal, or base64 data of arbritrary length</span>
+    </div>
+        <div class="bd">
+    <div class="dcmt-content">
+            <ul class="index">
+                    <li class="index-head1"><a href="#NAME">NAME</a></li>
+                    <li class="index-head1"><a href="#SYNOPSIS">SYNOPSIS</a></li>
+                    <li class="index-head1"><a href="#DESCRIPTION">DESCRIPTION</a></li>
+                    <li class="index-head1"><a href="#METHODS">METHODS</a></li>
+                    <li class="index-head2"><a href="#generate( [ $length ] )">generate( [ $length ] )</a></li>
+                    <li class="index-head2"><a href="#generate256( [ $length ] )">generate256( [ $length ] )</a></li>
+                    <li class="index-head2"><a href="#generateBase256( [ $length ] )">generateBase256( [ $length ] )</a></li>
+                    <li class="index-head2"><a href="#generate16( [ $length ] )">generate16( [ $length ] )</a></li>
+                    <li class="index-head2"><a href="#generateHexadecimal( [ $length ] )">generateHexadecimal( [ $length ] )</a></li>
+                    <li class="index-head2"><a href="#generateHex( [ $length ] )">generateHex( [ $length ] )</a></li>
+                    <li class="index-head2"><a href="#generateBase16( [ $length ] )">generateBase16( [ $length ] )</a></li>
+                    <li class="index-head2"><a href="#generate64( [ $length ] )">generate64( [ $length ] )</a></li>
+                    <li class="index-head2"><a href="#generateBase64( [ $length ] )">generateBase64( [ $length ] )</a></li>
+                    <li class="index-head1"><a href="#SEE ALSO">SEE ALSO</a></li>
+                    <li class="index-head1"><a href="#AUTHOR">AUTHOR</a></li>
+                    <li class="index-head1"><a href="#DOWNLOAD">DOWNLOAD</a></li>
+                    <li class="index-head1"><a href="#SOURCE">SOURCE</a></li>
+                    <li class="index-head1"><a href="#COPYRIGHT & LICENSE">COPYRIGHT & LICENSE</a></li>
+                </ul>
+        <h1 class="content-head1 content-head"><a name="NAME"></a>NAME</h1>
+
+<p>b9j.random - Generate pseudo-random binary-string, hexadecimal, or base64 data of arbritrary length</p>
+
+<h1 class="content-head1 content-head"><a name="SYNOPSIS"></a>SYNOPSIS</h1>
+
+<pre><code> var result
+
+ result = b9j.random.generate() 
+ // result is a random binary string (base256) of length 32 
+
+ result = b9j.random.generate64(4) 
+ // result is a random base64 (truncated) string of length 4
+
+ result = b9j.random.generate16(121) 
+ // result is a random hexadecimal string (base16, truncated) of length 121
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="DESCRIPTION"></a>DESCRIPTION</h1>
+
+<p>Generate pseudo-random binary, hexadecimal, or base64 data of arbritrary length</p>
+
+<p>The generator has two parts: the seeder and the digester.  The seeder is basically:</p>
+
+<pre><code>"" + ++&lt;counter&gt; + Math.random() + new Date().getTime()
+</code></pre>
+
+<p>The digester is <a href="http://appengine.bravo9.com/b9j/documentation/digest.sha256.html">b9j.digest.sha256</a>, which
+takes the resulting seed and makes it look "obscure" by calculating the SHA-256 digest of it.</p>
+
+<h1 class="content-head1 content-head"><a name="METHODS"></a>METHODS</h1>
+
+<h2 class="content-head2 content-head"><a name="generate( [ $length ] )"></a>generate( [ $length ] )</h2>
+
+<h2 class="content-head2 content-head"><a name="generate256( [ $length ] )"></a>generate256( [ $length ] )</h2>
+
+<h2 class="content-head2 content-head"><a name="generateBase256( [ $length ] )"></a>generateBase256( [ $length ] )</h2>
+
+<p>Returns a pseudo-random binary string (base 256) of length $length</p>
+
+<p>If $length is not given, then it defaults to 32</p>
+
+<h2 class="content-head2 content-head"><a name="generate16( [ $length ] )"></a>generate16( [ $length ] )</h2>
+
+<h2 class="content-head2 content-head"><a name="generateHexadecimal( [ $length ] )"></a>generateHexadecimal( [ $length ] )</h2>
+
+<h2 class="content-head2 content-head"><a name="generateHex( [ $length ] )"></a>generateHex( [ $length ] )</h2>
+
+<h2 class="content-head2 content-head"><a name="generateBase16( [ $length ] )"></a>generateBase16( [ $length ] )</h2>
+
+<p>Returns a pseudo-random hexadecimal (base16) string of length $length</p>
+
+<p>If $length is not given, then it defaults to 64</p>
+
+<h2 class="content-head2 content-head"><a name="generate64( [ $length ] )"></a>generate64( [ $length ] )</h2>
+
+<h2 class="content-head2 content-head"><a name="generateBase64( [ $length ] )"></a>generateBase64( [ $length ] )</h2>
+
+<p>Returns a pseudo-random base64 string of length $length</p>
+
+<p>If $length is not given, then it defaults to 44</p>
+
+<h1 class="content-head1 content-head"><a name="SEE ALSO"></a>SEE ALSO</h1>
+
+<p><a href="http://appengine.bravo9.com/b9j">b9j</a> - A JavaScript toolkit</p>
+
+<h1 class="content-head1 content-head"><a name="AUTHOR"></a>AUTHOR</h1>
+
+<p>Robert Krimen <code>&lt;robertkrimen at gmail.com&gt;</code> <a href="http://bravo9.com">http://bravo9.com</a></p>
+
+<h1 class="content-head1 content-head"><a name="DOWNLOAD"></a>DOWNLOAD</h1>
+
+<p>Available as part of <a href="http://appengine.bravo9.com/b9j"><strong>b9j</strong></a>: <a href="http://appengine.bravo9.com/b9j/b9j-latest.zip">b9j-latest.zip</a></p>
+
+<h1 class="content-head1 content-head"><a name="SOURCE"></a>SOURCE</h1>
+
+<p>You can contribute or fork this project via GitHub:</p>
+
+<p><a href="http://github.com/robertkrimen/b9j/tree/master">http://github.com/robertkrimen/b9j/tree/master</a></p>
+
+<pre><code> git clone git://github.com/robertkrimen/b9j.git
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="COPYRIGHT & LICENSE"></a>COPYRIGHT & LICENSE</h1>
+
+<p>Copyright 2008 Robert Krimen</p>
+
+<p>Code licensed under the BSD License: <a href="http://appengine.bravo9.com/b9j/documentation/license.txt">http://appengine.bravo9.com/b9j/documentation/license.txt</a></p>
+
+</div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

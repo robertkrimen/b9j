@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+<head>
+<title>b9j.digest - A SHA-256 digester</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/combo?2.8.1/build/reset-fonts-grids/reset-fonts-grids.css&2.8.1/build/base/base-min.css" type="text/css"/>
+
+<style type="text/css">body {
+    font-size: 116%;
+    background: #eee;
+}
+
+a {
+    color: #069;
+}
+
+.index a {
+    text-decoration: none;
+}
+
+.index a:hover {
+    text-decoration: underline;
+}
+
+ul.index {
+    margin-left: 0;
+}
+
+.index li {
+    list-style-type: none;
+}
+
+.index li.index-head1 {
+    margin-left: 0;
+    font-weight: 700;
+}
+
+.index li.index-head2 {
+    margin-left: 1em;
+}
+
+.index li.index-head3 {
+    margin-left: 2em;
+}
+
+.index li.index-head4 {
+    margin-left: 3em;
+}
+
+h1.content-head {
+    text-decoration: underline;
+}
+
+.content-head {
+    color: #333;
+}
+
+pre {
+    border: 1px solid #888;
+    background: #eee;
+    padding: 1em;
+    font-family: monospace;
+    line-height: 100%;
+}
+
+.hd {
+    background: #def;
+/*    border-bottom: 2px solid #ccc;*/
+    padding: 0.25em 1em;
+    text-align: left;
+    color: #555;
+    font-size: 131%;
+}
+
+.bd {
+    padding: 0 1em;
+}
+
+.name {
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 85%;
+}
+
+
+.dcmt-document {
+    border: 3px solid #ccc;
+    border-top: none;
+    border-bottom: none;
+    background: #fff;
+}
+
+.dcmt-content {
+/*    border-left: 2px solid #aaa;*/
+}
+</style>
+
+</head>
+<body>
+
+<div id="doc2">
+
+<div class="dcmt-document">
+    <div class="hd">
+        <span class="name">b9j.digest </span> <span class="subtitle">A SHA-256 digester</span>
+    </div>
+        <div class="bd">
+    <div class="dcmt-content">
+            <ul class="index">
+                    <li class="index-head1"><a href="#NAME">NAME</a></li>
+                    <li class="index-head1"><a href="#SYNOPSIS">SYNOPSIS</a></li>
+                    <li class="index-head1"><a href="#DESCRIPTION">DESCRIPTION</a></li>
+                    <li class="index-head1"><a href="#METHODS">METHODS</a></li>
+                    <li class="index-head2"><a href="#calculate16( $input )">calculate16( $input )</a></li>
+                    <li class="index-head2"><a href="#hexadecimal( $input )">hexadecimal( $input )</a></li>
+                    <li class="index-head2"><a href="#hex( $input )">hex( $input )</a></li>
+                    <li class="index-head2"><a href="#calculate64( $input )">calculate64( $input )</a></li>
+                    <li class="index-head2"><a href="#base64( $input )">base64( $input )</a></li>
+                    <li class="index-head2"><a href="#calculate256( $input )">calculate256( $input )</a></li>
+                    <li class="index-head2"><a href="#calculate( $input )">calculate( $input )</a></li>
+                    <li class="index-head1"><a href="#SEE ALSO">SEE ALSO</a></li>
+                    <li class="index-head1"><a href="#AUTHOR">AUTHOR</a></li>
+                    <li class="index-head1"><a href="#DOWNLOAD">DOWNLOAD</a></li>
+                    <li class="index-head1"><a href="#SOURCE">SOURCE</a></li>
+                    <li class="index-head1"><a href="#COPYRIGHT & LICENSE">COPYRIGHT & LICENSE</a></li>
+                </ul>
+        <h1 class="content-head1 content-head"><a name="NAME"></a>NAME</h1>
+
+<p>b9j.digest - A SHA-256 digester</p>
+
+<h1 class="content-head1 content-head"><a name="SYNOPSIS"></a>SYNOPSIS</h1>
+
+<pre><code> ... = b9j.digest.sha256.calculate16( "Hello, World." ) // Hexadecimal, base 16
+ ... = b9j.digest.sha256.calculate64( "Hello, World." ) // Base 64
+ ... = b9j.digest.sha256.calculate( "Hello, World." ) // Binary string (byte string), base 256
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="DESCRIPTION"></a>DESCRIPTION</h1>
+
+<p>A SHA-256 digester (implementation by Angel Marin <a href="http://anmar.eu.org/projects/jssha2/">http://anmar.eu.org/projects/jssha2/</a>)</p>
+
+<h1 class="content-head1 content-head"><a name="METHODS"></a>METHODS</h1>
+
+<h2 class="content-head2 content-head"><a name="calculate16( $input )"></a>calculate16( $input )</h2>
+
+<h2 class="content-head2 content-head"><a name="hexadecimal( $input )"></a>hexadecimal( $input )</h2>
+
+<h2 class="content-head2 content-head"><a name="hex( $input )"></a>hex( $input )</h2>
+
+<p>Calculate the SHA-256 digest of $input and return the result as a hexadecimal (base16) value</p>
+
+<h2 class="content-head2 content-head"><a name="calculate64( $input )"></a>calculate64( $input )</h2>
+
+<h2 class="content-head2 content-head"><a name="base64( $input )"></a>base64( $input )</h2>
+
+<p>Calculate the SHA-256 digest of $input and return the result as a base64 (= padded) value</p>
+
+<h2 class="content-head2 content-head"><a name="calculate256( $input )"></a>calculate256( $input )</h2>
+
+<h2 class="content-head2 content-head"><a name="calculate( $input )"></a>calculate( $input )</h2>
+
+<p>Calculate the SHA-256 digest of $input and return the result as a binary string (byte string), base 256</p>
+
+<h1 class="content-head1 content-head"><a name="SEE ALSO"></a>SEE ALSO</h1>
+
+<p><a href="http://anmar.eu.org/projects/jssha2/">http://anmar.eu.org/projects/jssha2/</a></p>
+
+<p><a href="http://appengine.bravo9.com/b9j">b9j</a> - A JavaScript toolkit</p>
+
+<h1 class="content-head1 content-head"><a name="AUTHOR"></a>AUTHOR</h1>
+
+<p>Robert Krimen <code>&lt;robertkrimen at gmail.com&gt;</code> <a href="http://bravo9.com">http://bravo9.com</a></p>
+
+<h1 class="content-head1 content-head"><a name="DOWNLOAD"></a>DOWNLOAD</h1>
+
+<p>Available as part of <a href="http://appengine.bravo9.com/b9j"><strong>b9j</strong></a>: <a href="http://appengine.bravo9.com/b9j/b9j-latest.zip">b9j-latest.zip</a></p>
+
+<h1 class="content-head1 content-head"><a name="SOURCE"></a>SOURCE</h1>
+
+<p>You can contribute or fork this project via GitHub:</p>
+
+<p><a href="http://github.com/robertkrimen/b9j/tree/master">http://github.com/robertkrimen/b9j/tree/master</a></p>
+
+<pre><code> git clone git://github.com/robertkrimen/b9j.git
+</code></pre>
+
+<h1 class="content-head1 content-head"><a name="COPYRIGHT & LICENSE"></a>COPYRIGHT & LICENSE</h1>
+
+<p>Copyright 2008 Robert Krimen</p>
+
+<p>Code licensed under the BSD License: <a href="http://appengine.bravo9.com/b9j/documentation/license.txt">http://appengine.bravo9.com/b9j/documentation/license.txt</a></p>
+
+</div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
