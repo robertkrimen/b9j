@@ -3,13 +3,17 @@
 
 b9j_version := 0.1.9
 
-yui_version := 2.5.2
-yuicompressor_version := 2.3.6
+yui_version := 2.8.1
+yuicompressor_version := 2.4.2
+
+#http://yuilibrary.com/downloads/yuicompressor/yuicompressor-2.4.2.zip
 
 build := build
 build_tmp := build/tmp
 build_documentation := build/documentation
 build_test := build/test
+
+doc_simple := doc-simply
 
 ship := $(build)/b9j-$(b9j_version)
 ship_zip := $(build)/b9j-$(b9j_version).zip
@@ -146,7 +150,7 @@ build_documentation: $(package_documentation) $(build_documentation)/b9jTest-exa
 
 $(package_documentation): $(build_documentation)/%.html: source/%/source.js
 	mkdir -p $(build_documentation)
-	cat $< | ./local/script/doc-simply > $@
+	cat $< | doc-simply > $@
 
 $(build_documentation)/b9jTest-example.html: source/b9jTest/example.html
 	cp $< $@
